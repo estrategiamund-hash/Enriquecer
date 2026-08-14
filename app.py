@@ -19,11 +19,16 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List
 
-from flask import Flask, jsonify, redirect, render_template, request, send_file, session, url_for
+from flask import Flask, jsonify, redirect, render_template, request, send_file, send_from_directory, session, url_for
 from openpyxl import Workbook, load_workbook
 
 app = Flask(__name__)
 app.secret_key = "enriquecimento-demo-secret-key"
+
+@app.route('/favicon.ico')
+@app.route('/favicon.png')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.png', mimetype='image/png')
 
 USERS = {
     "admin": {"password": "admin123", "role": "admin", "name": "Estratégia - Admin"},
