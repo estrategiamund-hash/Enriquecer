@@ -1557,8 +1557,8 @@ def create_import_request():
     queue_item = {
         "id": str(uuid.uuid4()),
         "record_id": record_id,
-        "queue_number": "",
-        "requester_name": "",
+        "queue_number": "TEMP" if mode == "queue_only" else "",
+        "requester_name": "Aguardando confirmação" if mode == "queue_only" else "",
         "observacoes": "",
         "selected_fields": [],
         "query_fields": query_fields,

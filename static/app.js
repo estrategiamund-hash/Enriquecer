@@ -582,6 +582,13 @@ function renderQueue() {
     const row = document.createElement('article');
     row.className = 'queue-item';
     const formattedFields = formatSelectedFields(item.selected_fields || []);
+    
+    // Verificar se está aguardando confirmação (queue_number === "TEMP")
+    const isAwaitingConfirmation = item.queue_number === "TEMP";
+    let queueNumberDisplay = item.queue_number;
+    if (isAwaitingConfirmation) {
+      queueNumberDisplay = "TEMP (Aguardando dados)";
+    }
 
     let actionsHtml = '';
     let statusText = 'Pendente';
@@ -617,7 +624,7 @@ function renderQueue() {
 
     row.innerHTML = `
       <div class="queue-header">
-        <strong>Fila ${item.queue_number}</strong>
+        <strong>Fila ${queueNumberDisplay}</strong>
         <span class="badge ${badgeClass}">${statusText}</span>
       </div>
       <div class="queue-meta">Solicitante: ${item.requester_name}</div>
