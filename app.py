@@ -106,10 +106,19 @@ def db_get_record(record_id: str) -> Dict[str, Any] | None:
         return res[0]
     return next((r for r in STATE["records"] if r["id"] == record_id), None)
 
+def extract_reject_reason(item: Dict[str, Any]) -> str:
+    if item.get("reject_reason"):
+        return str(item["reject_reason"]).strip()
+    logs = item.get("logs") or []
+    for log in logs:
+        if isinstance(log, str) and "Solicitação recusada pela Estratégia. Motivo: " in log:
+            return log.split("Solicitação recusada pela Estratégia. Motivo: ")[1].strip()
+    return ""
+
 def db_save_queue_item(item: Dict[str, Any]) -> None:
     item_db = {
         k: v for k, v in item.items()
-        if k in {"id", "record_id", "queue_number", "requester_name", "observacoes", "filename", "status", "total_rows", "processed_count", "success_count", "error_count", "request_time", "completed_at", "summary_name", "selected_fields", "detected_type", "logs"}
+        if k in {"id", "record_id", "queue_number", "requester_name", "observacoes", "filename", "status", "total_rows", "processed_count", "success_count", "error_count", "request_time", "completed_at", "summary_name", "selected_fields", "detected_type", "logs", "reject_reason", "mode"}
     }
     res = make_supabase_request("queue", "POST", item_db)
     if res is None:
@@ -119,7 +128,7 @@ def db_save_queue_item(item: Dict[str, Any]) -> None:
 def db_update_queue_item(item_id: str, updates: Dict[str, Any]) -> None:
     updates_db = {
         k: v for k, v in updates.items()
-        if k in {"id", "record_id", "queue_number", "requester_name", "observacoes", "filename", "status", "total_rows", "processed_count", "success_count", "error_count", "request_time", "completed_at", "summary_name", "selected_fields", "detected_type", "logs"}
+        if k in {"id", "record_id", "queue_number", "requester_name", "observacoes", "filename", "status", "total_rows", "processed_count", "success_count", "error_count", "request_time", "completed_at", "summary_name", "selected_fields", "detected_type", "logs", "reject_reason", "mode"}
     }
     res = make_supabase_request("queue", "PATCH", data=updates_db, query=f"?id=eq.{item_id}")
     if res is None:
@@ -131,17 +140,23 @@ def db_update_queue_item(item_id: str, updates: Dict[str, Any]) -> None:
 
 def db_get_queue_item(item_id: str) -> Dict[str, Any] | None:
     res = make_supabase_request("queue", "GET", query=f"?id=eq.{item_id}")
+    item = None
     if res and len(res) > 0:
-        return res[0]
-    return next((job for job in STATE["queue"] if job["id"] == item_id), None)
+        item = res[0]
+    else:
+        item = next((job for job in STATE["queue"] if job["id"] == item_id), None)
+    if item:
+        item["reject_reason"] = extract_reject_reason(item)
+    return item
 
 def db_get_all_queue() -> List[Dict[str, Any]]:
     res = make_supabase_request("queue", "GET")
+    items = res if res is not None else STATE["queue"]
+    for item in items:
+        item["reject_reason"] = extract_reject_reason(item)
     if res is not None:
-        # Update local memory copy
         STATE["queue"] = res
-        return res
-    return STATE["queue"]
+    return items
 
 def db_save_notification(notification: Dict[str, Any]) -> None:
     res = make_supabase_request("notifications", "POST", notification)

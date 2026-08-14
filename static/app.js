@@ -629,7 +629,8 @@ function renderNormalUserHistory() {
     
     let actionBtnHtml = '';
     if (item.status === 'rejected') {
-      actionBtnHtml = `<button type="button" class="button secondary" style="background-color: var(--danger-color); color: white; border-color: var(--danger-color); padding: 0.4rem 1rem; border-radius: var(--radius-sm); font-size: 0.8rem;" onclick="openViewReasonModal('${encodeURIComponent(item.reject_reason || 'Sem motivo')}')">Motivo da Recusa</button>`;
+      const reason = getItemRejectReason(item);
+      actionBtnHtml = `<button type="button" class="button secondary" style="background-color: var(--danger-color); color: white; border-color: var(--danger-color); padding: 0.4rem 1rem; border-radius: var(--radius-sm); font-size: 0.8rem;" onclick="openViewReasonModal('${encodeURIComponent(reason)}')">Motivo da Recusa</button>`;
     } else {
       actionBtnHtml = `<button type="button" class="primary" style="padding: 0.4rem 1rem; border-radius: var(--radius-sm); font-size: 0.8rem;" onclick="openImageViewer('/api/summary/${item.id}')">Visualizar Devolutiva</button>`;
     }
@@ -912,7 +913,7 @@ function renderQueueHistory() {
             </svg>
             <span>Download</span>
           </button>
-          ${item.status === 'rejected' ? `<button type="button" class="button secondary" style="background-color: var(--danger-color); color: white; border-color: var(--danger-color);" onclick="openViewReasonModal('${encodeURIComponent(item.reject_reason || 'Sem motivo')}')">Motivo da Recusa</button>` : ''}
+          ${item.status === 'rejected' ? `<button type="button" class="button secondary" style="background-color: var(--danger-color); color: white; border-color: var(--danger-color);" onclick="openViewReasonModal('${encodeURIComponent(getItemRejectReason(item))}')">Motivo da Recusa</button>` : ''}
           ${devolutivaBtnHtml}
           <button type="button" class="button secondary" onclick="viewDetailedLogs('${item.id}')">Logs</button>
         </div>
@@ -1203,6 +1204,20 @@ if (refuseForm) {
 
 window.openRefuseModal = openRefuseModal;
 window.closeRefuseModal = closeRefuseModal;
+
+function getItemRejectReason(item) {
+  if (item && item.reject_reason && String(item.reject_reason).trim() !== '') {
+    return String(item.reject_reason).trim();
+  }
+  if (item && Array.isArray(item.logs)) {
+    for (const log of item.logs) {
+      if (typeof log === 'string' && log.includes('Solicitação recusada pela Estratégia. Motivo: ')) {
+        return log.split('Solicitação recusada pela Estratégia. Motivo: ')[1].trim();
+      }
+    }
+  }
+  return 'Sem motivo informado';
+}
 
 function openViewReasonModal(encodedReason) {
   const reason = decodeURIComponent(encodedReason);
