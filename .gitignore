@@ -1,0 +1,7 @@
+exports/
+uploads/
+__pycache__/
+*.pyc
+api_debug.log
+.venv/
+.env

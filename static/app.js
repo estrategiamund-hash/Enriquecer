@@ -7,7 +7,20 @@ const state = {
   currentRole: document.body.dataset.userRole || 'user1',
   activeRequestImportId: null,
   currentAction: 'enrich_only',
+  historyCurrentPage: 1,
+  historyItemsPerPage: 20,
 };
+
+const expandedCardIds = new Set();
+
+function downloadFileDirectly(url) {
+  const link = document.createElement('a');
+  link.href = url;
+  link.style.display = 'none';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
 
 const tabButtons = document.querySelectorAll('.tab');
 const roleSelector = document.getElementById('roleSwitcher');
@@ -216,7 +229,10 @@ function renderAvailableFields() {
   }
 
   const used = new Set(state.selectedFields);
-  const items = (state.currentRecord.available_fields || []).filter((field) => !used.has(field));
+  const fields = state.currentAction === 'queue_only'
+    ? (state.currentRecord.columns || [])
+    : (state.currentRecord.available_fields || []);
+  const items = fields.filter((field) => !used.has(field));
 
   availableFields.innerHTML = '';
   items.forEach((field) => {
@@ -391,21 +407,24 @@ async function handleUpload(event) {
 
     state.currentRecord = payload;
 
-    // Iniciar com campos obrigatórios
-    const selected = [...REQUIRED_FIELDS].filter((field) => (payload.available_fields || []).includes(field));
-
-    // Adicionar colunas originais do arquivo por padrão (mantendo campos fixos que existiam)
-    if (payload.columns) {
-      payload.columns.forEach((col) => {
-        if (!selected.includes(col) && (payload.available_fields || []).includes(col)) {
-          selected.push(col);
-        }
-      });
+    const selected = [];
+    if (state.currentAction === 'queue_only') {
+      selected.push(...(payload.columns || []));
+    } else {
+      const initial = [...REQUIRED_FIELDS].filter((field) => (payload.available_fields || []).includes(field));
+      selected.push(...initial);
+      if (payload.columns) {
+        payload.columns.forEach((col) => {
+          if (!selected.includes(col) && (payload.available_fields || []).includes(col)) {
+            selected.push(col);
+          }
+        });
+      }
     }
 
     state.selectedFields = selected;
 
-    if (state.selectedFields.length < REQUIRED_FIELDS.length) {
+    if (state.currentAction !== 'queue_only' && state.selectedFields.length < REQUIRED_FIELDS.length) {
       const missing = REQUIRED_FIELDS.filter((field) => !state.selectedFields.includes(field));
       showMessage(`Faltam campos obrigatórios: ${missing.join(', ')}`, 'error');
     } else {
@@ -438,7 +457,14 @@ async function handleUpload(event) {
       step1Container.classList.add('hidden');
     } else {
       validationWarningBox.classList.add('hidden');
-      step1Container.classList.remove('hidden');
+      if (state.currentAction === 'queue_only') {
+        step3Container.classList.remove('hidden');
+        renderAvailableFields();
+        renderSelectedFields();
+        renderPreview();
+      } else {
+        step1Container.classList.remove('hidden');
+      }
     }
 
     renderQueryFieldsSelection(payload.columns || []);
@@ -560,9 +586,6 @@ async function submitRequest(event) {
 }
 
 async function loadQueue() {
-  if (state.currentRole !== 'admin') {
-    return;
-  }
   try {
     const response = await fetch('/api/queue');
     if (!response.ok) {
@@ -571,16 +594,138 @@ async function loadQueue() {
 
     const payload = await response.json();
     state.queue = payload.queue || [];
-    renderQueueActive();
-    renderQueueHistory();
+    if (state.currentRole === 'admin') {
+      renderQueueActive();
+      renderQueueHistory();
+    } else {
+      renderNormalUserHistory();
+    }
   } catch (error) {
     console.error(error);
   }
 }
 
+function renderNormalUserHistory() {
+  const container = document.getElementById('normalUserHistoryQueue');
+  if (!container) return;
+
+  // Filter completed requests that have a summary image (strategist uploaded devolutiva), OR rejected requests
+  const items = state.queue.filter(item => 
+    (item.status === 'completed' && item.summary_name) || 
+    item.status === 'rejected'
+  );
+
+  if (!items.length) {
+    container.innerHTML = '<div class="queue-item"><strong>Nenhum histórico disponível no momento.</strong></div>';
+    return;
+  }
+
+  container.innerHTML = '';
+  items.forEach((item) => {
+    const row = document.createElement('article');
+    const isCollapsed = !expandedCardIds.has(item.id);
+    row.className = `queue-item ${isCollapsed ? 'collapsed' : ''}`;
+    const rotation = isCollapsed ? '0deg' : '-180deg';
+    
+    let actionBtnHtml = '';
+    if (item.status === 'rejected') {
+      actionBtnHtml = `<button type="button" class="button secondary" style="background-color: var(--danger-color); color: white; border-color: var(--danger-color); padding: 0.4rem 1rem; border-radius: var(--radius-sm); font-size: 0.8rem;" onclick="openViewReasonModal('${encodeURIComponent(item.reject_reason || 'Sem motivo')}')">Motivo da Recusa</button>`;
+    } else {
+      actionBtnHtml = `<button type="button" class="primary" style="padding: 0.4rem 1rem; border-radius: var(--radius-sm); font-size: 0.8rem;" onclick="openImageViewer('/api/summary/${item.id}')">Visualizar Devolutiva</button>`;
+    }
+
+    row.innerHTML = `
+      <div class="queue-header" style="cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <span class="collapse-icon" style="display: inline-block; transition: transform 0.2s; font-size: 0.8rem; color: var(--text-muted); transform: rotate(${rotation});">▼</span>
+          <strong>Fila ${item.queue_number || 'Sem Fila'}</strong>
+        </div>
+        <span class="badge ${item.status === 'rejected' ? 'error' : 'completed'}">
+          ${item.status === 'rejected' ? 'Recusado' : 'Importado'}
+        </span>
+      </div>
+      <div class="queue-collapsible-content">
+        <div class="queue-meta">Solicitante: ${item.requester_name}</div>
+        <div class="queue-meta">Horário Conclusão: ${item.completed_at || item.request_time}</div>
+        <div class="queue-actions" style="margin-top: 0.5rem;">
+          ${actionBtnHtml}
+        </div>
+      </div>
+    `;
+
+    const header = row.querySelector('.queue-header');
+    header.addEventListener('click', () => {
+      row.classList.toggle('collapsed');
+      const icon = header.querySelector('.collapse-icon');
+      if (row.classList.contains('collapsed')) {
+        icon.style.transform = 'rotate(0deg)';
+        expandedCardIds.delete(item.id);
+      } else {
+        icon.style.transform = 'rotate(-180deg)';
+        expandedCardIds.add(item.id);
+      }
+    });
+
+    container.appendChild(row);
+  });
+}
+
+let currentZoom = 1;
+let isPanning = false;
+let startX = 0;
+let startY = 0;
+let translateX = 0;
+let translateY = 0;
+
+function openImageViewer(src) {
+  const modal = document.getElementById('imageViewerModal');
+  const img = document.getElementById('viewerImage');
+  if (modal && img) {
+    img.src = src;
+    currentZoom = 1;
+    translateX = 0;
+    translateY = 0;
+    img.style.transform = `scale(${currentZoom}) translate(0px, 0px)`;
+    img.style.cursor = 'grab';
+    modal.classList.remove('hidden');
+  }
+}
+
+function closeImageViewer() {
+  const modal = document.getElementById('imageViewerModal');
+  if (modal) {
+    modal.classList.add('hidden');
+  }
+}
+
+function zoomImage(amount) {
+  const img = document.getElementById('viewerImage');
+  if (img) {
+    currentZoom = Math.max(0.5, Math.min(3, currentZoom + amount));
+    img.style.transform = `scale(${currentZoom})`;
+  }
+}
+
+function resetZoom() {
+  const img = document.getElementById('viewerImage');
+  if (img) {
+    currentZoom = 1;
+    img.style.transform = `scale(${currentZoom})`;
+  }
+}
+
+window.openImageViewer = openImageViewer;
+window.closeImageViewer = closeImageViewer;
+window.zoomImage = zoomImage;
+window.resetZoom = resetZoom;
+
 function renderQueueActive() {
-  // Filtrar apenas itens ativos (não completados)
-  const activeItems = state.queue.filter(item => item.status !== 'completed');
+  // Filtrar apenas itens ativos (não completados), excluindo 'enrich_only'
+  const activeItems = state.queue.filter(item => 
+    item.status !== 'completed' && 
+    item.status !== 'rejected' && 
+    item.mode !== 'enrich_only'
+  );
   
   if (!activeItems.length) {
     strategyQueueActive.innerHTML = '<div class="queue-item"><strong>Sem solicitações ativas no momento.</strong></div>';
@@ -592,7 +737,9 @@ function renderQueueActive() {
   strategyQueueActive.innerHTML = '';
   activeItems.forEach((item) => {
     const row = document.createElement('article');
-    row.className = 'queue-item';
+    const isCollapsed = !expandedCardIds.has(item.id);
+    row.className = `queue-item ${isCollapsed ? 'collapsed' : ''}`;
+    const rotation = isCollapsed ? '0deg' : '-180deg';
     const formattedFields = formatSelectedFields(item.selected_fields || []);
     
     // Verificar se está aguardando confirmação (queue_number === "TEMP")
@@ -610,46 +757,99 @@ function renderQueueActive() {
       const pct = item.total_rows > 0 ? Math.round((item.processed_count / item.total_rows) * 100) : 0;
       statusText = `Processando (${pct}%)`;
       badgeClass = 'processing';
-      actionsHtml = `<span class="badge processing">Processando no plano de fundo...</span>`;
     } else if (item.status === 'error') {
       statusText = 'Erro';
       badgeClass = 'error';
-      actionsHtml = `<button type="button" class="button secondary" onclick="viewDetailedLogs('${item.id}')">Ver Erro</button>`;
+    } else if (item.status === 'rejected') {
+      statusText = 'Recusado';
+      badgeClass = 'error';
+    }
+
+    const isEnrichOnly = item.queue_number === "ENRICH";
+    
+    let refuseBtnHtml = '';
+    if (item.status === 'pending' || item.status === 'processing') {
+      refuseBtnHtml = `<button type="button" class="button secondary" onclick="openRefuseModal('${item.id}')" style="background-color: var(--danger-color); color: white; border-color: var(--danger-color); font-size: 0.8rem; padding: 0.4rem 1rem; border-radius: var(--radius-sm);">Recusar</button>`;
+    }
+
+    if (item.queue_number !== "TEMP") {
+      if (isEnrichOnly) {
+        actionsHtml = `
+          <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+            ${refuseBtnHtml}
+            <button type="button" class="download-link-premium" style="display: inline-flex; align-items: center; gap: 8px; border: none; font-family: inherit;" onclick="downloadFileDirectly('/api/request/${item.id}/download')" title="Baixar Planilha">
+              <svg viewBox="0 0 256 256" height="24" width="28" xmlns="http://www.w3.org/2000/svg">
+                <path d="M74.34 85.66a8 8 0 0 1 11.32-11.32L120 108.69V24a8 8 0 0 1 16 0v84.69l34.34-34.35a8 8 0 0 1 11.32 11.32l-48 48a8 8 0 0 1-11.32 0ZM240 136v64a16 16 0 0 1-16 16H32a16 16 0 0 1-16-16v-64a16 16 0 0 1 16-16h52.4a4 4 0 0 1 2.83 1.17L111 145a24 24 0 0 0 34 0l23.8-23.8a4 4 0 0 1 2.8-1.2H224a16 16 0 0 1 16 16m-40 32a12 12 0 1 0-12 12a12 12 0 0 0 12-12" fill="currentColor"></path>
+              </svg>
+              <span>Download</span>
+            </button>
+          </div>
+        `;
+      } else {
+        actionsHtml = `
+          <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+            ${refuseBtnHtml}
+            <button type="button" class="download-link-premium" style="display: inline-flex; align-items: center; gap: 8px; border: none; font-family: inherit;" onclick="downloadFileDirectly('/api/request/${item.id}/download')" title="Baixar Planilha">
+              <svg viewBox="0 0 256 256" height="24" width="28" xmlns="http://www.w3.org/2000/svg">
+                <path d="M74.34 85.66a8 8 0 0 1 11.32-11.32L120 108.69V24a8 8 0 0 1 16 0v84.69l34.34-34.35a8 8 0 0 1 11.32 11.32l-48 48a8 8 0 0 1-11.32 0ZM240 136v64a16 16 0 0 1-16 16H32a16 16 0 0 1-16-16v-64a16 16 0 0 1 16-16h52.4a4 4 0 0 1 2.83 1.17L111 145a24 24 0 0 0 34 0l23.8-23.8a4 4 0 0 1 2.8-1.2H224a16 16 0 0 1 16 16m-40 32a12 12 0 1 0-12 12a12 12 0 0 0 12-12" fill="currentColor"></path>
+              </svg>
+              <span>Download</span>
+            </button>
+            <input type="file" accept="image/*" class="summary-upload" data-id="${item.id}" />
+            <button type="button" class="primary" data-submit-summary="${item.id}">Check</button>
+          </div>
+        `;
+      }
     } else {
-      actionsHtml = `
-        <div style="display: flex; align-items: center; gap: 0.5rem;">
-          <a href="/api/request/${item.id}/download" target="_blank" class="download-link-premium" title="Baixar Planilha">
-            <svg viewBox="0 0 256 256" height="24" width="28" xmlns="http://www.w3.org/2000/svg">
-              <path d="M74.34 85.66a8 8 0 0 1 11.32-11.32L120 108.69V24a8 8 0 0 1 16 0v84.69l34.34-34.35a8 8 0 0 1 11.32 11.32l-48 48a8 8 0 0 1-11.32 0ZM240 136v64a16 16 0 0 1-16 16H32a16 16 0 0 1-16-16v-64a16 16 0 0 1 16-16h52.4a4 4 0 0 1 2.83 1.17L111 145a24 24 0 0 0 34 0l23.8-23.8a4 4 0 0 1 2.8-1.2H224a16 16 0 0 1 16 16m-40 32a12 12 0 1 0-12 12a12 12 0 0 0 12-12" fill="currentColor"></path>
-            </svg>
-            <span>Download</span>
-          </a>
-          <input type="file" accept="image/*" class="summary-upload" data-id="${item.id}" />
-          <button type="button" class="primary" data-submit-summary="${item.id}">Check</button>
-        </div>
-      `;
+      actionsHtml = `<span class="badge pending">Aguardando dados da fila</span>`;
+    }
+    
+    let rejectReasonHtml = '';
+    if (item.status === 'rejected' && item.reject_reason) {
+      rejectReasonHtml = `<div class="queue-meta" style="color: var(--danger-color);"><strong>Motivo da Recusa:</strong> ${item.reject_reason}</div>`;
     }
 
     row.innerHTML = `
-      <div class="queue-header">
-        <strong>Fila ${queueNumberDisplay}</strong>
+      <div class="queue-header" style="cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <span class="collapse-icon" style="display: inline-block; transition: transform 0.2s; font-size: 0.8rem; color: var(--text-muted); transform: rotate(${rotation});">▼</span>
+          <strong>Fila ${queueNumberDisplay}</strong>
+        </div>
         <span class="badge ${badgeClass}">${statusText}</span>
       </div>
-      <div class="queue-meta">Solicitante: ${item.requester_name}</div>
-      <div class="queue-meta">Horário: ${item.request_time}</div>
-      <div class="queue-meta">Campos: ${formattedFields}</div>
-      <div class="queue-actions">
-        ${actionsHtml}
-        <button type="button" class="button secondary" onclick="viewDetailedLogs('${item.id}')">Logs</button>
+      <div class="queue-collapsible-content">
+        <div class="queue-meta">Solicitante: ${item.requester_name}</div>
+        <div class="queue-meta">Horário: ${item.request_time}</div>
+        <div class="queue-meta">Campos: ${formattedFields}</div>
+        ${rejectReasonHtml}
+        <div class="queue-actions">
+          ${actionsHtml}
+          <button type="button" class="button secondary" onclick="viewDetailedLogs('${item.id}')">Logs</button>
+        </div>
       </div>
     `;
+
+    // Add collapse toggle handler
+    const header = row.querySelector('.queue-header');
+    header.addEventListener('click', (e) => {
+      row.classList.toggle('collapsed');
+      const icon = header.querySelector('.collapse-icon');
+      if (row.classList.contains('collapsed')) {
+        icon.style.transform = 'rotate(0deg)';
+        expandedCardIds.delete(item.id);
+      } else {
+        icon.style.transform = 'rotate(-180deg)';
+        expandedCardIds.add(item.id);
+      }
+    });
+
     strategyQueueActive.appendChild(row);
   });
 }
 
 function renderQueueHistory() {
-  // Filtrar apenas itens completados
-  const historyItems = state.queue.filter(item => item.status === 'completed');
+  // Filtrar apenas itens completados ou recusados
+  const historyItems = state.queue.filter(item => item.status === 'completed' || item.status === 'rejected');
   
   if (!historyItems.length) {
     strategyQueueHistory.innerHTML = '<div class="queue-item"><strong>Nenhum histórico disponível.</strong></div>';
@@ -658,33 +858,123 @@ function renderQueueHistory() {
   }
 
   historyBadge.textContent = historyItems.length;
+  
+  // Ordenar por data (mais recente primeiro)
+  const sortedItems = historyItems.sort((a, b) => {
+    const dateA = parseDate(a.completed_at || a.request_time);
+    const dateB = parseDate(b.completed_at || b.request_time);
+    return dateB - dateA; // Mais recente primeiro
+  });
+
+  // Calcular paginação
+  const totalPages = Math.ceil(sortedItems.length / state.historyItemsPerPage);
+  const startIdx = (state.historyCurrentPage - 1) * state.historyItemsPerPage;
+  const endIdx = startIdx + state.historyItemsPerPage;
+  const paginatedItems = sortedItems.slice(startIdx, endIdx);
+
   strategyQueueHistory.innerHTML = '';
-  historyItems.forEach((item) => {
+  
+  // Renderizar items da página atual
+  paginatedItems.forEach((item) => {
     const row = document.createElement('article');
-    row.className = 'queue-item';
+    const isCollapsed = !expandedCardIds.has(item.id);
+    row.className = `queue-item ${isCollapsed ? 'collapsed' : ''}`;
+    const rotation = isCollapsed ? '0deg' : '-180deg';
     const formattedFields = formatSelectedFields(item.selected_fields || []);
+    
+    const isEnrichOnly = item.queue_number === "ENRICH";
+
+    const devolutivaBtnHtml = item.summary_name
+      ? `<button type="button" class="primary" style="padding: 0.4rem 1rem; border-radius: var(--radius-sm); font-size: 0.8rem;" onclick="openImageViewer('/api/summary/${item.id}')">Visualizar Devolutiva</button>`
+      : '';
 
     row.innerHTML = `
-      <div class="queue-header">
-        <strong>Fila ${item.queue_number}</strong>
-        <span class="badge completed">Concluído</span>
+      <div class="queue-header" style="cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <span class="collapse-icon" style="display: inline-block; transition: transform 0.2s; font-size: 0.8rem; color: var(--text-muted); transform: rotate(${rotation});">▼</span>
+          <strong>Fila ${item.queue_number}</strong>
+        </div>
+        <span class="badge ${item.status === 'rejected' ? 'error' : 'completed'}">
+          ${item.status === 'rejected' ? 'Recusado' : (isEnrichOnly ? 'Apenas Enriquecido' : 'Concluído')}
+        </span>
       </div>
-      <div class="queue-meta">Solicitante: ${item.requester_name}</div>
-      <div class="queue-meta">Horário: ${item.request_time}</div>
-      <div class="queue-meta">Campos: ${formattedFields}</div>
-      <div class="queue-actions">
-        <span class="badge completed">Importado com sucesso</span>
-        <a href="/api/request/${item.id}/download" target="_blank" class="download-link-premium" title="Baixar Planilha">
-          <svg viewBox="0 0 256 256" height="24" width="28" xmlns="http://www.w3.org/2000/svg">
-            <path d="M74.34 85.66a8 8 0 0 1 11.32-11.32L120 108.69V24a8 8 0 0 1 16 0v84.69l34.34-34.35a8 8 0 0 1 11.32 11.32l-48 48a8 8 0 0 1-11.32 0ZM240 136v64a16 16 0 0 1-16 16H32a16 16 0 0 1-16-16v-64a16 16 0 0 1 16-16h52.4a4 4 0 0 1 2.83 1.17L111 145a24 24 0 0 0 34 0l23.8-23.8a4 4 0 0 1 2.8-1.2H224a16 16 0 0 1 16 16m-40 32a12 12 0 1 0-12 12a12 12 0 0 0 12-12" fill="currentColor"></path>
-          </svg>
-          <span>Download</span>
-        </a>
-        <button type="button" class="button secondary" onclick="viewDetailedLogs('${item.id}')">Logs</button>
+      <div class="queue-collapsible-content">
+        <div class="queue-meta">Solicitante: ${item.requester_name}</div>
+        <div class="queue-meta">Horário: ${item.completed_at || item.request_time}</div>
+        <div class="queue-meta">Campos: ${formattedFields}</div>
+        <div class="queue-actions">
+          <span class="badge ${item.status === 'rejected' ? 'error' : 'completed'}">
+            ${item.status === 'rejected' ? 'Recusado' : (isEnrichOnly ? 'Apenas Enriquecido' : 'Importado com sucesso')}
+          </span>
+          <button type="button" class="download-link-premium" style="display: inline-flex; align-items: center; gap: 8px; border: none; font-family: inherit;" onclick="downloadFileDirectly('/api/request/${item.id}/download')" title="Baixar Planilha">
+            <svg viewBox="0 0 256 256" height="24" width="28" xmlns="http://www.w3.org/2000/svg">
+              <path d="M74.34 85.66a8 8 0 0 1 11.32-11.32L120 108.69V24a8 8 0 0 1 16 0v84.69l34.34-34.35a8 8 0 0 1 11.32 11.32l-48 48a8 8 0 0 1-11.32 0ZM240 136v64a16 16 0 0 1-16 16H32a16 16 0 0 1-16-16v-64a16 16 0 0 1 16-16h52.4a4 4 0 0 1 2.83 1.17L111 145a24 24 0 0 0 34 0l23.8-23.8a4 4 0 0 1 2.8-1.2H224a16 16 0 0 1 16 16m-40 32a12 12 0 1 0-12 12a12 12 0 0 0 12-12" fill="currentColor"></path>
+            </svg>
+            <span>Download</span>
+          </button>
+          ${item.status === 'rejected' ? `<button type="button" class="button secondary" style="background-color: var(--danger-color); color: white; border-color: var(--danger-color);" onclick="openViewReasonModal('${encodeURIComponent(item.reject_reason || 'Sem motivo')}')">Motivo da Recusa</button>` : ''}
+          ${devolutivaBtnHtml}
+          <button type="button" class="button secondary" onclick="viewDetailedLogs('${item.id}')">Logs</button>
+        </div>
       </div>
     `;
+
+    // Add collapse toggle handler
+    const header = row.querySelector('.queue-header');
+    header.addEventListener('click', (e) => {
+      row.classList.toggle('collapsed');
+      const icon = header.querySelector('.collapse-icon');
+      if (row.classList.contains('collapsed')) {
+        icon.style.transform = 'rotate(0deg)';
+        expandedCardIds.delete(item.id);
+      } else {
+        icon.style.transform = 'rotate(-180deg)';
+        expandedCardIds.add(item.id);
+      }
+    });
+
     strategyQueueHistory.appendChild(row);
   });
+
+  // Adicionar controles de paginação se houver mais de uma página
+  if (totalPages > 1) {
+    const paginationContainer = document.createElement('div');
+    paginationContainer.className = 'pagination-container';
+    paginationContainer.innerHTML = `
+      <div class="pagination-controls">
+        <button type="button" class="pagination-btn" onclick="goToHistoryPage(1)" ${state.historyCurrentPage === 1 ? 'disabled' : ''}>«</button>
+        <button type="button" class="pagination-btn" onclick="goToHistoryPage(${state.historyCurrentPage - 1})" ${state.historyCurrentPage === 1 ? 'disabled' : ''}>‹</button>
+        <span class="pagination-info">Página ${state.historyCurrentPage} de ${totalPages}</span>
+        <button type="button" class="pagination-btn" onclick="goToHistoryPage(${state.historyCurrentPage + 1})" ${state.historyCurrentPage === totalPages ? 'disabled' : ''}>›</button>
+        <button type="button" class="pagination-btn" onclick="goToHistoryPage(${totalPages})" ${state.historyCurrentPage === totalPages ? 'disabled' : ''}>»</button>
+      </div>
+    `;
+    strategyQueueHistory.appendChild(paginationContainer);
+  }
+}
+
+function parseDate(dateStr) {
+  // Esperado formato: "DD/MM/YYYY HH:MM:SS"
+  if (!dateStr) return new Date(0);
+  try {
+    const [datePart, timePart] = dateStr.split(' ');
+    const [day, month, year] = datePart.split('/');
+    const [hour, minute, second] = timePart ? timePart.split(':') : ['0', '0', '0'];
+    return new Date(year, month - 1, day, hour, minute, second);
+  } catch (e) {
+    return new Date(0);
+  }
+}
+
+function goToHistoryPage(page) {
+  const historyItems = state.queue.filter(item => item.status === 'completed' || item.status === 'rejected');
+  const totalPages = Math.ceil(historyItems.length / state.historyItemsPerPage);
+  
+  if (page < 1) page = 1;
+  if (page > totalPages) page = totalPages;
+  
+  state.historyCurrentPage = page;
+  renderQueueHistory();
 }
 
 function renderQueue() {
@@ -770,6 +1060,29 @@ if (roleSelector) {
   });
 }
 
+// Setup user tabs
+const userTabButtons = document.querySelectorAll('[data-user-tab]');
+const userImportSection = document.getElementById('user-import-section');
+const normalUserHistoryContainer = document.getElementById('normalUserHistoryContainer');
+
+if (userTabButtons.length > 0) {
+  userTabButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      userTabButtons.forEach(b => b.classList.remove('is-active'));
+      btn.classList.add('is-active');
+      const tabName = btn.getAttribute('data-user-tab');
+      if (tabName === 'import') {
+        if(userImportSection) userImportSection.classList.remove('hidden');
+        if(normalUserHistoryContainer) normalUserHistoryContainer.classList.add('hidden');
+      } else if (tabName === 'history') {
+        if(userImportSection) userImportSection.classList.add('hidden');
+        if(normalUserHistoryContainer) normalUserHistoryContainer.classList.remove('hidden');
+        renderNormalUserHistory(); // refresh the view
+      }
+    });
+  });
+}
+
 document.querySelectorAll('.mode-btn').forEach((button) => {
   button.addEventListener('click', () => setActionMode(button.dataset.actionType));
 });
@@ -798,7 +1111,7 @@ async function handleFinalizeButton() {
         throw new Error(payload.error || 'Não foi possível finalizar o enriquecimento.');
       }
 
-      window.open(`/api/request/${state.activeRequestImportId}/download`, '_blank');
+      downloadFileDirectly(`/api/request/${state.activeRequestImportId}/download`);
       showMessage(payload.message, 'success');
       return;
     } catch (error) {
@@ -810,9 +1123,134 @@ async function handleFinalizeButton() {
   openRequestModal();
 }
 
+function openRequesterModal() {
+  const modal = document.getElementById('requesterModal');
+  if (modal) {
+    modal.classList.remove('hidden');
+    document.getElementById('requesterInputName').focus();
+  }
+}
+
+function closeRequesterModal() {
+  const modal = document.getElementById('requesterModal');
+  if (modal) {
+    modal.classList.add('hidden');
+    document.getElementById('requesterForm').reset();
+  }
+}
+
+const requesterForm = document.getElementById('requesterForm');
+if (requesterForm) {
+  requesterForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const requesterName = document.getElementById('requesterInputName').value.trim();
+    if (!requesterName) return;
+    closeRequesterModal();
+    startEnrichment(requesterName);
+  });
+}
+
+// Expose modal handlers globally for inline onclick
+window.closeRequesterModal = closeRequesterModal;
+
+let activeRefuseRequestId = null;
+
+function openRefuseModal(requestId) {
+  activeRefuseRequestId = requestId;
+  const modal = document.getElementById('refuseModal');
+  if (modal) {
+    modal.classList.remove('hidden');
+    document.getElementById('refuseReasonInput').focus();
+  }
+}
+
+function closeRefuseModal() {
+  activeRefuseRequestId = null;
+  const modal = document.getElementById('refuseModal');
+  if (modal) {
+    modal.classList.add('hidden');
+    document.getElementById('refuseForm').reset();
+  }
+}
+
+const refuseForm = document.getElementById('refuseForm');
+if (refuseForm) {
+  refuseForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!activeRefuseRequestId) return;
+    
+    const reason = document.getElementById('refuseReasonInput').value.trim();
+    if (!reason) return;
+    
+    try {
+      const response = await fetch(`/api/request/${activeRefuseRequestId}/refuse`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ reason })
+      });
+      const payload = await response.json();
+      if (!response.ok) {
+        throw new Error(payload.error || 'Erro ao recusar solicitação.');
+      }
+      showMessage(payload.message, 'success');
+      closeRefuseModal();
+      loadQueue();
+    } catch (error) {
+      showMessage(error.message, 'error');
+    }
+  });
+}
+
+window.openRefuseModal = openRefuseModal;
+window.closeRefuseModal = closeRefuseModal;
+
+function openViewReasonModal(encodedReason) {
+  const reason = decodeURIComponent(encodedReason);
+  const modal = document.getElementById('viewReasonModal');
+  const textEl = document.getElementById('viewReasonText');
+  if (modal && textEl) {
+    textEl.textContent = reason;
+    modal.classList.remove('hidden');
+  }
+}
+
+function closeViewReasonModal() {
+  const modal = document.getElementById('viewReasonModal');
+  if (modal) {
+    modal.classList.add('hidden');
+  }
+}
+
+window.openViewReasonModal = openViewReasonModal;
+window.closeViewReasonModal = closeViewReasonModal;
+
 uploadForm.addEventListener('submit', handleUpload);
 finalizeButton.addEventListener('click', handleFinalizeButton);
-enrichButton.addEventListener('click', startEnrichment);
+enrichButton.addEventListener('click', () => {
+  const actionMode = state.currentAction || 'enrich_only';
+  const queryFields = Array.from(state.selectedQueryFields || []);
+
+  if (actionMode !== 'queue_only' && queryFields.length === 0) {
+    showMessage('Selecione ao menos uma variável para a consulta.', 'error');
+    return;
+  }
+
+  if (actionMode !== 'queue_only') {
+    const hasNome = queryFields.some(f => f.toLowerCase().includes('nome'));
+    if (!hasNome) {
+      showMessage('É obrigatório selecionar o campo de Nome para realizar o enriquecimento.', 'error');
+      return;
+    }
+  }
+
+  if (actionMode === 'queue_only') {
+    openRequestModal();
+  } else if (actionMode === 'enrich_only') {
+    openRequesterModal();
+  } else {
+    startEnrichment("");
+  }
+});
 requestForm.addEventListener('submit', submitRequest);
 document.querySelectorAll('.close-modal').forEach((button) => button.addEventListener('click', closeRequestModal));
 document.querySelectorAll('.close-logs-modal').forEach((button) => button.addEventListener('click', closeLogsModal));
@@ -884,12 +1322,12 @@ function renderLogsQueue() {
     let downloadHtml = '';
     if (item.status === 'completed' || item.status === 'pending') {
       downloadHtml = `
-        <a href="/api/request/${item.id}/download" target="_blank" class="download-link-premium" title="Baixar Planilha">
+        <button type="button" class="download-link-premium" style="display: inline-flex; align-items: center; gap: 8px; border: none; font-family: inherit;" onclick="downloadFileDirectly('/api/request/${item.id}/download')" title="Baixar Planilha">
           <svg viewBox="0 0 256 256" height="24" width="28" xmlns="http://www.w3.org/2000/svg">
             <path d="M74.34 85.66a8 8 0 0 1 11.32-11.32L120 108.69V24a8 8 0 0 1 16 0v84.69l34.34-34.35a8 8 0 0 1 11.32 11.32l-48 48a8 8 0 0 1-11.32 0ZM240 136v64a16 16 0 0 1-16 16H32a16 16 0 0 1-16-16v-64a16 16 0 0 1 16-16h52.4a4 4 0 0 1 2.83 1.17L111 145a24 24 0 0 0 34 0l23.8-23.8a4 4 0 0 1 2.8-1.2H224a16 16 0 0 1 16 16m-40 32a12 12 0 1 0-12 12a12 12 0 0 0 12-12" fill="currentColor"></path>
           </svg>
           <span>Download</span>
-        </a>
+        </button>
       `;
     }
 
@@ -1015,21 +1453,11 @@ function renderQueryFieldsSelection(columns) {
 }
 
 // Step 2: Start background processing
-async function startEnrichment() {
+async function startEnrichment(requesterName) {
   if (!state.currentRecord) return;
 
   const actionMode = state.currentAction || 'enrich_only';
   const queryFields = Array.from(state.selectedQueryFields || []);
-
-  if (actionMode !== 'queue_only' && queryFields.length === 0) {
-    showMessage('Selecione ao menos uma variável para a consulta.', 'error');
-    return;
-  }
-
-  if (actionMode === 'queue_only') {
-    openRequestModal();
-    return;
-  }
 
   try {
     const response = await fetch('/api/request-import', {
@@ -1038,7 +1466,8 @@ async function startEnrichment() {
       body: JSON.stringify({
         record_id: state.currentRecord.id,
         query_fields: queryFields,
-        mode: actionMode
+        mode: actionMode,
+        requester_name: requesterName
       })
     });
 
@@ -1161,7 +1590,7 @@ function pollUploadProgress(requestId) {
             finalizeButton.textContent = 'Baixar arquivo enriquecido';
             finalizeButton.onclick = () => {
               if (state.activeRequestImportId) {
-                window.open(`/api/request/${state.activeRequestImportId}/download`, '_blank');
+                downloadFileDirectly(`/api/request/${state.activeRequestImportId}/download`);
               }
             };
             return;
@@ -1189,6 +1618,8 @@ setInterval(() => {
     const userRole = document.body.dataset.userRole;
     if (target === 'strategy-panel' && userRole === 'admin') {
       loadQueue();
+    } else if (target === 'user-panel') {
+      loadQueue();
     } else if (target === 'logs-panel') {
       loadLogsQueue();
     }
@@ -1210,9 +1641,7 @@ renderAvailableFields();
 renderSelectedFields();
 renderPreview();
 updateRequestButtonState();
-if (state.currentRole === 'admin') {
-  loadQueue();
-}
+loadQueue();
 loadNotifications();
 
 async function cancelEnrichment() {
@@ -1298,7 +1727,16 @@ if (dropZone && excelFile) {
 if (btnProceedValidation) {
   btnProceedValidation.addEventListener('click', () => {
     if (validationWarningBox) validationWarningBox.classList.add('hidden');
-    if (step1Container) step1Container.classList.remove('hidden');
+    if (state.currentAction === 'queue_only') {
+      if (step3Container) {
+        step3Container.classList.remove('hidden');
+        renderAvailableFields();
+        renderSelectedFields();
+        renderPreview();
+      }
+    } else {
+      if (step1Container) step1Container.classList.remove('hidden');
+    }
     showToast("Planilha aceita pelo usuário.", "info");
   });
 }
@@ -1350,3 +1788,53 @@ themeButtons.forEach(btn => {
 // Load theme on startup
 const savedTheme = localStorage.getItem('selected-theme') || 'classic';
 setTheme(savedTheme);
+
+// Add mouse wheel zoom listener to viewerImage
+document.addEventListener('DOMContentLoaded', () => {
+  const img = document.getElementById('viewerImage');
+  if (img) {
+    const applyTransform = () => {
+      const container = img.parentElement;
+      if (container) {
+        // Safe boundaries to prevent image from sliding completely off screen
+        const maxTranslateX = Math.max(0, (img.clientWidth * currentZoom - container.clientWidth) / 2) + (container.clientWidth * 0.15);
+        const maxTranslateY = Math.max(0, (img.clientHeight * currentZoom - container.clientHeight) / 2) + (container.clientHeight * 0.15);
+        translateX = Math.max(-maxTranslateX, Math.min(maxTranslateX, translateX));
+        translateY = Math.max(-maxTranslateY, Math.min(maxTranslateY, translateY));
+      }
+      img.style.transform = `scale(${currentZoom}) translate(${translateX}px, ${translateY}px)`;
+    };
+
+    img.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      const zoomSpeed = 0.15;
+      if (e.deltaY < 0) {
+        currentZoom = Math.min(3, currentZoom + zoomSpeed);
+      } else {
+        currentZoom = Math.max(0.5, currentZoom - zoomSpeed);
+      }
+      applyTransform();
+    });
+
+    img.addEventListener('mousedown', (e) => {
+      isPanning = true;
+      img.style.cursor = 'grabbing';
+      startX = e.clientX - translateX * currentZoom;
+      startY = e.clientY - translateY * currentZoom;
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!isPanning) return;
+      translateX = (e.clientX - startX) / currentZoom;
+      translateY = (e.clientY - startY) / currentZoom;
+      applyTransform();
+    });
+
+    window.addEventListener('mouseup', () => {
+      isPanning = false;
+      if (img) {
+        img.style.cursor = 'grab';
+      }
+    });
+  }
+});

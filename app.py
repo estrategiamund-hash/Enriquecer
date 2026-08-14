@@ -104,7 +104,7 @@ def db_get_record(record_id: str) -> Dict[str, Any] | None:
 def db_save_queue_item(item: Dict[str, Any]) -> None:
     item_db = {
         k: v for k, v in item.items()
-        if k in {"id", "record_id", "queue_number", "requester_name", "observacoes", "filename", "status", "total_rows", "processed_count", "success_count", "error_count", "request_time", "completed_at", "summary_name", "selected_fields", "detected_type", "logs", "mode"}
+        if k in {"id", "record_id", "queue_number", "requester_name", "observacoes", "filename", "status", "total_rows", "processed_count", "success_count", "error_count", "request_time", "completed_at", "summary_name", "selected_fields", "detected_type", "logs"}
     }
     res = make_supabase_request("queue", "POST", item_db)
     if res is None:
@@ -114,7 +114,7 @@ def db_save_queue_item(item: Dict[str, Any]) -> None:
 def db_update_queue_item(item_id: str, updates: Dict[str, Any]) -> None:
     updates_db = {
         k: v for k, v in updates.items()
-        if k in {"id", "record_id", "queue_number", "requester_name", "observacoes", "filename", "status", "total_rows", "processed_count", "success_count", "error_count", "request_time", "completed_at", "summary_name", "selected_fields", "detected_type", "logs", "mode"}
+        if k in {"id", "record_id", "queue_number", "requester_name", "observacoes", "filename", "status", "total_rows", "processed_count", "success_count", "error_count", "request_time", "completed_at", "summary_name", "selected_fields", "detected_type", "logs"}
     }
     res = make_supabase_request("queue", "PATCH", data=updates_db, query=f"?id=eq.{item_id}")
     if res is None:
@@ -508,6 +508,18 @@ def clean_dataframe(rows: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
                 if cleaned_row[p_key]:
                     cleaned_row[p_key] = re.sub(r"\D", "", str(cleaned_row[p_key]))
 
+        # Filter out rows where the telephone is empty or only consists of zeros ("0", "000000", etc.)
+        phone_keys = [k for k in cleaned_row.keys() if any(p in k for p in ["telefone", "celular", "fone", "cel"])]
+        if phone_keys:
+            has_valid_phone = False
+            for p_key in phone_keys:
+                val_digits = re.sub(r"\D", "", str(cleaned_row[p_key] or ""))
+                if val_digits and not re.match(r"^0+$", val_digits):
+                    has_valid_phone = True
+                    break
+            if not has_valid_phone:
+                continue
+
         cleaned_rows.append(cleaned_row)
     return cleaned_rows
 
@@ -721,7 +733,7 @@ def write_export_workbook(rows: List[Dict[str, Any]], selected_fields: List[str]
     sheet.title = "export"
     sheet.append(selected_fields)
     for row in rows:
-        sheet.append([row.get(field, "") for field in selected_fields])
+        sheet.append([row.get(normalize_text(field), row.get(field, "")) for field in selected_fields])
     workbook.save(filepath)
 
 
@@ -1284,6 +1296,9 @@ def process_enrichment_background_task(queue_item_id: str, raw_rows: List[Dict[s
                     email_ret = f"{clean_name_part[:12]}@{random.choice(['gmail.com', 'hotmail.com', 'outlook.com', 'yahoo.com.br'])}"
                 email_ret = normalize_email_value(email_ret)
 
+                if not phone_val or re.match(r"^0+$", phone_val):
+                    raise ValueError("Telefone vazio ou inválido após enriquecimento")
+
                 enriched = {
                     "nome": nome_ret,
                     "telefone": phone_val,
@@ -1321,9 +1336,17 @@ def process_enrichment_background_task(queue_item_id: str, raw_rows: List[Dict[s
                         item["logs"].append("... logs subsequentes ocultados para economizar memória ...")
 
             except Exception as exc:
+                phone_final = re.sub(r"\D", "", telefone_val)
+                if not phone_final or re.match(r"^0+$", phone_final):
+                    with lock:
+                        item["processed_count"] += 1
+                        if len(item["logs"]) < 300:
+                            item["logs"].append(f"[{item['processed_count']}/{total_rows}] Removido {nome_val}: Telefone vazio/zerado")
+                    return None
+
                 enriched = {
                     "nome": nome_val,
-                    "telefone": re.sub(r"\D", "", telefone_val),
+                    "telefone": phone_final,
                     "cpf": "",
                     "data_nascimento": "",
                     "idade": "",
@@ -1554,11 +1577,19 @@ def create_import_request():
     if not raw_rows:
         return jsonify({"error": "Erro ao recuperar dados para processamento (linhas vazias)."}), 400
 
+    requester_name = payload.get("requester_name", "").strip()
+    current_user_name = session.get("user_name", "Usuário")
+    
+    if requester_name:
+        final_requester_name = f"{current_user_name} ({requester_name})"
+    else:
+        final_requester_name = "Aguardando confirmação" if mode == "queue_only" else current_user_name
+
     queue_item = {
         "id": str(uuid.uuid4()),
         "record_id": record_id,
         "queue_number": "TEMP" if mode == "queue_only" else "",
-        "requester_name": "Aguardando confirmação" if mode == "queue_only" else "",
+        "requester_name": final_requester_name,
         "observacoes": "",
         "selected_fields": [],
         "query_fields": query_fields,
@@ -1574,6 +1605,22 @@ def create_import_request():
         "mode": mode,
     }
     db_save_queue_item(queue_item)
+
+    # Save the original raw rows to local CSV file immediately to prevent data loss
+    csv_path = EXPORT_DIR / f"raw_{queue_item['id']}.csv"
+    if raw_rows:
+        original_keys = list(dict.fromkeys(key for row in raw_rows for key in row.keys()))
+        all_keys = list(original_keys)
+        for field in ALL_ENRICH_FIELDS:
+            if field not in all_keys:
+                all_keys.append(field)
+        try:
+            with open(csv_path, "w", encoding="utf-8", newline="") as f:
+                writer = csv.DictWriter(f, fieldnames=all_keys, delimiter=";")
+                writer.writeheader()
+                writer.writerows([{k: r.get(k, "") for k in all_keys} for r in raw_rows])
+        except Exception as e:
+            log_api_debug(f"Erro ao salvar CSV inicial em request-import: {e}")
 
     if mode == "queue_only":
         return jsonify({
@@ -1600,39 +1647,48 @@ def create_import_request():
 def finalize_import_request(request_id: str):
     payload = request.get_json(silent=True) or {}
     queue_number = payload.get("queue_number")
-    requester_name = payload.get("requester_name")
+    requester_name_input = payload.get("requester_name", "").strip()
     observations = payload.get("observacoes", "")
     selected_fields = payload.get("selected_fields", [])
     mode = (payload.get("mode") or "enrich_and_queue").strip()
+    
+    current_user_name = session.get("user_name", "Usuário")
+    if requester_name_input:
+        requester_name = f"{current_user_name} ({requester_name_input})"
+    else:
+        requester_name = current_user_name
 
     item = db_get_queue_item(request_id)
     if item is None:
         return jsonify({"error": "Solicitação não encontrada."}), 404
 
-    if item.get("mode") == "enrich_only":
+    if mode == "enrich_only" or item.get("mode") == "enrich_only":
         if not selected_fields:
             return jsonify({"error": "É obrigatório selecionar ao menos uma coluna para exportação."}), 400
         item["selected_fields"] = [f for f in selected_fields if f]
         item["status"] = "completed"
         item["completed_at"] = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-        item["queue_number"] = item.get("queue_number") or "ENRICH"
-        item["requester_name"] = item.get("requester_name") or "Enriquecimento direto"
+        item["queue_number"] = "ENRICH"
+        
+        # Keep the requester_name provided in the modal
+        requester = item.get("requester_name", "").strip()
+        
         db_update_queue_item(request_id, {
             "selected_fields": item["selected_fields"],
             "status": item["status"],
             "completed_at": item["completed_at"],
-            "mode": item.get("mode"),
             "queue_number": item["queue_number"],
             "requester_name": item["requester_name"],
         })
 
-        notification = {
-            "id": str(uuid.uuid4()),
-            "title": f"Enriquecimento concluído {item['queue_number']}",
-            "message": f"Arquivo enriquecido concluído para {item['requester_name']} e pronto para download.",
-            "time": item["completed_at"],
-        }
-        db_save_notification(notification)
+        if requester:
+            notification = {
+                "id": str(uuid.uuid4()),
+                "title": f"Enriquecimento concluído",
+                "message": f"Arquivo enriquecido concluído para {requester} e pronto para download.",
+                "time": item["completed_at"],
+            }
+            db_save_notification(notification)
 
         return jsonify({
             "message": "Arquivo enriquecido finalizado e pronto para download.",
@@ -1656,6 +1712,8 @@ def finalize_import_request(request_id: str):
     item["status"] = "pending"
     item["completed_at"] = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
 
+
+
     db_update_queue_item(request_id, {
         "queue_number": item["queue_number"],
         "requester_name": item["requester_name"],
@@ -1663,7 +1721,6 @@ def finalize_import_request(request_id: str):
         "selected_fields": item["selected_fields"],
         "status": item["status"],
         "completed_at": item["completed_at"],
-        "mode": item["mode"],
     })
 
     notification = {
@@ -1693,6 +1750,28 @@ def cancel_import_request(request_id: str):
     item["logs"].append("Enriquecimento cancelado pelo usuário.")
     db_update_queue_item(request_id, {"status": "cancelled", "logs": item["logs"]})
     return jsonify({"message": "Enriquecimento cancelado com sucesso."})
+
+
+@app.post("/api/request/<request_id>/refuse")
+def refuse_import_request(request_id: str):
+    if session.get("role") != "admin":
+        return jsonify({"error": "Ação não permitida."}), 403
+
+    payload = request.get_json(silent=True) or {}
+    reason = payload.get("reason", "").strip()
+    if not reason:
+        return jsonify({"error": "Motivo da recusa é obrigatório."}), 400
+
+    item = db_get_queue_item(request_id)
+    if item is None:
+        return jsonify({"error": "Solicitação não encontrada."}), 404
+
+    item["status"] = "rejected"
+    item["reject_reason"] = reason
+    item["logs"].append(f"Solicitação recusada pela Estratégia. Motivo: {reason}")
+    db_update_queue_item(request_id, {"status": "rejected", "reject_reason": reason, "logs": item["logs"]})
+    
+    return jsonify({"message": "Solicitação recusada com sucesso."})
 
 
 @app.get("/api/me")
@@ -1729,9 +1808,6 @@ def download_export(request_id: str):
     if item is None:
         return jsonify({"error": "Solicitação não encontrada."}), 404
 
-    if item["status"] == "processing":
-        return jsonify({"error": "Enriquecimento ainda em andamento. Aguarde."}), 400
-
     original_columns = []
     record = db_get_record(item["record_id"])
     if record:
@@ -1742,7 +1818,8 @@ def download_export(request_id: str):
         if field not in export_columns:
             export_columns.append(field)
 
-    include_concatenated = not (item.get("mode") == "enrich_only")
+    is_enrich_only = (item.get("mode") == "enrich_only") or (item.get("queue_number") == "ENRICH")
+    include_concatenated = not is_enrich_only
     if include_concatenated:
         export_columns.append("Resultado Concatenado")
 
@@ -1849,6 +1926,20 @@ def complete_request(request_id: str):
         "message": "Solicitação concluída com sucesso.",
         "notification": notification,
     })
+
+
+@app.get("/api/summary/<request_id>")
+def get_summary_image(request_id: str):
+    item = db_get_queue_item(request_id)
+    if item is None or not item.get("summary_name"):
+        return jsonify({"error": "Resumo não encontrado."}), 404
+        
+    filename = f"summary_{request_id}_{item['summary_name']}"
+    filepath = EXPORT_DIR / filename
+    if not filepath.exists():
+        return jsonify({"error": "Arquivo não encontrado no servidor."}), 404
+        
+    return send_file(filepath)
 
 
 @app.get("/api/health")

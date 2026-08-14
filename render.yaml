@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: nova-vida-enriquecimento
+    env: python
+    region: ohio
+    plan: free
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn app:app --timeout 120 --workers 2 --threads 4"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
