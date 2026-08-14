@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - Enriquecimento</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+    <!-- Spline Web Component -->
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.72/build/spline-viewer.js"></script>
+  </head>
+  <body class="login-fullscreen-bg">
+    <!-- Background 3D Spline Scene (Robot covers full background) -->
+    <div class="spline-fullscreen-container">
+      <spline-viewer id="splineRobot" url="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"></spline-viewer>
+    </div>
+
+    <!-- Floating Login Card Container (Floating on Left) -->
+    <div class="login-floating-card">
+      <div class="login-spotlight"></div>
+      <div class="login-wrap">
+        <div class="login-logo-container">
+          <img src="{{ url_for('static', filename='Bookplay.png.webp') }}" alt="Bookplay Logo" class="login-logo-img" />
+        </div>
+        <h2>Login do Sistema</h2>
+
+        <div class="demo-credentials">
+          <strong>Usuários de Teste</strong>
+          <div>Admin Estratégia: <code>admin</code> / <code>admin123</code></div>
+          <div>Usuário SAF: <code>saf</code> / <code>saf123</code></div>
+        </div>
+
+        {% if error %}
+        <div class="login-error">{{ error }}</div>
+        {% endif %}
+
+        <form method="post" action="{{ url_for('login') }}" class="login-form">
+          <label>
+            Usuário
+            <input type="text" name="username" placeholder="admin ou saf" required autocomplete="username" />
+          </label>
+
+          <label>
+            Senha
+            <input type="password" name="password" placeholder="Sua senha" required autocomplete="current-password" />
+          </label>
+
+          <button type="submit" class="login-button">Entrar no Sistema</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Script to safely inject CSS into shadowRoot to hide logo without breaking Spline internal onLoaded handlers -->
+    <script>
+      window.addEventListener('DOMContentLoaded', () => {
+        const splineViewer = document.getElementById('splineRobot');
+        if (splineViewer) {
+          const injectCss = () => {
+            if (splineViewer.shadowRoot) {
+              if (!splineViewer.shadowRoot.querySelector('#hide-spline-logo-style')) {
+                const style = document.createElement('style');
+                style.id = 'hide-spline-logo-style';
+                style.textContent = '#logo, a[href*="spline.design"] { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }';
+                splineViewer.shadowRoot.appendChild(style);
+              }
+            }
+          };
+          injectCss();
+          const interval = setInterval(injectCss, 100);
+          setTimeout(() => clearInterval(interval), 10000);
+        }
+      });
+    </script>
+  </body>
+</html>
+

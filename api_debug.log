@@ -1,0 +1,1048 @@
+[2026-08-11 10:55:33] call_nova_vida_api chamado
+[2026-08-11 10:55:33] NOVA_VIDA_API_URL não está configurada
+[2026-08-11 13:49:49] call_nova_vida_api chamado
+[2026-08-11 13:49:49] get_nova_vida_token chamado
+[2026-08-11 13:49:49] Efetuando chamada SOAP POST de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-11 13:49:49] Falha na geração do token: HTTP Error 500: Internal Server Error
+[2026-08-11 13:49:49] Autenticação falhou: sem token de acesso
+[2026-08-11 14:03:33] call_nova_vida_api chamado
+[2026-08-11 14:03:33] get_nova_vida_token chamado
+[2026-08-11 14:03:33] Efetuando chamada SOAP POST de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-11 14:03:33] Falha na geração do token: HTTP Error 500: Internal Server Error
+[2026-08-11 14:03:33] Autenticação falhou: sem token de acesso
+[2026-08-11 14:09:36] call_nova_vida_api chamado
+[2026-08-11 14:09:36] get_nova_vida_token chamado
+[2026-08-11 14:09:36] Efetuando chamada SOAP POST de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-11 14:09:36] Falha na geração do token: HTTP Error 500: Internal Server Error
+[2026-08-11 14:09:36] Autenticação falhou: sem token de acesso
+[2026-08-11 14:09:36] call_nova_vida_api chamado
+[2026-08-11 14:09:36] get_nova_vida_token chamado
+[2026-08-11 14:09:36] Efetuando chamada SOAP POST de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-11 14:09:37] Falha na geração do token: HTTP Error 500: Internal Server Error
+[2026-08-11 14:09:37] Autenticação falhou: sem token de acesso
+[2026-08-11 14:19:07] call_nova_vida_api chamado
+[2026-08-11 14:19:07] get_nova_vida_token chamado
+[2026-08-11 14:19:07] Efetuando chamada SOAP POST de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-11 14:19:07] Falha na geração do token: HTTP Error 500: Internal Server Error
+[2026-08-11 14:19:07] Autenticação falhou: sem token de acesso
+[2026-08-11 14:46:28] call_nova_vida_api chamado
+[2026-08-11 14:46:28] get_nova_vida_token chamado
+[2026-08-11 14:46:28] Efetuando HTTP POST Form de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-11 14:46:28] Retorno do Token XML (parcial): <?xml version="1.0" encoding="utf-8"?>
+<string xmlns="http://tempuri.org/">bXVuZGlhbGVkaXRvcmF8U1RSQG5ld3xNVU5ESUFMRURJVE9SQXwxMDU3N3wxX1RydWU7Ml9UcnVlOzNfVHJ1ZTs0X1RydWU7Nl9UcnVlOzdfVHJ1ZTs5X1RydWU7MTBfVHJ1ZTsxMV9UcnVlOzEyX1RydWU7MTNfVHJ1ZTsxNF9UcnVlOzE2X1RydWU7MjBfVHJ1ZTs1MF9UcnVlOzUxX1RydWU7NTJfVHJ1ZTs1M19UcnVlOzU1X1RydWU7NTZfVHJ1ZTs1OF9UcnVlOzU5X1RydWU7NjBfVHJ1ZTs2MV9UcnVlOzYyX1RydWU7NjNfVHJ1ZTs2NV9UcnVlOzY3X1RydWU7NjhfVHJ1ZTs3Nl9UcnVlOzc5X1RydWU7ODBfVHJ1ZTs5NV9UcnVlOzk3X1RydWU7OThfVHJ1ZTsxMDVfVHJ1ZTsxMDZfVHJ1ZTsyMTVfVHJ1ZTs3MjFfVHJ1ZTs4OTFfVHJ1ZTs4OTJfVHJ1ZTs5MDZfVHJ1ZTs5MjhfVHJ1ZTs5MjlfVHJ1ZTs5MzBfVHJ1ZTs5MzFfVHJ1ZTs5MzJfVHJ1ZTs5NDRfVHJ1ZTs5NDVfVHJ1ZTsxMTI3X1RydWU7MTEyOF9UcnVlOzExMzJfVHJ1ZTsxMTk3X1RydWU7MTE5OF9UcnVlOzExOTlfVHJ1ZTsxMjk0X1RydWU7MTMzMV9UcnVlOzEzMzJfVHJ1ZTsxMzMzX1RydWU7MTM0MF9UcnVlOzEzNDdfVHJ1ZTsxMzQ5X1RydWU7MTM2M19UcnVlOzE0MTRfVHJ1ZTsxNDIxX1RydWU7MTc5Nl9UcnVlOzE3OTdfVHJ1ZTsxODAzX1RydWU7MTgxOV9UcnVlOzE4MjVfVHJ1ZTsxODc2X1RydWU7MTg4N19UcnVlOzE5MzRfVHJ1ZTsxOTkxX1RydWU7
+[2026-08-11 14:46:28] Token extraído com sucesso
+[2026-08-11 14:46:28] Efetuando chamadas de enriquecimento para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/PesquisaAtributosUnico
+[2026-08-11 14:46:29] Resultado vazio ou Nada Consta para ALEXI PEREZ MARTINEZ com UF=BA. Tentando busca nacional...
+[2026-08-11 14:46:30] Sucesso ao enriquecer ALEXI PEREZ MARTINEZ: CPF=06610255199, Cidade=CORONEL FABRICIANO
+[2026-08-11 14:46:31] Sucesso ao enriquecer ALINE FERNANDES CAMPOS: CPF=05792296537, Cidade=SANTA CRUZ CABRALIA
+[2026-08-11 14:46:32] Sucesso ao enriquecer ALOIS HUMBERTO ROESSLER: CPF=36402036749, Cidade=TEIXEIRA DE FREITAS
+[2026-08-11 14:46:33] Sucesso ao enriquecer ANA PAULA COELHO JACOMINI FREITAS: CPF=83458255672, Cidade=MUCURI
+[2026-08-11 14:46:34] Resultado vazio ou Nada Consta para ANA VITORIA FARIAS MARTINS com UF=BA. Tentando busca nacional...
+[2026-08-11 14:46:35] Sucesso ao enriquecer ANA VITORIA FARIAS MARTINS: CPF=06508647512, Cidade=CURITIBA
+[2026-08-11 14:46:36] Sucesso ao enriquecer ANDREA SILVA KOEPPE: CPF=02414125799, Cidade=MUCURI
+[2026-08-11 14:46:37] Sucesso ao enriquecer ANDREA SILVA KOEPPE: CPF=02414125799, Cidade=MUCURI
+[2026-08-11 14:46:38] Sucesso ao enriquecer ANDREA SILVA KOEPPE: CPF=02414125799, Cidade=MUCURI
+[2026-08-11 14:46:39] Sucesso ao enriquecer ARACELE SANTOS DA SILVA: CPF=03930359561, Cidade=PORTO SEGURO
+[2026-08-11 14:46:40] Sucesso ao enriquecer CESAR PASSAMANI: CPF=79027024553, Cidade=TEIXEIRA DE FREITAS
+[2026-08-11 14:46:40] Resultado vazio ou Nada Consta para CLAYTON MOREIRA CALDAS com UF=BA. Tentando busca nacional...
+[2026-08-11 14:46:41] Sucesso ao enriquecer CLAYTON MOREIRA CALDAS: CPF=18650179819, Cidade=CATANDUVA
+[2026-08-11 14:46:42] Resultado vazio ou Nada Consta para DANIELA SANTOS DE SOUZA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:46:43] Não foi possível enriquecer DANIELA SANTOS DE SOUZA: Registro múltiplo
+[2026-08-11 14:46:44] Sucesso ao enriquecer DIANA MARQUES MOREIRA: CPF=02720750514, Cidade=TEIXEIRA DE FREITAS
+[2026-08-11 14:46:45] Resultado vazio ou Nada Consta para EDSON GERALDINO MOREIRA JUNIOR com UF=BA. Tentando busca nacional...
+[2026-08-11 14:46:46] Sucesso ao enriquecer EDSON GERALDINO MOREIRA JUNIOR: CPF=94488967604, Cidade=BELO HORIZONTE
+[2026-08-11 14:46:46] Sucesso ao enriquecer ELENICE TEIXEIRA COSTA DE OLIVEIRA SUCUPIRA: CPF=01240017502, Cidade=ITABATA
+[2026-08-11 14:46:47] Sucesso ao enriquecer ELENY SILVA DIAS: CPF=07973981713, Cidade=ITABATA
+[2026-08-11 14:46:48] Sucesso ao enriquecer FABIO CARDOSO DA SILVA NETO: CPF=13151487572, Cidade=MUCURI
+[2026-08-11 14:46:49] Sucesso ao enriquecer FABIO CARDOSO DA SILVA NETO: CPF=13151487572, Cidade=MUCURI
+[2026-08-11 14:46:50] Resultado vazio ou Nada Consta para FELICIANO GIL QUARESMA NOVAES com UF=BA. Tentando busca nacional...
+[2026-08-11 14:46:51] Sucesso ao enriquecer FELICIANO GIL QUARESMA NOVAES: CPF=00461706695, Cidade=GUARAPARI
+[2026-08-11 14:46:52] Resultado vazio ou Nada Consta para FELICIANO GIL QUARESMA NOVAES com UF=BA. Tentando busca nacional...
+[2026-08-11 14:46:52] Sucesso ao enriquecer FELICIANO GIL QUARESMA NOVAES: CPF=00461706695, Cidade=GUARAPARI
+[2026-08-11 14:46:53] Resultado vazio ou Nada Consta para FELIPE FERREIRA DA MOTA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:46:54] Não foi possível enriquecer FELIPE FERREIRA DA MOTA: Registro múltiplo
+[2026-08-11 14:46:55] Resultado vazio ou Nada Consta para FERNANDA LEMGRUBER DA SILVA TAVARES com UF=BA. Tentando busca nacional...
+[2026-08-11 14:46:56] Sucesso ao enriquecer FERNANDA LEMGRUBER DA SILVA TAVARES: CPF=01623717566, Cidade=CAMPOS DOS GOYTACAZES
+[2026-08-11 14:46:57] Resultado vazio ou Nada Consta para FERNANDA PONTES GONCALVES com UF=BA. Tentando busca nacional...
+[2026-08-11 14:46:57] Não foi possível enriquecer FERNANDA PONTES GONCALVES: Registro múltiplo
+[2026-08-11 14:46:58] Resultado vazio ou Nada Consta para FERNANDO ANTONIO TEIXEIRA SILVA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:46:59] Não foi possível enriquecer FERNANDO ANTONIO TEIXEIRA SILVA: Registro múltiplo
+[2026-08-11 14:47:00] Resultado vazio ou Nada Consta para FLAVIA KRETLI VIEIRA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:47:01] Sucesso ao enriquecer FLAVIA KRETLI VIEIRA: CPF=04072198544, Cidade=RIO DE JANEIRO
+[2026-08-11 14:47:02] Sucesso ao enriquecer FRANCIELLY PRATES ALVES: CPF=04066407501, Cidade=MUCURI
+[2026-08-11 14:47:02] Resultado vazio ou Nada Consta para FRANCISCO DA SILVA TAVARES com UF=BA. Tentando busca nacional...
+[2026-08-11 14:47:03] Não foi possível enriquecer FRANCISCO DA SILVA TAVARES: Registro múltiplo
+[2026-08-11 14:47:04] Resultado vazio ou Nada Consta para FREDERICO AUGUSTO ABDO SUZUKI com UF=BA. Tentando busca nacional...
+[2026-08-11 14:47:05] Sucesso ao enriquecer FREDERICO AUGUSTO ABDO SUZUKI: CPF=86265610678, Cidade=BELO HORIZONTE
+[2026-08-11 14:47:06] call_nova_vida_api chamado
+[2026-08-11 14:47:06] get_nova_vida_token chamado
+[2026-08-11 14:47:06] Efetuando HTTP POST Form de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-11 14:47:06] Resultado vazio ou Nada Consta para GABRIELA PEREIRA DOS SANTOS com UF=BA. Tentando busca nacional...
+[2026-08-11 14:47:06] Retorno do Token XML (parcial): <?xml version="1.0" encoding="utf-8"?>
+<string xmlns="http://tempuri.org/">bXVuZGlhbGVkaXRvcmF8U1RSQG5ld3xNVU5ESUFMRURJVE9SQXwxMDU3N3wxX1RydWU7Ml9UcnVlOzNfVHJ1ZTs0X1RydWU7Nl9UcnVlOzdfVHJ1ZTs5X1RydWU7MTBfVHJ1ZTsxMV9UcnVlOzEyX1RydWU7MTNfVHJ1ZTsxNF9UcnVlOzE2X1RydWU7MjBfVHJ1ZTs1MF9UcnVlOzUxX1RydWU7NTJfVHJ1ZTs1M19UcnVlOzU1X1RydWU7NTZfVHJ1ZTs1OF9UcnVlOzU5X1RydWU7NjBfVHJ1ZTs2MV9UcnVlOzYyX1RydWU7NjNfVHJ1ZTs2NV9UcnVlOzY3X1RydWU7NjhfVHJ1ZTs3Nl9UcnVlOzc5X1RydWU7ODBfVHJ1ZTs5NV9UcnVlOzk3X1RydWU7OThfVHJ1ZTsxMDVfVHJ1ZTsxMDZfVHJ1ZTsyMTVfVHJ1ZTs3MjFfVHJ1ZTs4OTFfVHJ1ZTs4OTJfVHJ1ZTs5MDZfVHJ1ZTs5MjhfVHJ1ZTs5MjlfVHJ1ZTs5MzBfVHJ1ZTs5MzFfVHJ1ZTs5MzJfVHJ1ZTs5NDRfVHJ1ZTs5NDVfVHJ1ZTsxMTI3X1RydWU7MTEyOF9UcnVlOzExMzJfVHJ1ZTsxMTk3X1RydWU7MTE5OF9UcnVlOzExOTlfVHJ1ZTsxMjk0X1RydWU7MTMzMV9UcnVlOzEzMzJfVHJ1ZTsxMzMzX1RydWU7MTM0MF9UcnVlOzEzNDdfVHJ1ZTsxMzQ5X1RydWU7MTM2M19UcnVlOzE0MTRfVHJ1ZTsxNDIxX1RydWU7MTc5Nl9UcnVlOzE3OTdfVHJ1ZTsxODAzX1RydWU7MTgxOV9UcnVlOzE4MjVfVHJ1ZTsxODc2X1RydWU7MTg4N19UcnVlOzE5MzRfVHJ1ZTsxOTkxX1RydWU7
+[2026-08-11 14:47:06] Token extraído com sucesso
+[2026-08-11 14:47:06] Efetuando chamadas de enriquecimento para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/PesquisaAtributosUnico
+[2026-08-11 14:47:07] Não foi possível enriquecer GABRIELA PEREIRA DOS SANTOS: Registro múltiplo
+[2026-08-11 14:47:07] Resultado vazio ou Nada Consta para ALEXI PEREZ MARTINEZ com UF=BA. Tentando busca nacional...
+[2026-08-11 14:47:08] Sucesso ao enriquecer GEILTON DA SILVA GALVAO JUNIOR: CPF=71884432549, Cidade=TEIXEIRA DE FREITAS
+[2026-08-11 14:47:08] Sucesso ao enriquecer ALEXI PEREZ MARTINEZ: CPF=06610255199, Cidade=CORONEL FABRICIANO
+[2026-08-11 14:47:09] Sucesso ao enriquecer GILSON DOS SANTOS COUTO: CPF=09319960747, Cidade=MUCURI
+[2026-08-11 14:47:09] Sucesso ao enriquecer ALINE FERNANDES CAMPOS: CPF=05792296537, Cidade=SANTA CRUZ CABRALIA
+[2026-08-11 14:47:10] Resultado vazio ou Nada Consta para GRACIANNE SOUZA DE MIRANDA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:47:10] Sucesso ao enriquecer ALOIS HUMBERTO ROESSLER: CPF=36402036749, Cidade=TEIXEIRA DE FREITAS
+[2026-08-11 14:47:10] Sucesso ao enriquecer GRACIANNE SOUZA DE MIRANDA: CPF=11520758707, Cidade=MONTANHA
+[2026-08-11 14:47:10] Sucesso ao enriquecer ANA PAULA COELHO JACOMINI FREITAS: CPF=83458255672, Cidade=MUCURI
+[2026-08-11 14:47:11] Resultado vazio ou Nada Consta para ANA VITORIA FARIAS MARTINS com UF=BA. Tentando busca nacional...
+[2026-08-11 14:47:11] Resultado vazio ou Nada Consta para HENRIQUE DANTAS SILVA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:47:12] Sucesso ao enriquecer ANA VITORIA FARIAS MARTINS: CPF=06508647512, Cidade=CURITIBA
+[2026-08-11 14:47:12] Não foi possível enriquecer HENRIQUE DANTAS SILVA: Registro múltiplo
+[2026-08-11 14:47:13] Sucesso ao enriquecer ANDREA SILVA KOEPPE: CPF=02414125799, Cidade=MUCURI
+[2026-08-11 14:47:13] Sucesso ao enriquecer IGOR DE CASTRO MALACARNE: CPF=05517213758, Cidade=SALVADOR
+[2026-08-11 14:47:14] Sucesso ao enriquecer ANDREA SILVA KOEPPE: CPF=02414125799, Cidade=MUCURI
+[2026-08-11 14:47:14] Resultado vazio ou Nada Consta para JEAN CARLOS CARDOSO DA CRUZ com UF=BA. Tentando busca nacional...
+[2026-08-11 14:47:15] Sucesso ao enriquecer ANDREA SILVA KOEPPE: CPF=02414125799, Cidade=MUCURI
+[2026-08-11 14:47:15] Não foi possível enriquecer JEAN CARLOS CARDOSO DA CRUZ: Registro múltiplo
+[2026-08-11 14:47:16] Sucesso ao enriquecer JEILDE PEREIRA MARTINS DA ROCHA: CPF=98837346549, Cidade=MUCURI
+[2026-08-11 14:47:16] Sucesso ao enriquecer ARACELE SANTOS DA SILVA: CPF=03930359561, Cidade=PORTO SEGURO
+[2026-08-11 14:47:16] Resultado vazio ou Nada Consta para JESUINA DARK GOMES ROCHA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:47:17] Sucesso ao enriquecer CESAR PASSAMANI: CPF=79027024553, Cidade=TEIXEIRA DE FREITAS
+[2026-08-11 14:47:17] Sucesso ao enriquecer JESUINA DARK GOMES ROCHA: CPF=55815740659, Cidade=NANUQUE
+[2026-08-11 14:47:17] Resultado vazio ou Nada Consta para CLAYTON MOREIRA CALDAS com UF=BA. Tentando busca nacional...
+[2026-08-11 14:47:18] Resultado vazio ou Nada Consta para JESUINA DARK GOMES ROCHA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:47:18] Sucesso ao enriquecer CLAYTON MOREIRA CALDAS: CPF=18650179819, Cidade=CATANDUVA
+[2026-08-11 14:47:19] Sucesso ao enriquecer JESUINA DARK GOMES ROCHA: CPF=55815740659, Cidade=NANUQUE
+[2026-08-11 14:47:19] Resultado vazio ou Nada Consta para DANIELA SANTOS DE SOUZA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:47:20] Resultado vazio ou Nada Consta para JOABE DE JESUS RODRIGUES com UF=BA. Tentando busca nacional...
+[2026-08-11 14:47:20] Não foi possível enriquecer DANIELA SANTOS DE SOUZA: Registro múltiplo
+[2026-08-11 14:47:21] Sucesso ao enriquecer DIANA MARQUES MOREIRA: CPF=02720750514, Cidade=TEIXEIRA DE FREITAS
+[2026-08-11 14:47:21] Sucesso ao enriquecer JOABE DE JESUS RODRIGUES: CPF=09718906509, Cidade=
+[2026-08-11 14:47:21] Resultado vazio ou Nada Consta para EDSON GERALDINO MOREIRA JUNIOR com UF=BA. Tentando busca nacional...
+[2026-08-11 14:47:22] Sucesso ao enriquecer JOSE FREDERICO BAYLAO NETO: CPF=80392504715, Cidade=TEIXEIRA DE FREITAS
+[2026-08-11 14:47:22] Sucesso ao enriquecer EDSON GERALDINO MOREIRA JUNIOR: CPF=94488967604, Cidade=BELO HORIZONTE
+[2026-08-11 14:47:23] Sucesso ao enriquecer ELENICE TEIXEIRA COSTA DE OLIVEIRA SUCUPIRA: CPF=01240017502, Cidade=ITABATA
+[2026-08-11 14:47:24] Sucesso ao enriquecer ELENY SILVA DIAS: CPF=07973981713, Cidade=ITABATA
+[2026-08-11 14:47:24] Resultado vazio ou Nada Consta para JOSE RONALDO DA SILVA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:47:25] Não foi possível enriquecer JOSE RONALDO DA SILVA: Registro múltiplo
+[2026-08-11 14:47:25] Sucesso ao enriquecer FABIO CARDOSO DA SILVA NETO: CPF=13151487572, Cidade=MUCURI
+[2026-08-11 14:47:25] Resultado vazio ou Nada Consta para JOSE RONALDO DA SILVA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:47:26] Sucesso ao enriquecer FABIO CARDOSO DA SILVA NETO: CPF=13151487572, Cidade=MUCURI
+[2026-08-11 14:47:26] Não foi possível enriquecer JOSE RONALDO DA SILVA: Registro múltiplo
+[2026-08-11 14:47:26] Resultado vazio ou Nada Consta para FELICIANO GIL QUARESMA NOVAES com UF=BA. Tentando busca nacional...
+[2026-08-11 14:47:27] Sucesso ao enriquecer LAURO OSCAR DE LIMA JUNIOR: CPF=90662873653, Cidade=TEIXEIRA DE FREITAS
+[2026-08-11 14:47:27] Sucesso ao enriquecer FELICIANO GIL QUARESMA NOVAES: CPF=00461706695, Cidade=GUARAPARI
+[2026-08-11 14:47:28] Resultado vazio ou Nada Consta para LAZARO MARQUES AZEVEDO com UF=BA. Tentando busca nacional...
+[2026-08-11 14:47:28] Resultado vazio ou Nada Consta para FELICIANO GIL QUARESMA NOVAES com UF=BA. Tentando busca nacional...
+[2026-08-11 14:47:29] Sucesso ao enriquecer LAZARO MARQUES AZEVEDO: CPF=12329471726, Cidade=CRISTAL DO NORTE
+[2026-08-11 14:47:29] Sucesso ao enriquecer FELICIANO GIL QUARESMA NOVAES: CPF=00461706695, Cidade=GUARAPARI
+[2026-08-11 14:47:29] Resultado vazio ou Nada Consta para LEANDRO CHICON MUNIZ com UF=BA. Tentando busca nacional...
+[2026-08-11 14:47:29] Resultado vazio ou Nada Consta para FELIPE FERREIRA DA MOTA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:47:30] Não foi possível enriquecer FELIPE FERREIRA DA MOTA: Registro múltiplo
+[2026-08-11 14:47:30] Sucesso ao enriquecer LEANDRO CHICON MUNIZ: CPF=00822777533, Cidade=BELO HORIZONTE
+[2026-08-11 14:47:31] Resultado vazio ou Nada Consta para FERNANDA LEMGRUBER DA SILVA TAVARES com UF=BA. Tentando busca nacional...
+[2026-08-11 14:47:31] Resultado vazio ou Nada Consta para LEANDRO CHICON MUNIZ com UF=BA. Tentando busca nacional...
+[2026-08-11 14:47:32] Sucesso ao enriquecer FERNANDA LEMGRUBER DA SILVA TAVARES: CPF=01623717566, Cidade=CAMPOS DOS GOYTACAZES
+[2026-08-11 14:47:32] Sucesso ao enriquecer LEANDRO CHICON MUNIZ: CPF=00822777533, Cidade=BELO HORIZONTE
+[2026-08-11 14:47:33] Resultado vazio ou Nada Consta para FERNANDA PONTES GONCALVES com UF=BA. Tentando busca nacional...
+[2026-08-11 14:47:33] Resultado vazio ou Nada Consta para LETICIA DE JESUS ANDRADE com UF=BA. Tentando busca nacional...
+[2026-08-11 14:47:33] Não foi possível enriquecer FERNANDA PONTES GONCALVES: Registro múltiplo
+[2026-08-11 14:47:34] Não foi possível enriquecer LETICIA DE JESUS ANDRADE: Registro múltiplo
+[2026-08-11 14:47:34] Resultado vazio ou Nada Consta para FERNANDO ANTONIO TEIXEIRA SILVA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:47:34] Sucesso ao enriquecer LUCIANA ABREU RAMOS: CPF=14288267773, Cidade=POSTO DA MATA
+[2026-08-11 14:47:35] Não foi possível enriquecer FERNANDO ANTONIO TEIXEIRA SILVA: Registro múltiplo
+[2026-08-11 14:47:35] Sucesso ao enriquecer MAGNA DOS ANJOS SOARES: CPF=04695184567, Cidade=MUCURI
+[2026-08-11 14:47:36] Resultado vazio ou Nada Consta para FLAVIA KRETLI VIEIRA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:47:36] Resultado vazio ou Nada Consta para MANOEL PEDRO RODRIGUES SOARES JUNIOR com UF=BA. Tentando busca nacional...
+[2026-08-11 14:47:37] Sucesso ao enriquecer FLAVIA KRETLI VIEIRA: CPF=04072198544, Cidade=RIO DE JANEIRO
+[2026-08-11 14:47:37] Sucesso ao enriquecer MANOEL PEDRO RODRIGUES SOARES JUNIOR: CPF=00825428564, Cidade=BARBACENA
+[2026-08-11 14:47:37] Sucesso ao enriquecer FRANCIELLY PRATES ALVES: CPF=04066407501, Cidade=MUCURI
+[2026-08-11 14:47:38] Sucesso ao enriquecer MARIA DE LOURDES SOUZA SANTOS DA SILVA: CPF=02205177540, Cidade=ITABATAN
+[2026-08-11 14:47:38] Resultado vazio ou Nada Consta para FRANCISCO DA SILVA TAVARES com UF=BA. Tentando busca nacional...
+[2026-08-11 14:47:39] Não foi possível enriquecer FRANCISCO DA SILVA TAVARES: Registro múltiplo
+[2026-08-11 14:47:39] Sucesso ao enriquecer MARINALVA SOUZA FRANCO: CPF=91454433515, Cidade=NOVA VICOSA
+[2026-08-11 14:47:40] Resultado vazio ou Nada Consta para FREDERICO AUGUSTO ABDO SUZUKI com UF=BA. Tentando busca nacional...
+[2026-08-11 14:47:40] Sucesso ao enriquecer MERIDIANE ALMEIDA DE SOUZA: CPF=03333835592, Cidade=MUCURI
+[2026-08-11 14:47:41] Sucesso ao enriquecer FREDERICO AUGUSTO ABDO SUZUKI: CPF=86265610678, Cidade=BELO HORIZONTE
+[2026-08-11 14:47:41] Resultado vazio ou Nada Consta para NELMA DE SOUZA MACHADO DE MIRANDA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:47:41] Resultado vazio ou Nada Consta para GABRIELA PEREIRA DOS SANTOS com UF=BA. Tentando busca nacional...
+[2026-08-11 14:47:42] Sucesso ao enriquecer NELMA DE SOUZA MACHADO DE MIRANDA: CPF=02464194581, Cidade=RIO BRANCO
+[2026-08-11 14:47:42] Não foi possível enriquecer GABRIELA PEREIRA DOS SANTOS: Registro múltiplo
+[2026-08-11 14:47:42] Resultado vazio ou Nada Consta para PAULO HENRIQUE DE SOUSA RESENDE com UF=BA. Tentando busca nacional...
+[2026-08-11 14:47:43] Sucesso ao enriquecer GEILTON DA SILVA GALVAO JUNIOR: CPF=71884432549, Cidade=TEIXEIRA DE FREITAS
+[2026-08-11 14:47:43] Não foi possível enriquecer PAULO HENRIQUE DE SOUSA RESENDE: Registro múltiplo
+[2026-08-11 14:47:44] Sucesso ao enriquecer GILSON DOS SANTOS COUTO: CPF=09319960747, Cidade=MUCURI
+[2026-08-11 14:47:45] Resultado vazio ou Nada Consta para GRACIANNE SOUZA DE MIRANDA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:47:46] Sucesso ao enriquecer GRACIANNE SOUZA DE MIRANDA: CPF=11520758707, Cidade=MONTANHA
+[2026-08-11 14:47:46] Resultado vazio ou Nada Consta para PEDRO FIGUEIREDO NETO com UF=BA. Tentando busca nacional...
+[2026-08-11 14:47:46] Resultado vazio ou Nada Consta para HENRIQUE DANTAS SILVA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:47:47] Não foi possível enriquecer PEDRO FIGUEIREDO NETO: Registro múltiplo
+[2026-08-11 14:47:47] Não foi possível enriquecer HENRIQUE DANTAS SILVA: Registro múltiplo
+[2026-08-11 14:47:48] Resultado vazio ou Nada Consta para RAFAEL SANTOS SOUZA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:47:48] Sucesso ao enriquecer IGOR DE CASTRO MALACARNE: CPF=05517213758, Cidade=SALVADOR
+[2026-08-11 14:47:48] Não foi possível enriquecer RAFAEL SANTOS SOUZA: Registro múltiplo
+[2026-08-11 14:47:49] Resultado vazio ou Nada Consta para JEAN CARLOS CARDOSO DA CRUZ com UF=BA. Tentando busca nacional...
+[2026-08-11 14:47:49] Sucesso ao enriquecer RENATA DOS SANTOS DALLY: CPF=04351873507, Cidade=NOVA VICOSA
+[2026-08-11 14:47:49] Não foi possível enriquecer JEAN CARLOS CARDOSO DA CRUZ: Registro múltiplo
+[2026-08-11 14:47:50] Resultado vazio ou Nada Consta para RHAYANI FRANZOTTI SOUZA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:47:50] Sucesso ao enriquecer JEILDE PEREIRA MARTINS DA ROCHA: CPF=98837346549, Cidade=MUCURI
+[2026-08-11 14:47:51] Sucesso ao enriquecer RHAYANI FRANZOTTI SOUZA: CPF=03341790500, Cidade=SAO MATEUS
+[2026-08-11 14:47:51] Resultado vazio ou Nada Consta para JESUINA DARK GOMES ROCHA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:47:52] Sucesso ao enriquecer JESUINA DARK GOMES ROCHA: CPF=55815740659, Cidade=NANUQUE
+[2026-08-11 14:47:52] Sucesso ao enriquecer RICARDO KOPRUSZYNSKI JUNIOR: CPF=74462911920, Cidade=TEIXEIRA DE FREITAS
+[2026-08-11 14:47:53] Resultado vazio ou Nada Consta para JESUINA DARK GOMES ROCHA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:47:53] Sucesso ao enriquecer RICARDO KOPRUSZYNSKI JUNIOR: CPF=74462911920, Cidade=TEIXEIRA DE FREITAS
+[2026-08-11 14:47:53] Sucesso ao enriquecer JESUINA DARK GOMES ROCHA: CPF=55815740659, Cidade=NANUQUE
+[2026-08-11 14:47:54] Sucesso ao enriquecer RICARDO KOPRUSZYNSKI JUNIOR: CPF=74462911920, Cidade=TEIXEIRA DE FREITAS
+[2026-08-11 14:47:54] Resultado vazio ou Nada Consta para JOABE DE JESUS RODRIGUES com UF=BA. Tentando busca nacional...
+[2026-08-11 14:47:54] Sucesso ao enriquecer ROBERTO WAGNER MIRANDA: CPF=47113634753, Cidade=MUCURI
+[2026-08-11 14:47:55] Sucesso ao enriquecer JOABE DE JESUS RODRIGUES: CPF=09718906509, Cidade=
+[2026-08-11 14:47:55] Resultado vazio ou Nada Consta para SERGIO CARVALHO DE PAULA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:47:56] Sucesso ao enriquecer JOSE FREDERICO BAYLAO NETO: CPF=80392504715, Cidade=TEIXEIRA DE FREITAS
+[2026-08-11 14:47:56] Não foi possível enriquecer SERGIO CARVALHO DE PAULA: Registro múltiplo
+[2026-08-11 14:47:57] Resultado vazio ou Nada Consta para JOSE RONALDO DA SILVA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:47:57] Sucesso ao enriquecer SIMONE DA SILVA LACERDA: CPF=03314107536, Cidade=TAQUARINHA
+[2026-08-11 14:47:57] Não foi possível enriquecer JOSE RONALDO DA SILVA: Registro múltiplo
+[2026-08-11 14:47:58] Resultado vazio ou Nada Consta para STEFANE DOS SANTOS ALMEIDA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:47:58] Resultado vazio ou Nada Consta para JOSE RONALDO DA SILVA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:47:59] Não foi possível enriquecer STEFANE DOS SANTOS ALMEIDA: Registro múltiplo
+[2026-08-11 14:47:59] Não foi possível enriquecer JOSE RONALDO DA SILVA: Registro múltiplo
+[2026-08-11 14:47:59] Sucesso ao enriquecer LAURO OSCAR DE LIMA JUNIOR: CPF=90662873653, Cidade=TEIXEIRA DE FREITAS
+[2026-08-11 14:48:00] Sucesso ao enriquecer TAIGUARA PACHECO MELO: CPF=05777153569, Cidade=TEIXEIRA DE FREITAS
+[2026-08-11 14:48:00] Resultado vazio ou Nada Consta para LAZARO MARQUES AZEVEDO com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:01] Sucesso ao enriquecer TARCISIO SANDES RONACHER: CPF=01616261579, Cidade=TEIXEIRA DE FREITAS
+[2026-08-11 14:48:01] Sucesso ao enriquecer LAZARO MARQUES AZEVEDO: CPF=12329471726, Cidade=CRISTAL DO NORTE
+[2026-08-11 14:48:01] Resultado vazio ou Nada Consta para TATIANA SOUZA BORGES com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:02] Resultado vazio ou Nada Consta para LEANDRO CHICON MUNIZ com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:02] Não foi possível enriquecer TATIANA SOUZA BORGES: Registro múltiplo
+[2026-08-11 14:48:03] Sucesso ao enriquecer LEANDRO CHICON MUNIZ: CPF=00822777533, Cidade=BELO HORIZONTE
+[2026-08-11 14:48:03] Resultado vazio ou Nada Consta para VALESKA FERRI SOUZA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:03] Resultado vazio ou Nada Consta para LEANDRO CHICON MUNIZ com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:04] call_nova_vida_api chamado
+[2026-08-11 14:48:04] get_nova_vida_token chamado
+[2026-08-11 14:48:04] Efetuando HTTP POST Form de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-11 14:48:04] Sucesso ao enriquecer VALESKA FERRI SOUZA: CPF=07339837744, Cidade=CARIACICA
+[2026-08-11 14:48:04] Sucesso ao enriquecer LEANDRO CHICON MUNIZ: CPF=00822777533, Cidade=BELO HORIZONTE
+[2026-08-11 14:48:04] Retorno do Token XML (parcial): <?xml version="1.0" encoding="utf-8"?>
+<string xmlns="http://tempuri.org/">bXVuZGlhbGVkaXRvcmF8U1RSQG5ld3xNVU5ESUFMRURJVE9SQXwxMDU3N3wxX1RydWU7Ml9UcnVlOzNfVHJ1ZTs0X1RydWU7Nl9UcnVlOzdfVHJ1ZTs5X1RydWU7MTBfVHJ1ZTsxMV9UcnVlOzEyX1RydWU7MTNfVHJ1ZTsxNF9UcnVlOzE2X1RydWU7MjBfVHJ1ZTs1MF9UcnVlOzUxX1RydWU7NTJfVHJ1ZTs1M19UcnVlOzU1X1RydWU7NTZfVHJ1ZTs1OF9UcnVlOzU5X1RydWU7NjBfVHJ1ZTs2MV9UcnVlOzYyX1RydWU7NjNfVHJ1ZTs2NV9UcnVlOzY3X1RydWU7NjhfVHJ1ZTs3Nl9UcnVlOzc5X1RydWU7ODBfVHJ1ZTs5NV9UcnVlOzk3X1RydWU7OThfVHJ1ZTsxMDVfVHJ1ZTsxMDZfVHJ1ZTsyMTVfVHJ1ZTs3MjFfVHJ1ZTs4OTFfVHJ1ZTs4OTJfVHJ1ZTs5MDZfVHJ1ZTs5MjhfVHJ1ZTs5MjlfVHJ1ZTs5MzBfVHJ1ZTs5MzFfVHJ1ZTs5MzJfVHJ1ZTs5NDRfVHJ1ZTs5NDVfVHJ1ZTsxMTI3X1RydWU7MTEyOF9UcnVlOzExMzJfVHJ1ZTsxMTk3X1RydWU7MTE5OF9UcnVlOzExOTlfVHJ1ZTsxMjk0X1RydWU7MTMzMV9UcnVlOzEzMzJfVHJ1ZTsxMzMzX1RydWU7MTM0MF9UcnVlOzEzNDdfVHJ1ZTsxMzQ5X1RydWU7MTM2M19UcnVlOzE0MTRfVHJ1ZTsxNDIxX1RydWU7MTc5Nl9UcnVlOzE3OTdfVHJ1ZTsxODAzX1RydWU7MTgxOV9UcnVlOzE4MjVfVHJ1ZTsxODc2X1RydWU7MTg4N19UcnVlOzE5MzRfVHJ1ZTsxOTkxX1RydWU7
+[2026-08-11 14:48:04] Token extraído com sucesso
+[2026-08-11 14:48:04] Efetuando chamadas de enriquecimento para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/PesquisaAtributosUnico
+[2026-08-11 14:48:05] Sucesso ao enriquecer VILMA OLIVEIRA DA SILVA COUTINHO: CPF=00809729504, Cidade=ITABATA
+[2026-08-11 14:48:05] Resultado vazio ou Nada Consta para LETICIA DE JESUS ANDRADE com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:05] call_nova_vida_api chamado
+[2026-08-11 14:48:05] get_nova_vida_token chamado
+[2026-08-11 14:48:05] Efetuando HTTP POST Form de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-11 14:48:05] Resultado vazio ou Nada Consta para ALEXI PEREZ MARTINEZ com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:06] Sucesso ao enriquecer ABEL FERREIRA DE ALMEIDA JUNIOR: CPF=01745209565, Cidade=SALVADOR
+[2026-08-11 14:48:06] Retorno do Token XML (parcial): <?xml version="1.0" encoding="utf-8"?>
+<string xmlns="http://tempuri.org/">bXVuZGlhbGVkaXRvcmF8U1RSQG5ld3xNVU5ESUFMRURJVE9SQXwxMDU3N3wxX1RydWU7Ml9UcnVlOzNfVHJ1ZTs0X1RydWU7Nl9UcnVlOzdfVHJ1ZTs5X1RydWU7MTBfVHJ1ZTsxMV9UcnVlOzEyX1RydWU7MTNfVHJ1ZTsxNF9UcnVlOzE2X1RydWU7MjBfVHJ1ZTs1MF9UcnVlOzUxX1RydWU7NTJfVHJ1ZTs1M19UcnVlOzU1X1RydWU7NTZfVHJ1ZTs1OF9UcnVlOzU5X1RydWU7NjBfVHJ1ZTs2MV9UcnVlOzYyX1RydWU7NjNfVHJ1ZTs2NV9UcnVlOzY3X1RydWU7NjhfVHJ1ZTs3Nl9UcnVlOzc5X1RydWU7ODBfVHJ1ZTs5NV9UcnVlOzk3X1RydWU7OThfVHJ1ZTsxMDVfVHJ1ZTsxMDZfVHJ1ZTsyMTVfVHJ1ZTs3MjFfVHJ1ZTs4OTFfVHJ1ZTs4OTJfVHJ1ZTs5MDZfVHJ1ZTs5MjhfVHJ1ZTs5MjlfVHJ1ZTs5MzBfVHJ1ZTs5MzFfVHJ1ZTs5MzJfVHJ1ZTs5NDRfVHJ1ZTs5NDVfVHJ1ZTsxMTI3X1RydWU7MTEyOF9UcnVlOzExMzJfVHJ1ZTsxMTk3X1RydWU7MTE5OF9UcnVlOzExOTlfVHJ1ZTsxMjk0X1RydWU7MTMzMV9UcnVlOzEzMzJfVHJ1ZTsxMzMzX1RydWU7MTM0MF9UcnVlOzEzNDdfVHJ1ZTsxMzQ5X1RydWU7MTM2M19UcnVlOzE0MTRfVHJ1ZTsxNDIxX1RydWU7MTc5Nl9UcnVlOzE3OTdfVHJ1ZTsxODAzX1RydWU7MTgxOV9UcnVlOzE4MjVfVHJ1ZTsxODc2X1RydWU7MTg4N19UcnVlOzE5MzRfVHJ1ZTsxOTkxX1RydWU7
+[2026-08-11 14:48:06] Token extraído com sucesso
+[2026-08-11 14:48:06] Efetuando chamadas de enriquecimento para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/PesquisaAtributosUnico
+[2026-08-11 14:48:06] Não foi possível enriquecer LETICIA DE JESUS ANDRADE: Registro múltiplo
+[2026-08-11 14:48:06] Sucesso ao enriquecer ALEXI PEREZ MARTINEZ: CPF=06610255199, Cidade=CORONEL FABRICIANO
+[2026-08-11 14:48:07] Resultado vazio ou Nada Consta para ADAO DIAS DO CARMO com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:07] Resultado vazio ou Nada Consta para ALEXI PEREZ MARTINEZ com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:07] Sucesso ao enriquecer LUCIANA ABREU RAMOS: CPF=14288267773, Cidade=POSTO DA MATA
+[2026-08-11 14:48:07] Sucesso ao enriquecer ALINE FERNANDES CAMPOS: CPF=05792296537, Cidade=SANTA CRUZ CABRALIA
+[2026-08-11 14:48:07] Sucesso ao enriquecer ADAO DIAS DO CARMO: CPF=05861974276, Cidade=
+[2026-08-11 14:48:07] Sucesso ao enriquecer ALEXI PEREZ MARTINEZ: CPF=06610255199, Cidade=CORONEL FABRICIANO
+[2026-08-11 14:48:08] Sucesso ao enriquecer MAGNA DOS ANJOS SOARES: CPF=04695184567, Cidade=MUCURI
+[2026-08-11 14:48:08] Sucesso ao enriquecer ALOIS HUMBERTO ROESSLER: CPF=36402036749, Cidade=TEIXEIRA DE FREITAS
+[2026-08-11 14:48:08] Sucesso ao enriquecer ALINE FERNANDES CAMPOS: CPF=05792296537, Cidade=SANTA CRUZ CABRALIA
+[2026-08-11 14:48:08] Resultado vazio ou Nada Consta para ADEMILSON ALMEIDA DOS SANTOS com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:08] Resultado vazio ou Nada Consta para MANOEL PEDRO RODRIGUES SOARES JUNIOR com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:08] Sucesso ao enriquecer ANA PAULA COELHO JACOMINI FREITAS: CPF=83458255672, Cidade=MUCURI
+[2026-08-11 14:48:09] Não foi possível enriquecer ADEMILSON ALMEIDA DOS SANTOS: Registro múltiplo
+[2026-08-11 14:48:09] Sucesso ao enriquecer ALOIS HUMBERTO ROESSLER: CPF=36402036749, Cidade=TEIXEIRA DE FREITAS
+[2026-08-11 14:48:09] Sucesso ao enriquecer MANOEL PEDRO RODRIGUES SOARES JUNIOR: CPF=00825428564, Cidade=BARBACENA
+[2026-08-11 14:48:09] Resultado vazio ou Nada Consta para ANA VITORIA FARIAS MARTINS com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:10] Sucesso ao enriquecer ANA VITORIA FARIAS MARTINS: CPF=06508647512, Cidade=CURITIBA
+[2026-08-11 14:48:10] Sucesso ao enriquecer ADILELSON MATTOS DIAS: CPF=00604377584, Cidade=SANTALUZ
+[2026-08-11 14:48:10] Sucesso ao enriquecer ANA PAULA COELHO JACOMINI FREITAS: CPF=83458255672, Cidade=MUCURI
+[2026-08-11 14:48:10] Sucesso ao enriquecer MARIA DE LOURDES SOUZA SANTOS DA SILVA: CPF=02205177540, Cidade=ITABATAN
+[2026-08-11 14:48:11] Sucesso ao enriquecer ANDREA SILVA KOEPPE: CPF=02414125799, Cidade=MUCURI
+[2026-08-11 14:48:11] Resultado vazio ou Nada Consta para ANA VITORIA FARIAS MARTINS com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:11] Resultado vazio ou Nada Consta para ADRIA DOS SANTOS SILVA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:11] Sucesso ao enriquecer MARINALVA SOUZA FRANCO: CPF=91454433515, Cidade=NOVA VICOSA
+[2026-08-11 14:48:12] Não foi possível enriquecer ADRIA DOS SANTOS SILVA: Registro múltiplo
+[2026-08-11 14:48:12] Sucesso ao enriquecer ANA VITORIA FARIAS MARTINS: CPF=06508647512, Cidade=CURITIBA
+[2026-08-11 14:48:12] Sucesso ao enriquecer ANDREA SILVA KOEPPE: CPF=02414125799, Cidade=MUCURI
+[2026-08-11 14:48:12] Sucesso ao enriquecer MERIDIANE ALMEIDA DE SOUZA: CPF=03333835592, Cidade=MUCURI
+[2026-08-11 14:48:12] Resultado vazio ou Nada Consta para ALDACI DOS SANTOS LIMA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:13] Sucesso ao enriquecer ANDREA SILVA KOEPPE: CPF=02414125799, Cidade=MUCURI
+[2026-08-11 14:48:13] Sucesso ao enriquecer ANDREA SILVA KOEPPE: CPF=02414125799, Cidade=MUCURI
+[2026-08-11 14:48:13] Resultado vazio ou Nada Consta para NELMA DE SOUZA MACHADO DE MIRANDA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:13] Não foi possível enriquecer ALDACI DOS SANTOS LIMA: Registro múltiplo
+[2026-08-11 14:48:13] Sucesso ao enriquecer ANDREA SILVA KOEPPE: CPF=02414125799, Cidade=MUCURI
+[2026-08-11 14:48:13] Sucesso ao enriquecer NELMA DE SOUZA MACHADO DE MIRANDA: CPF=02464194581, Cidade=RIO BRANCO
+[2026-08-11 14:48:13] Sucesso ao enriquecer ARACELE SANTOS DA SILVA: CPF=03930359561, Cidade=PORTO SEGURO
+[2026-08-11 14:48:14] Sucesso ao enriquecer ALIADNY ARAUJO OLIVEIRA LIMA: CPF=05181069509, Cidade=SANTALUZ
+[2026-08-11 14:48:14] Resultado vazio ou Nada Consta para PAULO HENRIQUE DE SOUSA RESENDE com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:14] Sucesso ao enriquecer ANDREA SILVA KOEPPE: CPF=02414125799, Cidade=MUCURI
+[2026-08-11 14:48:15] Sucesso ao enriquecer CESAR PASSAMANI: CPF=79027024553, Cidade=TEIXEIRA DE FREITAS
+[2026-08-11 14:48:15] Não foi possível enriquecer PAULO HENRIQUE DE SOUSA RESENDE: Registro múltiplo
+[2026-08-11 14:48:15] Sucesso ao enriquecer ALLEYRAND SERGIO RAMOS MEDEIROS: CPF=24469580520, Cidade=SALVADOR
+[2026-08-11 14:48:15] Sucesso ao enriquecer ARACELE SANTOS DA SILVA: CPF=03930359561, Cidade=PORTO SEGURO
+[2026-08-11 14:48:16] Resultado vazio ou Nada Consta para CLAYTON MOREIRA CALDAS com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:16] Resultado vazio ou Nada Consta para PEDRO FIGUEIREDO NETO com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:16] Resultado vazio ou Nada Consta para AMANDA DA SILVA TANAJURA CIRINO com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:16] Sucesso ao enriquecer CESAR PASSAMANI: CPF=79027024553, Cidade=TEIXEIRA DE FREITAS
+[2026-08-11 14:48:16] Sucesso ao enriquecer CLAYTON MOREIRA CALDAS: CPF=18650179819, Cidade=CATANDUVA
+[2026-08-11 14:48:16] Não foi possível enriquecer PEDRO FIGUEIREDO NETO: Registro múltiplo
+[2026-08-11 14:48:17] Não foi possível enriquecer AMANDA DA SILVA TANAJURA CIRINO: Registro múltiplo
+[2026-08-11 14:48:17] Resultado vazio ou Nada Consta para CLAYTON MOREIRA CALDAS com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:17] Resultado vazio ou Nada Consta para DANIELA SANTOS DE SOUZA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:17] Resultado vazio ou Nada Consta para ANA BEATRIZ PEREIRA DE CARVALHO com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:17] Sucesso ao enriquecer CLAYTON MOREIRA CALDAS: CPF=18650179819, Cidade=CATANDUVA
+[2026-08-11 14:48:18] Não foi possível enriquecer DANIELA SANTOS DE SOUZA: Registro múltiplo
+[2026-08-11 14:48:18] Resultado vazio ou Nada Consta para RAFAEL SANTOS SOUZA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:18] Não foi possível enriquecer ANA BEATRIZ PEREIRA DE CARVALHO: Registro múltiplo
+[2026-08-11 14:48:18] Resultado vazio ou Nada Consta para DANIELA SANTOS DE SOUZA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:19] Sucesso ao enriquecer DIANA MARQUES MOREIRA: CPF=02720750514, Cidade=TEIXEIRA DE FREITAS
+[2026-08-11 14:48:19] Não foi possível enriquecer RAFAEL SANTOS SOUZA: Registro múltiplo
+[2026-08-11 14:48:19] Resultado vazio ou Nada Consta para ANA NERI ALVES LOPES com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:19] Não foi possível enriquecer DANIELA SANTOS DE SOUZA: Registro múltiplo
+[2026-08-11 14:48:19] Resultado vazio ou Nada Consta para EDSON GERALDINO MOREIRA JUNIOR com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:20] Sucesso ao enriquecer RENATA DOS SANTOS DALLY: CPF=04351873507, Cidade=NOVA VICOSA
+[2026-08-11 14:48:20] Sucesso ao enriquecer ANA NERI ALVES LOPES: CPF=59688017515, Cidade=SAO PAULO
+[2026-08-11 14:48:20] Sucesso ao enriquecer DIANA MARQUES MOREIRA: CPF=02720750514, Cidade=TEIXEIRA DE FREITAS
+[2026-08-11 14:48:20] Sucesso ao enriquecer EDSON GERALDINO MOREIRA JUNIOR: CPF=94488967604, Cidade=BELO HORIZONTE
+[2026-08-11 14:48:20] Resultado vazio ou Nada Consta para RHAYANI FRANZOTTI SOUZA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:21] Resultado vazio ou Nada Consta para EDSON GERALDINO MOREIRA JUNIOR com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:21] Resultado vazio ou Nada Consta para ANA PAULA ALVES DE MIRANDA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:21] Sucesso ao enriquecer ELENICE TEIXEIRA COSTA DE OLIVEIRA SUCUPIRA: CPF=01240017502, Cidade=ITABATA
+[2026-08-11 14:48:21] Sucesso ao enriquecer RHAYANI FRANZOTTI SOUZA: CPF=03341790500, Cidade=SAO MATEUS
+[2026-08-11 14:48:21] Sucesso ao enriquecer EDSON GERALDINO MOREIRA JUNIOR: CPF=94488967604, Cidade=BELO HORIZONTE
+[2026-08-11 14:48:21] Não foi possível enriquecer ANA PAULA ALVES DE MIRANDA: Registro múltiplo
+[2026-08-11 14:48:22] Sucesso ao enriquecer ELENY SILVA DIAS: CPF=07973981713, Cidade=ITABATA
+[2026-08-11 14:48:22] Sucesso ao enriquecer RICARDO KOPRUSZYNSKI JUNIOR: CPF=74462911920, Cidade=TEIXEIRA DE FREITAS
+[2026-08-11 14:48:22] Sucesso ao enriquecer ELENICE TEIXEIRA COSTA DE OLIVEIRA SUCUPIRA: CPF=01240017502, Cidade=ITABATA
+[2026-08-11 14:48:22] Sucesso ao enriquecer ANA PAULA DA SILVA EVANGELISTA BACELAR: CPF=00497082527, Cidade=SANTALUZ
+[2026-08-11 14:48:23] Sucesso ao enriquecer FABIO CARDOSO DA SILVA NETO: CPF=13151487572, Cidade=MUCURI
+[2026-08-11 14:48:23] Sucesso ao enriquecer RICARDO KOPRUSZYNSKI JUNIOR: CPF=74462911920, Cidade=TEIXEIRA DE FREITAS
+[2026-08-11 14:48:23] Sucesso ao enriquecer ELENY SILVA DIAS: CPF=07973981713, Cidade=ITABATA
+[2026-08-11 14:48:23] Resultado vazio ou Nada Consta para ANA PAULA SANTOS DE JESUS com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:23] Sucesso ao enriquecer FABIO CARDOSO DA SILVA NETO: CPF=13151487572, Cidade=MUCURI
+[2026-08-11 14:48:24] Sucesso ao enriquecer RICARDO KOPRUSZYNSKI JUNIOR: CPF=74462911920, Cidade=TEIXEIRA DE FREITAS
+[2026-08-11 14:48:24] Sucesso ao enriquecer FABIO CARDOSO DA SILVA NETO: CPF=13151487572, Cidade=MUCURI
+[2026-08-11 14:48:24] Não foi possível enriquecer ANA PAULA SANTOS DE JESUS: Registro múltiplo
+[2026-08-11 14:48:24] Resultado vazio ou Nada Consta para FELICIANO GIL QUARESMA NOVAES com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:25] Sucesso ao enriquecer FABIO CARDOSO DA SILVA NETO: CPF=13151487572, Cidade=MUCURI
+[2026-08-11 14:48:25] Sucesso ao enriquecer ROBERTO WAGNER MIRANDA: CPF=47113634753, Cidade=MUCURI
+[2026-08-11 14:48:25] Sucesso ao enriquecer ANDRE LUIZ BRASIL GONSALVES: CPF=54589800500, Cidade=SANTALUZ
+[2026-08-11 14:48:25] Sucesso ao enriquecer FELICIANO GIL QUARESMA NOVAES: CPF=00461706695, Cidade=GUARAPARI
+[2026-08-11 14:48:25] Resultado vazio ou Nada Consta para FELICIANO GIL QUARESMA NOVAES com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:25] Resultado vazio ou Nada Consta para SERGIO CARVALHO DE PAULA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:26] Resultado vazio ou Nada Consta para FELICIANO GIL QUARESMA NOVAES com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:26] Resultado vazio ou Nada Consta para ANGELA MARIA LIMA DOS SANTOS com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:26] Não foi possível enriquecer SERGIO CARVALHO DE PAULA: Registro múltiplo
+[2026-08-11 14:48:26] Sucesso ao enriquecer FELICIANO GIL QUARESMA NOVAES: CPF=00461706695, Cidade=GUARAPARI
+[2026-08-11 14:48:27] Sucesso ao enriquecer FELICIANO GIL QUARESMA NOVAES: CPF=00461706695, Cidade=GUARAPARI
+[2026-08-11 14:48:27] Não foi possível enriquecer ANGELA MARIA LIMA DOS SANTOS: Registro múltiplo
+[2026-08-11 14:48:27] Resultado vazio ou Nada Consta para FELICIANO GIL QUARESMA NOVAES com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:27] Sucesso ao enriquecer SIMONE DA SILVA LACERDA: CPF=03314107536, Cidade=TAQUARINHA
+[2026-08-11 14:48:27] Resultado vazio ou Nada Consta para FELIPE FERREIRA DA MOTA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:28] Sucesso ao enriquecer ANTONIA GARDENIA MATOS BARRETO: CPF=06783359581, Cidade=CAMACARI
+[2026-08-11 14:48:28] Sucesso ao enriquecer FELICIANO GIL QUARESMA NOVAES: CPF=00461706695, Cidade=GUARAPARI
+[2026-08-11 14:48:28] Resultado vazio ou Nada Consta para STEFANE DOS SANTOS ALMEIDA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:28] Não foi possível enriquecer FELIPE FERREIRA DA MOTA: Registro múltiplo
+[2026-08-11 14:48:28] Resultado vazio ou Nada Consta para ANTONIA SANT ANA DOS SANTOS com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:29] Resultado vazio ou Nada Consta para FELIPE FERREIRA DA MOTA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:29] Não foi possível enriquecer STEFANE DOS SANTOS ALMEIDA: Registro múltiplo
+[2026-08-11 14:48:29] Resultado vazio ou Nada Consta para FERNANDA LEMGRUBER DA SILVA TAVARES com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:29] Não foi possível enriquecer ANTONIA SANT ANA DOS SANTOS: Registro múltiplo
+[2026-08-11 14:48:29] Não foi possível enriquecer FELIPE FERREIRA DA MOTA: Registro múltiplo
+[2026-08-11 14:48:30] Sucesso ao enriquecer TAIGUARA PACHECO MELO: CPF=05777153569, Cidade=TEIXEIRA DE FREITAS
+[2026-08-11 14:48:30] Sucesso ao enriquecer FERNANDA LEMGRUBER DA SILVA TAVARES: CPF=01623717566, Cidade=CAMPOS DOS GOYTACAZES
+[2026-08-11 14:48:30] Sucesso ao enriquecer ANTONIO SEVERO DE OLIVEIRA NETO: CPF=08678732482, Cidade=ITABUNA
+[2026-08-11 14:48:30] Resultado vazio ou Nada Consta para FERNANDA LEMGRUBER DA SILVA TAVARES com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:30] Resultado vazio ou Nada Consta para FERNANDA PONTES GONCALVES com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:30] Sucesso ao enriquecer TARCISIO SANDES RONACHER: CPF=01616261579, Cidade=TEIXEIRA DE FREITAS
+[2026-08-11 14:48:31] Sucesso ao enriquecer FERNANDA LEMGRUBER DA SILVA TAVARES: CPF=01623717566, Cidade=CAMPOS DOS GOYTACAZES
+[2026-08-11 14:48:31] Sucesso ao enriquecer ANTONIO SEVERO DE OLIVEIRA NETO: CPF=08678732482, Cidade=ITABUNA
+[2026-08-11 14:48:31] Não foi possível enriquecer FERNANDA PONTES GONCALVES: Registro múltiplo
+[2026-08-11 14:48:31] Resultado vazio ou Nada Consta para TATIANA SOUZA BORGES com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:32] Resultado vazio ou Nada Consta para FERNANDA PONTES GONCALVES com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:32] Resultado vazio ou Nada Consta para BARBARA FERREIRA DA COSTA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:32] Resultado vazio ou Nada Consta para FERNANDO ANTONIO TEIXEIRA SILVA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:32] Não foi possível enriquecer TATIANA SOUZA BORGES: Registro múltiplo
+[2026-08-11 14:48:32] Não foi possível enriquecer FERNANDA PONTES GONCALVES: Registro múltiplo
+[2026-08-11 14:48:33] Não foi possível enriquecer BARBARA FERREIRA DA COSTA: Registro múltiplo
+[2026-08-11 14:48:33] Não foi possível enriquecer FERNANDO ANTONIO TEIXEIRA SILVA: Registro múltiplo
+[2026-08-11 14:48:33] Resultado vazio ou Nada Consta para VALESKA FERRI SOUZA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:33] Resultado vazio ou Nada Consta para FERNANDO ANTONIO TEIXEIRA SILVA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:33] Resultado vazio ou Nada Consta para FLAVIA KRETLI VIEIRA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:34] Sucesso ao enriquecer BARBARA LITCIA DOS SANTOS SILVA: CPF=02278739557, Cidade=SANTALUZ
+[2026-08-11 14:48:34] Sucesso ao enriquecer VALESKA FERRI SOUZA: CPF=07339837744, Cidade=CARIACICA
+[2026-08-11 14:48:34] Não foi possível enriquecer FERNANDO ANTONIO TEIXEIRA SILVA: Registro múltiplo
+[2026-08-11 14:48:34] Sucesso ao enriquecer FLAVIA KRETLI VIEIRA: CPF=04072198544, Cidade=RIO DE JANEIRO
+[2026-08-11 14:48:34] Resultado vazio ou Nada Consta para BEATRIZ SILVA SOUZA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:35] Sucesso ao enriquecer VILMA OLIVEIRA DA SILVA COUTINHO: CPF=00809729504, Cidade=ITABATA
+[2026-08-11 14:48:35] Resultado vazio ou Nada Consta para FLAVIA KRETLI VIEIRA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:35] Sucesso ao enriquecer FRANCIELLY PRATES ALVES: CPF=04066407501, Cidade=MUCURI
+[2026-08-11 14:48:35] Não foi possível enriquecer BEATRIZ SILVA SOUZA: Registro múltiplo
+[2026-08-11 14:48:35] Sucesso ao enriquecer FLAVIA KRETLI VIEIRA: CPF=04072198544, Cidade=RIO DE JANEIRO
+[2026-08-11 14:48:35] Sucesso ao enriquecer ABEL FERREIRA DE ALMEIDA JUNIOR: CPF=01745209565, Cidade=SALVADOR
+[2026-08-11 14:48:36] Resultado vazio ou Nada Consta para FRANCISCO DA SILVA TAVARES com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:36] Resultado vazio ou Nada Consta para BENVINDA MATIAS DANTAS NETA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:36] Sucesso ao enriquecer FRANCIELLY PRATES ALVES: CPF=04066407501, Cidade=MUCURI
+[2026-08-11 14:48:36] Resultado vazio ou Nada Consta para ADAO DIAS DO CARMO com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:37] Não foi possível enriquecer FRANCISCO DA SILVA TAVARES: Registro múltiplo
+[2026-08-11 14:48:37] Sucesso ao enriquecer BENVINDA MATIAS DANTAS NETA: CPF=06599271448, Cidade=VERDEJANTE
+[2026-08-11 14:48:37] Resultado vazio ou Nada Consta para FRANCISCO DA SILVA TAVARES com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:37] Sucesso ao enriquecer ADAO DIAS DO CARMO: CPF=05861974276, Cidade=
+[2026-08-11 14:48:37] Resultado vazio ou Nada Consta para FREDERICO AUGUSTO ABDO SUZUKI com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:38] Resultado vazio ou Nada Consta para BENVINDA MATIAS DANTAS NETA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:38] Não foi possível enriquecer FRANCISCO DA SILVA TAVARES: Registro múltiplo
+[2026-08-11 14:48:38] Resultado vazio ou Nada Consta para ADEMILSON ALMEIDA DOS SANTOS com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:38] Sucesso ao enriquecer FREDERICO AUGUSTO ABDO SUZUKI: CPF=86265610678, Cidade=BELO HORIZONTE
+[2026-08-11 14:48:38] Sucesso ao enriquecer BENVINDA MATIAS DANTAS NETA: CPF=06599271448, Cidade=VERDEJANTE
+[2026-08-11 14:48:38] Resultado vazio ou Nada Consta para FREDERICO AUGUSTO ABDO SUZUKI com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:39] Não foi possível enriquecer ADEMILSON ALMEIDA DOS SANTOS: Registro múltiplo
+[2026-08-11 14:48:39] Resultado vazio ou Nada Consta para GABRIELA PEREIRA DOS SANTOS com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:39] Sucesso ao enriquecer FREDERICO AUGUSTO ABDO SUZUKI: CPF=86265610678, Cidade=BELO HORIZONTE
+[2026-08-11 14:48:39] Sucesso ao enriquecer BIANCA DA SILVA CARNEIRO: CPF=07444091528, Cidade=FEIRA DE SANTANA
+[2026-08-11 14:48:39] Sucesso ao enriquecer ADILELSON MATTOS DIAS: CPF=00604377584, Cidade=SANTALUZ
+[2026-08-11 14:48:40] Não foi possível enriquecer GABRIELA PEREIRA DOS SANTOS: Registro múltiplo
+[2026-08-11 14:48:40] Resultado vazio ou Nada Consta para GABRIELA PEREIRA DOS SANTOS com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:40] Resultado vazio ou Nada Consta para ADRIA DOS SANTOS SILVA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:40] Sucesso ao enriquecer BRENO CEDRAZ ANDRADE DA SILVA: CPF=07262377523, Cidade=SALVADOR
+[2026-08-11 14:48:40] Sucesso ao enriquecer GEILTON DA SILVA GALVAO JUNIOR: CPF=71884432549, Cidade=TEIXEIRA DE FREITAS
+[2026-08-11 14:48:41] Não foi possível enriquecer GABRIELA PEREIRA DOS SANTOS: Registro múltiplo
+[2026-08-11 14:48:41] Não foi possível enriquecer ADRIA DOS SANTOS SILVA: Registro múltiplo
+[2026-08-11 14:48:41] Resultado vazio ou Nada Consta para BRUNA MARTINS FERREIRA MATOS com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:41] Sucesso ao enriquecer GILSON DOS SANTOS COUTO: CPF=09319960747, Cidade=MUCURI
+[2026-08-11 14:48:42] Sucesso ao enriquecer GEILTON DA SILVA GALVAO JUNIOR: CPF=71884432549, Cidade=TEIXEIRA DE FREITAS
+[2026-08-11 14:48:42] Resultado vazio ou Nada Consta para ALDACI DOS SANTOS LIMA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:42] Resultado vazio ou Nada Consta para GRACIANNE SOUZA DE MIRANDA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:42] Sucesso ao enriquecer BRUNA MARTINS FERREIRA MATOS: CPF=85849168575, Cidade=
+[2026-08-11 14:48:42] Sucesso ao enriquecer GILSON DOS SANTOS COUTO: CPF=09319960747, Cidade=MUCURI
+[2026-08-11 14:48:43] Não foi possível enriquecer ALDACI DOS SANTOS LIMA: Registro múltiplo
+[2026-08-11 14:48:43] Sucesso ao enriquecer GRACIANNE SOUZA DE MIRANDA: CPF=11520758707, Cidade=MONTANHA
+[2026-08-11 14:48:43] Resultado vazio ou Nada Consta para BRUNO OLIVEIRA ALMEIDA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:43] Resultado vazio ou Nada Consta para GRACIANNE SOUZA DE MIRANDA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:43] Sucesso ao enriquecer ALIADNY ARAUJO OLIVEIRA LIMA: CPF=05181069509, Cidade=SANTALUZ
+[2026-08-11 14:48:44] Resultado vazio ou Nada Consta para HENRIQUE DANTAS SILVA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:44] Não foi possível enriquecer BRUNO OLIVEIRA ALMEIDA: Registro múltiplo
+[2026-08-11 14:48:44] Sucesso ao enriquecer GRACIANNE SOUZA DE MIRANDA: CPF=11520758707, Cidade=MONTANHA
+[2026-08-11 14:48:44] Sucesso ao enriquecer ALLEYRAND SERGIO RAMOS MEDEIROS: CPF=24469580520, Cidade=SALVADOR
+[2026-08-11 14:48:44] Não foi possível enriquecer HENRIQUE DANTAS SILVA: Registro múltiplo
+[2026-08-11 14:48:45] Sucesso ao enriquecer CACILDA MARION LIMA DE SOUZA: CPF=13500384587, Cidade=SANTALUZ
+[2026-08-11 14:48:45] Resultado vazio ou Nada Consta para HENRIQUE DANTAS SILVA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:45] Resultado vazio ou Nada Consta para AMANDA DA SILVA TANAJURA CIRINO com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:45] Sucesso ao enriquecer IGOR DE CASTRO MALACARNE: CPF=05517213758, Cidade=SALVADOR
+[2026-08-11 14:48:45] Não foi possível enriquecer HENRIQUE DANTAS SILVA: Registro múltiplo
+[2026-08-11 14:48:46] Sucesso ao enriquecer CARINA AQUINO DOS SANTOS: CPF=05434668502, Cidade=SANTALUZ
+[2026-08-11 14:48:46] Não foi possível enriquecer AMANDA DA SILVA TANAJURA CIRINO: Registro múltiplo
+[2026-08-11 14:48:46] Resultado vazio ou Nada Consta para JEAN CARLOS CARDOSO DA CRUZ com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:46] Sucesso ao enriquecer IGOR DE CASTRO MALACARNE: CPF=05517213758, Cidade=SALVADOR
+[2026-08-11 14:48:46] Resultado vazio ou Nada Consta para CARLA DIAS DOS SANTOS com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:47] Não foi possível enriquecer JEAN CARLOS CARDOSO DA CRUZ: Registro múltiplo
+[2026-08-11 14:48:47] Resultado vazio ou Nada Consta para ANA BEATRIZ PEREIRA DE CARVALHO com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:47] Resultado vazio ou Nada Consta para JEAN CARLOS CARDOSO DA CRUZ com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:47] Não foi possível enriquecer CARLA DIAS DOS SANTOS: Registro múltiplo
+[2026-08-11 14:48:47] Não foi possível enriquecer ANA BEATRIZ PEREIRA DE CARVALHO: Registro múltiplo
+[2026-08-11 14:48:47] Sucesso ao enriquecer JEILDE PEREIRA MARTINS DA ROCHA: CPF=98837346549, Cidade=MUCURI
+[2026-08-11 14:48:48] Não foi possível enriquecer JEAN CARLOS CARDOSO DA CRUZ: Registro múltiplo
+[2026-08-11 14:48:48] Sucesso ao enriquecer CARLOS MAGALHAES BORGES JUNIOR: CPF=03824762552, Cidade=SALVADOR
+[2026-08-11 14:48:48] Resultado vazio ou Nada Consta para ANA NERI ALVES LOPES com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:48] Resultado vazio ou Nada Consta para JESUINA DARK GOMES ROCHA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:49] Sucesso ao enriquecer JEILDE PEREIRA MARTINS DA ROCHA: CPF=98837346549, Cidade=MUCURI
+[2026-08-11 14:48:49] Sucesso ao enriquecer CHIRLEY ANTONIELA DA SILVA CUNHA: CPF=00234288566, Cidade=FEIRA DE SANTANA
+[2026-08-11 14:48:49] Sucesso ao enriquecer JESUINA DARK GOMES ROCHA: CPF=55815740659, Cidade=NANUQUE
+[2026-08-11 14:48:49] Sucesso ao enriquecer ANA NERI ALVES LOPES: CPF=59688017515, Cidade=SAO PAULO
+[2026-08-11 14:48:49] Resultado vazio ou Nada Consta para JESUINA DARK GOMES ROCHA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:50] Resultado vazio ou Nada Consta para JESUINA DARK GOMES ROCHA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:50] Resultado vazio ou Nada Consta para ANA PAULA ALVES DE MIRANDA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:50] Sucesso ao enriquecer CINTIA DOS SANTOS MOTA LIMA: CPF=89319940525, Cidade=QUEIMADAS
+[2026-08-11 14:48:50] Sucesso ao enriquecer JESUINA DARK GOMES ROCHA: CPF=55815740659, Cidade=NANUQUE
+[2026-08-11 14:48:50] Sucesso ao enriquecer JESUINA DARK GOMES ROCHA: CPF=55815740659, Cidade=NANUQUE
+[2026-08-11 14:48:50] Não foi possível enriquecer ANA PAULA ALVES DE MIRANDA: Registro múltiplo
+[2026-08-11 14:48:51] Sucesso ao enriquecer CONCEICAO MACHADO DA SILVA: CPF=00301150516, Cidade=ITIRUCU
+[2026-08-11 14:48:51] Resultado vazio ou Nada Consta para JESUINA DARK GOMES ROCHA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:51] Resultado vazio ou Nada Consta para JOABE DE JESUS RODRIGUES com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:51] Sucesso ao enriquecer ANA PAULA DA SILVA EVANGELISTA BACELAR: CPF=00497082527, Cidade=SANTALUZ
+[2026-08-11 14:48:52] Sucesso ao enriquecer JESUINA DARK GOMES ROCHA: CPF=55815740659, Cidade=NANUQUE
+[2026-08-11 14:48:52] Resultado vazio ou Nada Consta para CONCHITA DE MATOS SANTOS com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:52] Sucesso ao enriquecer JOABE DE JESUS RODRIGUES: CPF=09718906509, Cidade=
+[2026-08-11 14:48:52] Resultado vazio ou Nada Consta para ANA PAULA SANTOS DE JESUS com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:52] Resultado vazio ou Nada Consta para JOABE DE JESUS RODRIGUES com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:53] Sucesso ao enriquecer CONCHITA DE MATOS SANTOS: CPF=35421909859, Cidade=SAO PAULO
+[2026-08-11 14:48:53] Sucesso ao enriquecer JOSE FREDERICO BAYLAO NETO: CPF=80392504715, Cidade=TEIXEIRA DE FREITAS
+[2026-08-11 14:48:53] Não foi possível enriquecer ANA PAULA SANTOS DE JESUS: Registro múltiplo
+[2026-08-11 14:48:53] Sucesso ao enriquecer JOABE DE JESUS RODRIGUES: CPF=09718906509, Cidade=
+[2026-08-11 14:48:53] Resultado vazio ou Nada Consta para CRISTINA SANTOS EVANGELISTA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:54] Resultado vazio ou Nada Consta para JOSE RONALDO DA SILVA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:54] Sucesso ao enriquecer ANDRE LUIZ BRASIL GONSALVES: CPF=54589800500, Cidade=SANTALUZ
+[2026-08-11 14:48:54] Sucesso ao enriquecer JOSE FREDERICO BAYLAO NETO: CPF=80392504715, Cidade=TEIXEIRA DE FREITAS
+[2026-08-11 14:48:54] Não foi possível enriquecer CRISTINA SANTOS EVANGELISTA: Registro múltiplo
+[2026-08-11 14:48:54] Não foi possível enriquecer JOSE RONALDO DA SILVA: Registro múltiplo
+[2026-08-11 14:48:55] Resultado vazio ou Nada Consta para ANGELA MARIA LIMA DOS SANTOS com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:55] Resultado vazio ou Nada Consta para JOSE RONALDO DA SILVA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:55] Resultado vazio ou Nada Consta para JOSE RONALDO DA SILVA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:55] Sucesso ao enriquecer DALMICE DE JESUS: CPF=79216676515, Cidade=SALVADOR
+[2026-08-11 14:48:55] Não foi possível enriquecer ANGELA MARIA LIMA DOS SANTOS: Registro múltiplo
+[2026-08-11 14:48:55] Não foi possível enriquecer JOSE RONALDO DA SILVA: Registro múltiplo
+[2026-08-11 14:48:56] Não foi possível enriquecer JOSE RONALDO DA SILVA: Registro múltiplo
+[2026-08-11 14:48:56] Resultado vazio ou Nada Consta para JOSE RONALDO DA SILVA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:56] Sucesso ao enriquecer ANTONIA GARDENIA MATOS BARRETO: CPF=06783359581, Cidade=CAMACARI
+[2026-08-11 14:48:56] Resultado vazio ou Nada Consta para DANILO DA SILVA SANTOS com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:56] Sucesso ao enriquecer LAURO OSCAR DE LIMA JUNIOR: CPF=90662873653, Cidade=TEIXEIRA DE FREITAS
+[2026-08-11 14:48:57] Não foi possível enriquecer JOSE RONALDO DA SILVA: Registro múltiplo
+[2026-08-11 14:48:57] Não foi possível enriquecer DANILO DA SILVA SANTOS: Registro múltiplo
+[2026-08-11 14:48:57] Resultado vazio ou Nada Consta para ANTONIA SANT ANA DOS SANTOS com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:57] Resultado vazio ou Nada Consta para LAZARO MARQUES AZEVEDO com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:58] Sucesso ao enriquecer LAURO OSCAR DE LIMA JUNIOR: CPF=90662873653, Cidade=TEIXEIRA DE FREITAS
+[2026-08-11 14:48:58] Não foi possível enriquecer ANTONIA SANT ANA DOS SANTOS: Registro múltiplo
+[2026-08-11 14:48:58] Sucesso ao enriquecer DAVID RAMOS DA SILVA RIOS: CPF=03090660504, Cidade=SALVADOR
+[2026-08-11 14:48:58] Sucesso ao enriquecer LAZARO MARQUES AZEVEDO: CPF=12329471726, Cidade=CRISTAL DO NORTE
+[2026-08-11 14:48:58] Resultado vazio ou Nada Consta para LAZARO MARQUES AZEVEDO com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:59] Sucesso ao enriquecer ANTONIO SEVERO DE OLIVEIRA NETO: CPF=08678732482, Cidade=ITABUNA
+[2026-08-11 14:48:59] Resultado vazio ou Nada Consta para LEANDRO CHICON MUNIZ com UF=BA. Tentando busca nacional...
+[2026-08-11 14:48:59] Sucesso ao enriquecer DEISE LAURA DE JESUS SANTOS: CPF=85963538521, Cidade=JEQUIE
+[2026-08-11 14:48:59] Sucesso ao enriquecer LAZARO MARQUES AZEVEDO: CPF=12329471726, Cidade=CRISTAL DO NORTE
+[2026-08-11 14:48:59] Sucesso ao enriquecer ANTONIO SEVERO DE OLIVEIRA NETO: CPF=08678732482, Cidade=ITABUNA
+[2026-08-11 14:49:00] Sucesso ao enriquecer LEANDRO CHICON MUNIZ: CPF=00822777533, Cidade=BELO HORIZONTE
+[2026-08-11 14:49:00] Resultado vazio ou Nada Consta para DILSON LOPES DOS SANTOS com UF=BA. Tentando busca nacional...
+[2026-08-11 14:49:00] Resultado vazio ou Nada Consta para LEANDRO CHICON MUNIZ com UF=BA. Tentando busca nacional...
+[2026-08-11 14:49:00] Resultado vazio ou Nada Consta para BARBARA FERREIRA DA COSTA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:49:00] Resultado vazio ou Nada Consta para LEANDRO CHICON MUNIZ com UF=BA. Tentando busca nacional...
+[2026-08-11 14:49:00] Não foi possível enriquecer DILSON LOPES DOS SANTOS: Registro múltiplo
+[2026-08-11 14:49:01] Sucesso ao enriquecer LEANDRO CHICON MUNIZ: CPF=00822777533, Cidade=BELO HORIZONTE
+[2026-08-11 14:49:01] Não foi possível enriquecer BARBARA FERREIRA DA COSTA: Registro múltiplo
+[2026-08-11 14:49:01] Sucesso ao enriquecer LEANDRO CHICON MUNIZ: CPF=00822777533, Cidade=BELO HORIZONTE
+[2026-08-11 14:49:01] Sucesso ao enriquecer DOMINGOS JANIO NOGUEIRA SANTANA: CPF=02759976505, Cidade=SAO DOMINGOS
+[2026-08-11 14:49:01] Resultado vazio ou Nada Consta para LEANDRO CHICON MUNIZ com UF=BA. Tentando busca nacional...
+[2026-08-11 14:49:02] Sucesso ao enriquecer BARBARA LITCIA DOS SANTOS SILVA: CPF=02278739557, Cidade=SANTALUZ
+[2026-08-11 14:49:02] Resultado vazio ou Nada Consta para LETICIA DE JESUS ANDRADE com UF=BA. Tentando busca nacional...
+[2026-08-11 14:49:02] Sucesso ao enriquecer LEANDRO CHICON MUNIZ: CPF=00822777533, Cidade=BELO HORIZONTE
+[2026-08-11 14:49:02] Resultado vazio ou Nada Consta para EDILENE NUNES DA SILVA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:49:03] Não foi possível enriquecer LETICIA DE JESUS ANDRADE: Registro múltiplo
+[2026-08-11 14:49:03] Resultado vazio ou Nada Consta para BEATRIZ SILVA SOUZA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:49:03] Resultado vazio ou Nada Consta para LETICIA DE JESUS ANDRADE com UF=BA. Tentando busca nacional...
+[2026-08-11 14:49:03] Não foi possível enriquecer EDILENE NUNES DA SILVA: Registro múltiplo
+[2026-08-11 14:49:03] Não foi possível enriquecer BEATRIZ SILVA SOUZA: Registro múltiplo
+[2026-08-11 14:49:03] Sucesso ao enriquecer LUCIANA ABREU RAMOS: CPF=14288267773, Cidade=POSTO DA MATA
+[2026-08-11 14:49:04] Não foi possível enriquecer LETICIA DE JESUS ANDRADE: Registro múltiplo
+[2026-08-11 14:49:04] Resultado vazio ou Nada Consta para EDINAR SANTANA DA SILVA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:49:04] Resultado vazio ou Nada Consta para BENVINDA MATIAS DANTAS NETA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:49:04] Sucesso ao enriquecer MAGNA DOS ANJOS SOARES: CPF=04695184567, Cidade=MUCURI
+[2026-08-11 14:49:05] Sucesso ao enriquecer LUCIANA ABREU RAMOS: CPF=14288267773, Cidade=POSTO DA MATA
+[2026-08-11 14:49:05] Não foi possível enriquecer EDINAR SANTANA DA SILVA: Registro múltiplo
+[2026-08-11 14:49:05] Sucesso ao enriquecer BENVINDA MATIAS DANTAS NETA: CPF=06599271448, Cidade=VERDEJANTE
+[2026-08-11 14:49:05] Resultado vazio ou Nada Consta para MANOEL PEDRO RODRIGUES SOARES JUNIOR com UF=BA. Tentando busca nacional...
+[2026-08-11 14:49:05] Sucesso ao enriquecer MAGNA DOS ANJOS SOARES: CPF=04695184567, Cidade=MUCURI
+[2026-08-11 14:49:06] Sucesso ao enriquecer EDVALDA OLIVEIRA DIAS: CPF=50125575572, Cidade=SANTALUZ
+[2026-08-11 14:49:06] Resultado vazio ou Nada Consta para BENVINDA MATIAS DANTAS NETA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:49:06] Sucesso ao enriquecer MANOEL PEDRO RODRIGUES SOARES JUNIOR: CPF=00825428564, Cidade=BARBACENA
+[2026-08-11 14:49:06] Resultado vazio ou Nada Consta para MANOEL PEDRO RODRIGUES SOARES JUNIOR com UF=BA. Tentando busca nacional...
+[2026-08-11 14:49:06] Sucesso ao enriquecer BENVINDA MATIAS DANTAS NETA: CPF=06599271448, Cidade=VERDEJANTE
+[2026-08-11 14:49:07] Sucesso ao enriquecer EDVALDO MATOS VARGAS SANTANA: CPF=02564322522, Cidade=QUEIMADAS
+[2026-08-11 14:49:07] Sucesso ao enriquecer MARIA DE LOURDES SOUZA SANTOS DA SILVA: CPF=02205177540, Cidade=ITABATAN
+[2026-08-11 14:49:07] Sucesso ao enriquecer MANOEL PEDRO RODRIGUES SOARES JUNIOR: CPF=00825428564, Cidade=BARBACENA
+[2026-08-11 14:49:07] Sucesso ao enriquecer BIANCA DA SILVA CARNEIRO: CPF=07444091528, Cidade=FEIRA DE SANTANA
+[2026-08-11 14:49:07] Sucesso ao enriquecer MARINALVA SOUZA FRANCO: CPF=91454433515, Cidade=NOVA VICOSA
+[2026-08-11 14:49:07] Sucesso ao enriquecer ELCILENE SANTANA DOS SANTOS GOMES: CPF=05306111556, Cidade=SALVADOR
+[2026-08-11 14:49:08] Sucesso ao enriquecer MARIA DE LOURDES SOUZA SANTOS DA SILVA: CPF=02205177540, Cidade=ITABATAN
+[2026-08-11 14:49:08] Sucesso ao enriquecer BRENO CEDRAZ ANDRADE DA SILVA: CPF=07262377523, Cidade=SALVADOR
+[2026-08-11 14:49:08] Sucesso ao enriquecer MERIDIANE ALMEIDA DE SOUZA: CPF=03333835592, Cidade=MUCURI
+[2026-08-11 14:49:08] Sucesso ao enriquecer ELEN BEATRIZ SANTOS DE OLIVEIRA: CPF=07453227518, Cidade=SANTALUZ
+[2026-08-11 14:49:09] Sucesso ao enriquecer MARINALVA SOUZA FRANCO: CPF=91454433515, Cidade=NOVA VICOSA
+[2026-08-11 14:49:09] Resultado vazio ou Nada Consta para NELMA DE SOUZA MACHADO DE MIRANDA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:49:09] Resultado vazio ou Nada Consta para BRUNA MARTINS FERREIRA MATOS com UF=BA. Tentando busca nacional...
+[2026-08-11 14:49:09] Sucesso ao enriquecer ELIEDSON CARNEIRO DE JESUS: CPF=03011605548, Cidade=CONCEICAO DO COITE
+[2026-08-11 14:49:09] Sucesso ao enriquecer MERIDIANE ALMEIDA DE SOUZA: CPF=03333835592, Cidade=MUCURI
+[2026-08-11 14:49:10] Sucesso ao enriquecer NELMA DE SOUZA MACHADO DE MIRANDA: CPF=02464194581, Cidade=RIO BRANCO
+[2026-08-11 14:49:10] Sucesso ao enriquecer BRUNA MARTINS FERREIRA MATOS: CPF=85849168575, Cidade=
+[2026-08-11 14:49:10] Resultado vazio ou Nada Consta para NELMA DE SOUZA MACHADO DE MIRANDA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:49:10] Resultado vazio ou Nada Consta para ELIETE PEREIRA NUNES com UF=BA. Tentando busca nacional...
+[2026-08-11 14:49:11] Resultado vazio ou Nada Consta para PAULO HENRIQUE DE SOUSA RESENDE com UF=BA. Tentando busca nacional...
+[2026-08-11 14:49:11] Resultado vazio ou Nada Consta para BRUNO OLIVEIRA ALMEIDA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:49:11] Não foi possível enriquecer ELIETE PEREIRA NUNES: Registro múltiplo
+[2026-08-11 14:49:11] Sucesso ao enriquecer NELMA DE SOUZA MACHADO DE MIRANDA: CPF=02464194581, Cidade=RIO BRANCO
+[2026-08-11 14:49:11] Não foi possível enriquecer PAULO HENRIQUE DE SOUSA RESENDE: Registro múltiplo
+[2026-08-11 14:49:11] Não foi possível enriquecer BRUNO OLIVEIRA ALMEIDA: Registro múltiplo
+[2026-08-11 14:49:12] Resultado vazio ou Nada Consta para PAULO HENRIQUE DE SOUSA RESENDE com UF=BA. Tentando busca nacional...
+[2026-08-11 14:49:12] Resultado vazio ou Nada Consta para ELISANGELA PIRES DOS SANTOS com UF=BA. Tentando busca nacional...
+[2026-08-11 14:49:12] Resultado vazio ou Nada Consta para PEDRO FIGUEIREDO NETO com UF=BA. Tentando busca nacional...
+[2026-08-11 14:49:12] Sucesso ao enriquecer CACILDA MARION LIMA DE SOUZA: CPF=13500384587, Cidade=SANTALUZ
+[2026-08-11 14:49:13] Não foi possível enriquecer PAULO HENRIQUE DE SOUSA RESENDE: Registro múltiplo
+[2026-08-11 14:49:13] Não foi possível enriquecer ELISANGELA PIRES DOS SANTOS: Registro múltiplo
+[2026-08-11 14:49:13] Não foi possível enriquecer PEDRO FIGUEIREDO NETO: Registro múltiplo
+[2026-08-11 14:49:13] Sucesso ao enriquecer CARINA AQUINO DOS SANTOS: CPF=05434668502, Cidade=SANTALUZ
+[2026-08-11 14:49:13] Resultado vazio ou Nada Consta para PEDRO FIGUEIREDO NETO com UF=BA. Tentando busca nacional...
+[2026-08-11 14:49:13] Resultado vazio ou Nada Consta para ELIZANE ARAUJO DE CARVALHO com UF=BA. Tentando busca nacional...
+[2026-08-11 14:49:14] Resultado vazio ou Nada Consta para RAFAEL SANTOS SOUZA com UF=BA. Tentando busca nacional...
+[2026-08-11 14:49:14] Resultado vazio ou Nada Consta para CARLA DIAS DOS SANTOS com UF=BA. Tentando busca nacional...
+[2026-08-11 14:49:14] Não foi possível enriquecer PEDRO FIGUEIREDO NETO: Registro múltiplo
+[2026-08-11 14:49:14] Não foi possível enriquecer RAFAEL SANTOS SOUZA: Registro múltiplo
+[2026-08-11 14:49:14] Sucesso ao enriquecer ELIZANE ARAUJO DE CARVALHO: CPF=05877493507, Cidade=
+[2026-08-11 14:55:13] call_nova_vida_api chamado
+[2026-08-11 14:55:13] get_nova_vida_token chamado
+[2026-08-11 14:55:13] Efetuando HTTP POST Form de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-11 14:55:14] Retorno do Token XML (parcial): <?xml version="1.0" encoding="utf-8"?>
+<string xmlns="http://tempuri.org/">bXVuZGlhbGVkaXRvcmF8U1RSQG5ld3xNVU5ESUFMRURJVE9SQXwxMDU3N3wxX1RydWU7Ml9UcnVlOzNfVHJ1ZTs0X1RydWU7Nl9UcnVlOzdfVHJ1ZTs5X1RydWU7MTBfVHJ1ZTsxMV9UcnVlOzEyX1RydWU7MTNfVHJ1ZTsxNF9UcnVlOzE2X1RydWU7MjBfVHJ1ZTs1MF9UcnVlOzUxX1RydWU7NTJfVHJ1ZTs1M19UcnVlOzU1X1RydWU7NTZfVHJ1ZTs1OF9UcnVlOzU5X1RydWU7NjBfVHJ1ZTs2MV9UcnVlOzYyX1RydWU7NjNfVHJ1ZTs2NV9UcnVlOzY3X1RydWU7NjhfVHJ1ZTs3Nl9UcnVlOzc5X1RydWU7ODBfVHJ1ZTs5NV9UcnVlOzk3X1RydWU7OThfVHJ1ZTsxMDVfVHJ1ZTsxMDZfVHJ1ZTsyMTVfVHJ1ZTs3MjFfVHJ1ZTs4OTFfVHJ1ZTs4OTJfVHJ1ZTs5MDZfVHJ1ZTs5MjhfVHJ1ZTs5MjlfVHJ1ZTs5MzBfVHJ1ZTs5MzFfVHJ1ZTs5MzJfVHJ1ZTs5NDRfVHJ1ZTs5NDVfVHJ1ZTsxMTI3X1RydWU7MTEyOF9UcnVlOzExMzJfVHJ1ZTsxMTk3X1RydWU7MTE5OF9UcnVlOzExOTlfVHJ1ZTsxMjk0X1RydWU7MTMzMV9UcnVlOzEzMzJfVHJ1ZTsxMzMzX1RydWU7MTM0MF9UcnVlOzEzNDdfVHJ1ZTsxMzQ5X1RydWU7MTM2M19UcnVlOzE0MTRfVHJ1ZTsxNDIxX1RydWU7MTc5Nl9UcnVlOzE3OTdfVHJ1ZTsxODAzX1RydWU7MTgxOV9UcnVlOzE4MjVfVHJ1ZTsxODc2X1RydWU7MTg4N19UcnVlOzE5MzRfVHJ1ZTsxOTkxX1RydWU7
+[2026-08-11 14:55:14] Token extraído com sucesso
+[2026-08-11 14:55:14] Efetuando chamadas de enriquecimento para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/PesquisaAtributosUnico
+[2026-08-11 14:55:15] Resultado vazio ou Nada Consta para ALEXI PEREZ MARTINEZ com UF=BA. Tentando busca nacional...
+[2026-08-11 14:55:15] Sucesso ao enriquecer ALEXI PEREZ MARTINEZ: CPF=06610255199, Cidade=CORONEL FABRICIANO
+[2026-08-11 14:56:13] call_nova_vida_api chamado
+[2026-08-11 14:56:13] get_nova_vida_token chamado
+[2026-08-11 14:56:13] Efetuando HTTP POST Form de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-11 14:56:14] Retorno do Token XML (parcial): <?xml version="1.0" encoding="utf-8"?>
+<string xmlns="http://tempuri.org/">bXVuZGlhbGVkaXRvcmF8U1RSQG5ld3xNVU5ESUFMRURJVE9SQXwxMDU3N3wxX1RydWU7Ml9UcnVlOzNfVHJ1ZTs0X1RydWU7Nl9UcnVlOzdfVHJ1ZTs5X1RydWU7MTBfVHJ1ZTsxMV9UcnVlOzEyX1RydWU7MTNfVHJ1ZTsxNF9UcnVlOzE2X1RydWU7MjBfVHJ1ZTs1MF9UcnVlOzUxX1RydWU7NTJfVHJ1ZTs1M19UcnVlOzU1X1RydWU7NTZfVHJ1ZTs1OF9UcnVlOzU5X1RydWU7NjBfVHJ1ZTs2MV9UcnVlOzYyX1RydWU7NjNfVHJ1ZTs2NV9UcnVlOzY3X1RydWU7NjhfVHJ1ZTs3Nl9UcnVlOzc5X1RydWU7ODBfVHJ1ZTs5NV9UcnVlOzk3X1RydWU7OThfVHJ1ZTsxMDVfVHJ1ZTsxMDZfVHJ1ZTsyMTVfVHJ1ZTs3MjFfVHJ1ZTs4OTFfVHJ1ZTs4OTJfVHJ1ZTs5MDZfVHJ1ZTs5MjhfVHJ1ZTs5MjlfVHJ1ZTs5MzBfVHJ1ZTs5MzFfVHJ1ZTs5MzJfVHJ1ZTs5NDRfVHJ1ZTs5NDVfVHJ1ZTsxMTI3X1RydWU7MTEyOF9UcnVlOzExMzJfVHJ1ZTsxMTk3X1RydWU7MTE5OF9UcnVlOzExOTlfVHJ1ZTsxMjk0X1RydWU7MTMzMV9UcnVlOzEzMzJfVHJ1ZTsxMzMzX1RydWU7MTM0MF9UcnVlOzEzNDdfVHJ1ZTsxMzQ5X1RydWU7MTM2M19UcnVlOzE0MTRfVHJ1ZTsxNDIxX1RydWU7MTc5Nl9UcnVlOzE3OTdfVHJ1ZTsxODAzX1RydWU7MTgxOV9UcnVlOzE4MjVfVHJ1ZTsxODc2X1RydWU7MTg4N19UcnVlOzE5MzRfVHJ1ZTsxOTkxX1RydWU7
+[2026-08-11 14:56:14] Token extraído com sucesso
+[2026-08-11 14:56:14] Efetuando chamadas de enriquecimento para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/PesquisaAtributosUnico
+[2026-08-11 14:56:15] Resultado vazio ou Nada Consta para ALEXI PEREZ MARTINEZ com UF=BA. Tentando busca nacional...
+[2026-08-11 14:56:15] Sucesso ao enriquecer ALEXI PEREZ MARTINEZ: CPF=06610255199, Cidade=CORONEL FABRICIANO
+[2026-08-11 15:39:43] call_nova_vida_api chamado
+[2026-08-11 15:39:43] get_nova_vida_token chamado
+[2026-08-11 15:39:43] Efetuando HTTP POST Form de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-11 15:39:44] Retorno do Token XML (parcial): <?xml version="1.0" encoding="utf-8"?>
+<string xmlns="http://tempuri.org/">bXVuZGlhbGVkaXRvcmF8U1RSQG5ld3xNVU5ESUFMRURJVE9SQXwxMDU3N3wxX1RydWU7Ml9UcnVlOzNfVHJ1ZTs0X1RydWU7Nl9UcnVlOzdfVHJ1ZTs5X1RydWU7MTBfVHJ1ZTsxMV9UcnVlOzEyX1RydWU7MTNfVHJ1ZTsxNF9UcnVlOzE2X1RydWU7MjBfVHJ1ZTs1MF9UcnVlOzUxX1RydWU7NTJfVHJ1ZTs1M19UcnVlOzU1X1RydWU7NTZfVHJ1ZTs1OF9UcnVlOzU5X1RydWU7NjBfVHJ1ZTs2MV9UcnVlOzYyX1RydWU7NjNfVHJ1ZTs2NV9UcnVlOzY3X1RydWU7NjhfVHJ1ZTs3Nl9UcnVlOzc5X1RydWU7ODBfVHJ1ZTs5NV9UcnVlOzk3X1RydWU7OThfVHJ1ZTsxMDVfVHJ1ZTsxMDZfVHJ1ZTsyMTVfVHJ1ZTs3MjFfVHJ1ZTs4OTFfVHJ1ZTs4OTJfVHJ1ZTs5MDZfVHJ1ZTs5MjhfVHJ1ZTs5MjlfVHJ1ZTs5MzBfVHJ1ZTs5MzFfVHJ1ZTs5MzJfVHJ1ZTs5NDRfVHJ1ZTs5NDVfVHJ1ZTsxMTI3X1RydWU7MTEyOF9UcnVlOzExMzJfVHJ1ZTsxMTk3X1RydWU7MTE5OF9UcnVlOzExOTlfVHJ1ZTsxMjk0X1RydWU7MTMzMV9UcnVlOzEzMzJfVHJ1ZTsxMzMzX1RydWU7MTM0MF9UcnVlOzEzNDdfVHJ1ZTsxMzQ5X1RydWU7MTM2M19UcnVlOzE0MTRfVHJ1ZTsxNDIxX1RydWU7MTc5Nl9UcnVlOzE3OTdfVHJ1ZTsxODAzX1RydWU7MTgxOV9UcnVlOzE4MjVfVHJ1ZTsxODc2X1RydWU7MTg4N19UcnVlOzE5MzRfVHJ1ZTsxOTkxX1RydWU7
+[2026-08-11 15:39:44] Token extraído com sucesso
+[2026-08-11 15:39:44] Efetuando chamadas de enriquecimento para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/PesquisaAtributosUnico
+[2026-08-11 15:39:45] Resultado vazio ou Nada Consta para ALEXI PEREZ MARTINEZ com UF=BA. Tentando busca nacional...
+[2026-08-11 15:39:46] Sucesso ao enriquecer ALEXI PEREZ MARTINEZ: CPF=06610255199, Cidade=CORONEL FABRICIANO
+[2026-08-11 15:41:02] call_nova_vida_api chamado
+[2026-08-11 15:41:02] get_nova_vida_token chamado
+[2026-08-11 15:41:02] Efetuando HTTP POST Form de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-11 15:41:03] Retorno do Token XML (parcial): <?xml version="1.0" encoding="utf-8"?>
+<string xmlns="http://tempuri.org/">bXVuZGlhbGVkaXRvcmF8U1RSQG5ld3xNVU5ESUFMRURJVE9SQXwxMDU3N3wxX1RydWU7Ml9UcnVlOzNfVHJ1ZTs0X1RydWU7Nl9UcnVlOzdfVHJ1ZTs5X1RydWU7MTBfVHJ1ZTsxMV9UcnVlOzEyX1RydWU7MTNfVHJ1ZTsxNF9UcnVlOzE2X1RydWU7MjBfVHJ1ZTs1MF9UcnVlOzUxX1RydWU7NTJfVHJ1ZTs1M19UcnVlOzU1X1RydWU7NTZfVHJ1ZTs1OF9UcnVlOzU5X1RydWU7NjBfVHJ1ZTs2MV9UcnVlOzYyX1RydWU7NjNfVHJ1ZTs2NV9UcnVlOzY3X1RydWU7NjhfVHJ1ZTs3Nl9UcnVlOzc5X1RydWU7ODBfVHJ1ZTs5NV9UcnVlOzk3X1RydWU7OThfVHJ1ZTsxMDVfVHJ1ZTsxMDZfVHJ1ZTsyMTVfVHJ1ZTs3MjFfVHJ1ZTs4OTFfVHJ1ZTs4OTJfVHJ1ZTs5MDZfVHJ1ZTs5MjhfVHJ1ZTs5MjlfVHJ1ZTs5MzBfVHJ1ZTs5MzFfVHJ1ZTs5MzJfVHJ1ZTs5NDRfVHJ1ZTs5NDVfVHJ1ZTsxMTI3X1RydWU7MTEyOF9UcnVlOzExMzJfVHJ1ZTsxMTk3X1RydWU7MTE5OF9UcnVlOzExOTlfVHJ1ZTsxMjk0X1RydWU7MTMzMV9UcnVlOzEzMzJfVHJ1ZTsxMzMzX1RydWU7MTM0MF9UcnVlOzEzNDdfVHJ1ZTsxMzQ5X1RydWU7MTM2M19UcnVlOzE0MTRfVHJ1ZTsxNDIxX1RydWU7MTc5Nl9UcnVlOzE3OTdfVHJ1ZTsxODAzX1RydWU7MTgxOV9UcnVlOzE4MjVfVHJ1ZTsxODc2X1RydWU7MTg4N19UcnVlOzE5MzRfVHJ1ZTsxOTkxX1RydWU7
+[2026-08-11 15:41:03] Token extraído com sucesso
+[2026-08-11 15:41:03] Efetuando chamadas de enriquecimento para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/PesquisaAtributosUnico
+[2026-08-11 15:41:03] Resultado vazio ou Nada Consta para ALEXI PEREZ MARTINEZ com UF=BA. Tentando busca nacional...
+[2026-08-11 15:41:04] Sucesso ao enriquecer ALEXI PEREZ MARTINEZ: CPF=06610255199, Cidade=CORONEL FABRICIANO
+[2026-08-11 15:41:25] call_nova_vida_api chamado
+[2026-08-11 15:41:25] get_nova_vida_token chamado
+[2026-08-11 15:41:25] Efetuando HTTP POST Form de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-11 15:41:26] Retorno do Token XML (parcial): <?xml version="1.0" encoding="utf-8"?>
+<string xmlns="http://tempuri.org/">bXVuZGlhbGVkaXRvcmF8U1RSQG5ld3xNVU5ESUFMRURJVE9SQXwxMDU3N3wxX1RydWU7Ml9UcnVlOzNfVHJ1ZTs0X1RydWU7Nl9UcnVlOzdfVHJ1ZTs5X1RydWU7MTBfVHJ1ZTsxMV9UcnVlOzEyX1RydWU7MTNfVHJ1ZTsxNF9UcnVlOzE2X1RydWU7MjBfVHJ1ZTs1MF9UcnVlOzUxX1RydWU7NTJfVHJ1ZTs1M19UcnVlOzU1X1RydWU7NTZfVHJ1ZTs1OF9UcnVlOzU5X1RydWU7NjBfVHJ1ZTs2MV9UcnVlOzYyX1RydWU7NjNfVHJ1ZTs2NV9UcnVlOzY3X1RydWU7NjhfVHJ1ZTs3Nl9UcnVlOzc5X1RydWU7ODBfVHJ1ZTs5NV9UcnVlOzk3X1RydWU7OThfVHJ1ZTsxMDVfVHJ1ZTsxMDZfVHJ1ZTsyMTVfVHJ1ZTs3MjFfVHJ1ZTs4OTFfVHJ1ZTs4OTJfVHJ1ZTs5MDZfVHJ1ZTs5MjhfVHJ1ZTs5MjlfVHJ1ZTs5MzBfVHJ1ZTs5MzFfVHJ1ZTs5MzJfVHJ1ZTs5NDRfVHJ1ZTs5NDVfVHJ1ZTsxMTI3X1RydWU7MTEyOF9UcnVlOzExMzJfVHJ1ZTsxMTk3X1RydWU7MTE5OF9UcnVlOzExOTlfVHJ1ZTsxMjk0X1RydWU7MTMzMV9UcnVlOzEzMzJfVHJ1ZTsxMzMzX1RydWU7MTM0MF9UcnVlOzEzNDdfVHJ1ZTsxMzQ5X1RydWU7MTM2M19UcnVlOzE0MTRfVHJ1ZTsxNDIxX1RydWU7MTc5Nl9UcnVlOzE3OTdfVHJ1ZTsxODAzX1RydWU7MTgxOV9UcnVlOzE4MjVfVHJ1ZTsxODc2X1RydWU7MTg4N19UcnVlOzE5MzRfVHJ1ZTsxOTkxX1RydWU7
+[2026-08-11 15:41:26] Token extraído com sucesso
+[2026-08-11 15:41:26] Efetuando chamadas de enriquecimento para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/PesquisaAtributosUnico
+[2026-08-11 15:41:27] Resultado vazio ou Nada Consta para ALEXI PEREZ MARTINEZ com UF=BA. Tentando busca nacional...
+[2026-08-11 15:41:28] Sucesso ao enriquecer ALEXI PEREZ MARTINEZ: CPF=06610255199, Cidade=CORONEL FABRICIANO
+[2026-08-11 15:49:57] call_nova_vida_api chamado
+[2026-08-11 15:49:57] get_nova_vida_token chamado
+[2026-08-11 15:49:57] Efetuando HTTP POST Form de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-11 15:49:58] Retorno do Token XML (parcial): <?xml version="1.0" encoding="utf-8"?>
+<string xmlns="http://tempuri.org/">bXVuZGlhbGVkaXRvcmF8U1RSQG5ld3xNVU5ESUFMRURJVE9SQXwxMDU3N3wxX1RydWU7Ml9UcnVlOzNfVHJ1ZTs0X1RydWU7Nl9UcnVlOzdfVHJ1ZTs5X1RydWU7MTBfVHJ1ZTsxMV9UcnVlOzEyX1RydWU7MTNfVHJ1ZTsxNF9UcnVlOzE2X1RydWU7MjBfVHJ1ZTs1MF9UcnVlOzUxX1RydWU7NTJfVHJ1ZTs1M19UcnVlOzU1X1RydWU7NTZfVHJ1ZTs1OF9UcnVlOzU5X1RydWU7NjBfVHJ1ZTs2MV9UcnVlOzYyX1RydWU7NjNfVHJ1ZTs2NV9UcnVlOzY3X1RydWU7NjhfVHJ1ZTs3Nl9UcnVlOzc5X1RydWU7ODBfVHJ1ZTs5NV9UcnVlOzk3X1RydWU7OThfVHJ1ZTsxMDVfVHJ1ZTsxMDZfVHJ1ZTsyMTVfVHJ1ZTs3MjFfVHJ1ZTs4OTFfVHJ1ZTs4OTJfVHJ1ZTs5MDZfVHJ1ZTs5MjhfVHJ1ZTs5MjlfVHJ1ZTs5MzBfVHJ1ZTs5MzFfVHJ1ZTs5MzJfVHJ1ZTs5NDRfVHJ1ZTs5NDVfVHJ1ZTsxMTI3X1RydWU7MTEyOF9UcnVlOzExMzJfVHJ1ZTsxMTk3X1RydWU7MTE5OF9UcnVlOzExOTlfVHJ1ZTsxMjk0X1RydWU7MTMzMV9UcnVlOzEzMzJfVHJ1ZTsxMzMzX1RydWU7MTM0MF9UcnVlOzEzNDdfVHJ1ZTsxMzQ5X1RydWU7MTM2M19UcnVlOzE0MTRfVHJ1ZTsxNDIxX1RydWU7MTc5Nl9UcnVlOzE3OTdfVHJ1ZTsxODAzX1RydWU7MTgxOV9UcnVlOzE4MjVfVHJ1ZTsxODc2X1RydWU7MTg4N19UcnVlOzE5MzRfVHJ1ZTsxOTkxX1RydWU7
+[2026-08-11 15:49:58] Token extraído com sucesso
+[2026-08-11 15:49:58] Efetuando chamadas de enriquecimento para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/PesquisaAtributosUnico
+[2026-08-11 15:49:58] Resultado vazio ou Nada Consta para ALEXI PEREZ MARTINEZ com UF=BA. Tentando busca nacional...
+[2026-08-11 15:49:59] Sucesso ao enriquecer ALEXI PEREZ MARTINEZ: CPF=06610255199, Cidade=CORONEL FABRICIANO
+[2026-08-11 15:50:10] [000007] Thread de processamento iniciada para 2 registros
+[2026-08-11 15:50:10] get_nova_vida_token chamado
+[2026-08-11 15:50:10] Efetuando HTTP POST Form de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-11 15:50:11] Retorno do Token XML (parcial): <?xml version="1.0" encoding="utf-8"?>
+<string xmlns="http://tempuri.org/">bXVuZGlhbGVkaXRvcmF8U1RSQG5ld3xNVU5ESUFMRURJVE9SQXwxMDU3N3wxX1RydWU7Ml9UcnVlOzNfVHJ1ZTs0X1RydWU7Nl9UcnVlOzdfVHJ1ZTs5X1RydWU7MTBfVHJ1ZTsxMV9UcnVlOzEyX1RydWU7MTNfVHJ1ZTsxNF9UcnVlOzE2X1RydWU7MjBfVHJ1ZTs1MF9UcnVlOzUxX1RydWU7NTJfVHJ1ZTs1M19UcnVlOzU1X1RydWU7NTZfVHJ1ZTs1OF9UcnVlOzU5X1RydWU7NjBfVHJ1ZTs2MV9UcnVlOzYyX1RydWU7NjNfVHJ1ZTs2NV9UcnVlOzY3X1RydWU7NjhfVHJ1ZTs3Nl9UcnVlOzc5X1RydWU7ODBfVHJ1ZTs5NV9UcnVlOzk3X1RydWU7OThfVHJ1ZTsxMDVfVHJ1ZTsxMDZfVHJ1ZTsyMTVfVHJ1ZTs3MjFfVHJ1ZTs4OTFfVHJ1ZTs4OTJfVHJ1ZTs5MDZfVHJ1ZTs5MjhfVHJ1ZTs5MjlfVHJ1ZTs5MzBfVHJ1ZTs5MzFfVHJ1ZTs5MzJfVHJ1ZTs5NDRfVHJ1ZTs5NDVfVHJ1ZTsxMTI3X1RydWU7MTEyOF9UcnVlOzExMzJfVHJ1ZTsxMTk3X1RydWU7MTE5OF9UcnVlOzExOTlfVHJ1ZTsxMjk0X1RydWU7MTMzMV9UcnVlOzEzMzJfVHJ1ZTsxMzMzX1RydWU7MTM0MF9UcnVlOzEzNDdfVHJ1ZTsxMzQ5X1RydWU7MTM2M19UcnVlOzE0MTRfVHJ1ZTsxNDIxX1RydWU7MTc5Nl9UcnVlOzE3OTdfVHJ1ZTsxODAzX1RydWU7MTgxOV9UcnVlOzE4MjVfVHJ1ZTsxODc2X1RydWU7MTg4N19UcnVlOzE5MzRfVHJ1ZTsxOTkxX1RydWU7
+[2026-08-11 15:50:11] Token extraído com sucesso
+[2026-08-11 15:50:14] [000007] Thread de processamento concluída: 2 sucessos, 0 falhas.
+[2026-08-11 16:15:48] call_nova_vida_api chamado
+[2026-08-11 16:15:48] get_nova_vida_token chamado
+[2026-08-11 16:15:48] Efetuando HTTP POST Form de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-11 16:15:49] Retorno do Token XML (parcial): <?xml version="1.0" encoding="utf-8"?>
+<string xmlns="http://tempuri.org/">bXVuZGlhbGVkaXRvcmF8U1RSQG5ld3xNVU5ESUFMRURJVE9SQXwxMDU3N3wxX1RydWU7Ml9UcnVlOzNfVHJ1ZTs0X1RydWU7Nl9UcnVlOzdfVHJ1ZTs5X1RydWU7MTBfVHJ1ZTsxMV9UcnVlOzEyX1RydWU7MTNfVHJ1ZTsxNF9UcnVlOzE2X1RydWU7MjBfVHJ1ZTs1MF9UcnVlOzUxX1RydWU7NTJfVHJ1ZTs1M19UcnVlOzU1X1RydWU7NTZfVHJ1ZTs1OF9UcnVlOzU5X1RydWU7NjBfVHJ1ZTs2MV9UcnVlOzYyX1RydWU7NjNfVHJ1ZTs2NV9UcnVlOzY3X1RydWU7NjhfVHJ1ZTs3Nl9UcnVlOzc5X1RydWU7ODBfVHJ1ZTs5NV9UcnVlOzk3X1RydWU7OThfVHJ1ZTsxMDVfVHJ1ZTsxMDZfVHJ1ZTsyMTVfVHJ1ZTs3MjFfVHJ1ZTs4OTFfVHJ1ZTs4OTJfVHJ1ZTs5MDZfVHJ1ZTs5MjhfVHJ1ZTs5MjlfVHJ1ZTs5MzBfVHJ1ZTs5MzFfVHJ1ZTs5MzJfVHJ1ZTs5NDRfVHJ1ZTs5NDVfVHJ1ZTsxMTI3X1RydWU7MTEyOF9UcnVlOzExMzJfVHJ1ZTsxMTk3X1RydWU7MTE5OF9UcnVlOzExOTlfVHJ1ZTsxMjk0X1RydWU7MTMzMV9UcnVlOzEzMzJfVHJ1ZTsxMzMzX1RydWU7MTM0MF9UcnVlOzEzNDdfVHJ1ZTsxMzQ5X1RydWU7MTM2M19UcnVlOzE0MTRfVHJ1ZTsxNDIxX1RydWU7MTc5Nl9UcnVlOzE3OTdfVHJ1ZTsxODAzX1RydWU7MTgxOV9UcnVlOzE4MjVfVHJ1ZTsxODc2X1RydWU7MTg4N19UcnVlOzE5MzRfVHJ1ZTsxOTkxX1RydWU7
+[2026-08-11 16:15:49] Token extraído com sucesso
+[2026-08-11 16:15:49] Efetuando chamadas de enriquecimento para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/PesquisaAtributosUnico
+[2026-08-11 16:15:50] Resultado vazio ou Nada Consta para ALEXI PEREZ MARTINEZ com UF=BA. Tentando busca nacional...
+[2026-08-11 16:15:50] Sucesso ao enriquecer ALEXI PEREZ MARTINEZ: CPF=06610255199, Cidade=CORONEL FABRICIANO
+[2026-08-11 16:16:07] call_nova_vida_api chamado
+[2026-08-11 16:16:07] get_nova_vida_token chamado
+[2026-08-11 16:16:07] Efetuando HTTP POST Form de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-11 16:16:08] Retorno do Token XML (parcial): <?xml version="1.0" encoding="utf-8"?>
+<string xmlns="http://tempuri.org/">bXVuZGlhbGVkaXRvcmF8U1RSQG5ld3xNVU5ESUFMRURJVE9SQXwxMDU3N3wxX1RydWU7Ml9UcnVlOzNfVHJ1ZTs0X1RydWU7Nl9UcnVlOzdfVHJ1ZTs5X1RydWU7MTBfVHJ1ZTsxMV9UcnVlOzEyX1RydWU7MTNfVHJ1ZTsxNF9UcnVlOzE2X1RydWU7MjBfVHJ1ZTs1MF9UcnVlOzUxX1RydWU7NTJfVHJ1ZTs1M19UcnVlOzU1X1RydWU7NTZfVHJ1ZTs1OF9UcnVlOzU5X1RydWU7NjBfVHJ1ZTs2MV9UcnVlOzYyX1RydWU7NjNfVHJ1ZTs2NV9UcnVlOzY3X1RydWU7NjhfVHJ1ZTs3Nl9UcnVlOzc5X1RydWU7ODBfVHJ1ZTs5NV9UcnVlOzk3X1RydWU7OThfVHJ1ZTsxMDVfVHJ1ZTsxMDZfVHJ1ZTsyMTVfVHJ1ZTs3MjFfVHJ1ZTs4OTFfVHJ1ZTs4OTJfVHJ1ZTs5MDZfVHJ1ZTs5MjhfVHJ1ZTs5MjlfVHJ1ZTs5MzBfVHJ1ZTs5MzFfVHJ1ZTs5MzJfVHJ1ZTs5NDRfVHJ1ZTs5NDVfVHJ1ZTsxMTI3X1RydWU7MTEyOF9UcnVlOzExMzJfVHJ1ZTsxMTk3X1RydWU7MTE5OF9UcnVlOzExOTlfVHJ1ZTsxMjk0X1RydWU7MTMzMV9UcnVlOzEzMzJfVHJ1ZTsxMzMzX1RydWU7MTM0MF9UcnVlOzEzNDdfVHJ1ZTsxMzQ5X1RydWU7MTM2M19UcnVlOzE0MTRfVHJ1ZTsxNDIxX1RydWU7MTc5Nl9UcnVlOzE3OTdfVHJ1ZTsxODAzX1RydWU7MTgxOV9UcnVlOzE4MjVfVHJ1ZTsxODc2X1RydWU7MTg4N19UcnVlOzE5MzRfVHJ1ZTsxOTkxX1RydWU7
+[2026-08-11 16:16:08] Token extraído com sucesso
+[2026-08-11 16:16:08] Efetuando chamadas de enriquecimento para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/PesquisaAtributosUnico
+[2026-08-11 16:16:09] Resultado vazio ou Nada Consta para ALEXI PEREZ MARTINEZ com UF=BA. Tentando busca nacional...
+[2026-08-11 16:16:10] Sucesso ao enriquecer ALEXI PEREZ MARTINEZ: CPF=06610255199, Cidade=CORONEL FABRICIANO
+[2026-08-11 16:20:39] call_nova_vida_api chamado
+[2026-08-11 16:20:39] get_nova_vida_token chamado
+[2026-08-11 16:20:39] Efetuando HTTP POST Form de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-11 16:20:40] Retorno do Token XML (parcial): <?xml version="1.0" encoding="utf-8"?>
+<string xmlns="http://tempuri.org/">bXVuZGlhbGVkaXRvcmF8U1RSQG5ld3xNVU5ESUFMRURJVE9SQXwxMDU3N3wxX1RydWU7Ml9UcnVlOzNfVHJ1ZTs0X1RydWU7Nl9UcnVlOzdfVHJ1ZTs5X1RydWU7MTBfVHJ1ZTsxMV9UcnVlOzEyX1RydWU7MTNfVHJ1ZTsxNF9UcnVlOzE2X1RydWU7MjBfVHJ1ZTs1MF9UcnVlOzUxX1RydWU7NTJfVHJ1ZTs1M19UcnVlOzU1X1RydWU7NTZfVHJ1ZTs1OF9UcnVlOzU5X1RydWU7NjBfVHJ1ZTs2MV9UcnVlOzYyX1RydWU7NjNfVHJ1ZTs2NV9UcnVlOzY3X1RydWU7NjhfVHJ1ZTs3Nl9UcnVlOzc5X1RydWU7ODBfVHJ1ZTs5NV9UcnVlOzk3X1RydWU7OThfVHJ1ZTsxMDVfVHJ1ZTsxMDZfVHJ1ZTsyMTVfVHJ1ZTs3MjFfVHJ1ZTs4OTFfVHJ1ZTs4OTJfVHJ1ZTs5MDZfVHJ1ZTs5MjhfVHJ1ZTs5MjlfVHJ1ZTs5MzBfVHJ1ZTs5MzFfVHJ1ZTs5MzJfVHJ1ZTs5NDRfVHJ1ZTs5NDVfVHJ1ZTsxMTI3X1RydWU7MTEyOF9UcnVlOzExMzJfVHJ1ZTsxMTk3X1RydWU7MTE5OF9UcnVlOzExOTlfVHJ1ZTsxMjk0X1RydWU7MTMzMV9UcnVlOzEzMzJfVHJ1ZTsxMzMzX1RydWU7MTM0MF9UcnVlOzEzNDdfVHJ1ZTsxMzQ5X1RydWU7MTM2M19UcnVlOzE0MTRfVHJ1ZTsxNDIxX1RydWU7MTc5Nl9UcnVlOzE3OTdfVHJ1ZTsxODAzX1RydWU7MTgxOV9UcnVlOzE4MjVfVHJ1ZTsxODc2X1RydWU7MTg4N19UcnVlOzE5MzRfVHJ1ZTsxOTkxX1RydWU7
+[2026-08-11 16:20:40] Token extraído com sucesso
+[2026-08-11 16:20:40] Efetuando chamadas de enriquecimento para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/PesquisaAtributosUnico
+[2026-08-11 16:20:41] Resultado vazio ou Nada Consta para ALEXI PEREZ MARTINEZ com UF=BA. Tentando busca nacional...
+[2026-08-11 16:20:41] Sucesso ao enriquecer ALEXI PEREZ MARTINEZ: CPF=06610255199, Cidade=CORONEL FABRICIANO
+[2026-08-11 16:20:46] Thread de processamento iniciada para 2 registros
+[2026-08-11 16:20:46] get_nova_vida_token chamado
+[2026-08-11 16:20:46] Efetuando HTTP POST Form de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-11 16:20:47] Retorno do Token XML (parcial): <?xml version="1.0" encoding="utf-8"?>
+<string xmlns="http://tempuri.org/">bXVuZGlhbGVkaXRvcmF8U1RSQG5ld3xNVU5ESUFMRURJVE9SQXwxMDU3N3wxX1RydWU7Ml9UcnVlOzNfVHJ1ZTs0X1RydWU7Nl9UcnVlOzdfVHJ1ZTs5X1RydWU7MTBfVHJ1ZTsxMV9UcnVlOzEyX1RydWU7MTNfVHJ1ZTsxNF9UcnVlOzE2X1RydWU7MjBfVHJ1ZTs1MF9UcnVlOzUxX1RydWU7NTJfVHJ1ZTs1M19UcnVlOzU1X1RydWU7NTZfVHJ1ZTs1OF9UcnVlOzU5X1RydWU7NjBfVHJ1ZTs2MV9UcnVlOzYyX1RydWU7NjNfVHJ1ZTs2NV9UcnVlOzY3X1RydWU7NjhfVHJ1ZTs3Nl9UcnVlOzc5X1RydWU7ODBfVHJ1ZTs5NV9UcnVlOzk3X1RydWU7OThfVHJ1ZTsxMDVfVHJ1ZTsxMDZfVHJ1ZTsyMTVfVHJ1ZTs3MjFfVHJ1ZTs4OTFfVHJ1ZTs4OTJfVHJ1ZTs5MDZfVHJ1ZTs5MjhfVHJ1ZTs5MjlfVHJ1ZTs5MzBfVHJ1ZTs5MzFfVHJ1ZTs5MzJfVHJ1ZTs5NDRfVHJ1ZTs5NDVfVHJ1ZTsxMTI3X1RydWU7MTEyOF9UcnVlOzExMzJfVHJ1ZTsxMTk3X1RydWU7MTE5OF9UcnVlOzExOTlfVHJ1ZTsxMjk0X1RydWU7MTMzMV9UcnVlOzEzMzJfVHJ1ZTsxMzMzX1RydWU7MTM0MF9UcnVlOzEzNDdfVHJ1ZTsxMzQ5X1RydWU7MTM2M19UcnVlOzE0MTRfVHJ1ZTsxNDIxX1RydWU7MTc5Nl9UcnVlOzE3OTdfVHJ1ZTsxODAzX1RydWU7MTgxOV9UcnVlOzE4MjVfVHJ1ZTsxODc2X1RydWU7MTg4N19UcnVlOzE5MzRfVHJ1ZTsxOTkxX1RydWU7
+[2026-08-11 16:20:47] Token extraído com sucesso
+[2026-08-11 16:20:49] [] Thread de processamento concluída: 2 sucessos, 0 falhas.
+[2026-08-11 16:29:27] call_nova_vida_api chamado
+[2026-08-11 16:29:27] get_nova_vida_token chamado
+[2026-08-11 16:29:27] Efetuando HTTP POST Form de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-11 16:29:28] Retorno do Token XML (parcial): <?xml version="1.0" encoding="utf-8"?>
+<string xmlns="http://tempuri.org/">bXVuZGlhbGVkaXRvcmF8U1RSQG5ld3xNVU5ESUFMRURJVE9SQXwxMDU3N3wxX1RydWU7Ml9UcnVlOzNfVHJ1ZTs0X1RydWU7Nl9UcnVlOzdfVHJ1ZTs5X1RydWU7MTBfVHJ1ZTsxMV9UcnVlOzEyX1RydWU7MTNfVHJ1ZTsxNF9UcnVlOzE2X1RydWU7MjBfVHJ1ZTs1MF9UcnVlOzUxX1RydWU7NTJfVHJ1ZTs1M19UcnVlOzU1X1RydWU7NTZfVHJ1ZTs1OF9UcnVlOzU5X1RydWU7NjBfVHJ1ZTs2MV9UcnVlOzYyX1RydWU7NjNfVHJ1ZTs2NV9UcnVlOzY3X1RydWU7NjhfVHJ1ZTs3Nl9UcnVlOzc5X1RydWU7ODBfVHJ1ZTs5NV9UcnVlOzk3X1RydWU7OThfVHJ1ZTsxMDVfVHJ1ZTsxMDZfVHJ1ZTsyMTVfVHJ1ZTs3MjFfVHJ1ZTs4OTFfVHJ1ZTs4OTJfVHJ1ZTs5MDZfVHJ1ZTs5MjhfVHJ1ZTs5MjlfVHJ1ZTs5MzBfVHJ1ZTs5MzFfVHJ1ZTs5MzJfVHJ1ZTs5NDRfVHJ1ZTs5NDVfVHJ1ZTsxMTI3X1RydWU7MTEyOF9UcnVlOzExMzJfVHJ1ZTsxMTk3X1RydWU7MTE5OF9UcnVlOzExOTlfVHJ1ZTsxMjk0X1RydWU7MTMzMV9UcnVlOzEzMzJfVHJ1ZTsxMzMzX1RydWU7MTM0MF9UcnVlOzEzNDdfVHJ1ZTsxMzQ5X1RydWU7MTM2M19UcnVlOzE0MTRfVHJ1ZTsxNDIxX1RydWU7MTc5Nl9UcnVlOzE3OTdfVHJ1ZTsxODAzX1RydWU7MTgxOV9UcnVlOzE4MjVfVHJ1ZTsxODc2X1RydWU7MTg4N19UcnVlOzE5MzRfVHJ1ZTsxOTkxX1RydWU7
+[2026-08-11 16:29:28] Token extraído com sucesso
+[2026-08-11 16:29:28] Efetuando chamadas de enriquecimento para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/PesquisaAtributosUnico
+[2026-08-11 16:29:29] Resultado vazio ou Nada Consta para ALEXI PEREZ MARTINEZ com UF=CE. Tentando busca nacional...
+[2026-08-11 16:29:29] Não foi possível enriquecer ALEXI PEREZ MARTINEZ: Nada Consta
+[2026-08-11 16:29:29] Thread de processamento iniciada para 240 registros
+[2026-08-11 16:29:29] get_nova_vida_token chamado
+[2026-08-11 16:29:29] Efetuando HTTP POST Form de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-11 16:29:30] Retorno do Token XML (parcial): <?xml version="1.0" encoding="utf-8"?>
+<string xmlns="http://tempuri.org/">bXVuZGlhbGVkaXRvcmF8U1RSQG5ld3xNVU5ESUFMRURJVE9SQXwxMDU3N3wxX1RydWU7Ml9UcnVlOzNfVHJ1ZTs0X1RydWU7Nl9UcnVlOzdfVHJ1ZTs5X1RydWU7MTBfVHJ1ZTsxMV9UcnVlOzEyX1RydWU7MTNfVHJ1ZTsxNF9UcnVlOzE2X1RydWU7MjBfVHJ1ZTs1MF9UcnVlOzUxX1RydWU7NTJfVHJ1ZTs1M19UcnVlOzU1X1RydWU7NTZfVHJ1ZTs1OF9UcnVlOzU5X1RydWU7NjBfVHJ1ZTs2MV9UcnVlOzYyX1RydWU7NjNfVHJ1ZTs2NV9UcnVlOzY3X1RydWU7NjhfVHJ1ZTs3Nl9UcnVlOzc5X1RydWU7ODBfVHJ1ZTs5NV9UcnVlOzk3X1RydWU7OThfVHJ1ZTsxMDVfVHJ1ZTsxMDZfVHJ1ZTsyMTVfVHJ1ZTs3MjFfVHJ1ZTs4OTFfVHJ1ZTs4OTJfVHJ1ZTs5MDZfVHJ1ZTs5MjhfVHJ1ZTs5MjlfVHJ1ZTs5MzBfVHJ1ZTs5MzFfVHJ1ZTs5MzJfVHJ1ZTs5NDRfVHJ1ZTs5NDVfVHJ1ZTsxMTI3X1RydWU7MTEyOF9UcnVlOzExMzJfVHJ1ZTsxMTk3X1RydWU7MTE5OF9UcnVlOzExOTlfVHJ1ZTsxMjk0X1RydWU7MTMzMV9UcnVlOzEzMzJfVHJ1ZTsxMzMzX1RydWU7MTM0MF9UcnVlOzEzNDdfVHJ1ZTsxMzQ5X1RydWU7MTM2M19UcnVlOzE0MTRfVHJ1ZTsxNDIxX1RydWU7MTc5Nl9UcnVlOzE3OTdfVHJ1ZTsxODAzX1RydWU7MTgxOV9UcnVlOzE4MjVfVHJ1ZTsxODc2X1RydWU7MTg4N19UcnVlOzE5MzRfVHJ1ZTsxOTkxX1RydWU7
+[2026-08-11 16:29:30] Token extraído com sucesso
+[2026-08-11 16:31:58] call_nova_vida_api chamado
+[2026-08-11 16:31:58] get_nova_vida_token chamado
+[2026-08-11 16:31:58] Efetuando HTTP POST Form de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-11 16:31:59] Retorno do Token XML (parcial): <?xml version="1.0" encoding="utf-8"?>
+<string xmlns="http://tempuri.org/">bXVuZGlhbGVkaXRvcmF8U1RSQG5ld3xNVU5ESUFMRURJVE9SQXwxMDU3N3wxX1RydWU7Ml9UcnVlOzNfVHJ1ZTs0X1RydWU7Nl9UcnVlOzdfVHJ1ZTs5X1RydWU7MTBfVHJ1ZTsxMV9UcnVlOzEyX1RydWU7MTNfVHJ1ZTsxNF9UcnVlOzE2X1RydWU7MjBfVHJ1ZTs1MF9UcnVlOzUxX1RydWU7NTJfVHJ1ZTs1M19UcnVlOzU1X1RydWU7NTZfVHJ1ZTs1OF9UcnVlOzU5X1RydWU7NjBfVHJ1ZTs2MV9UcnVlOzYyX1RydWU7NjNfVHJ1ZTs2NV9UcnVlOzY3X1RydWU7NjhfVHJ1ZTs3Nl9UcnVlOzc5X1RydWU7ODBfVHJ1ZTs5NV9UcnVlOzk3X1RydWU7OThfVHJ1ZTsxMDVfVHJ1ZTsxMDZfVHJ1ZTsyMTVfVHJ1ZTs3MjFfVHJ1ZTs4OTFfVHJ1ZTs4OTJfVHJ1ZTs5MDZfVHJ1ZTs5MjhfVHJ1ZTs5MjlfVHJ1ZTs5MzBfVHJ1ZTs5MzFfVHJ1ZTs5MzJfVHJ1ZTs5NDRfVHJ1ZTs5NDVfVHJ1ZTsxMTI3X1RydWU7MTEyOF9UcnVlOzExMzJfVHJ1ZTsxMTk3X1RydWU7MTE5OF9UcnVlOzExOTlfVHJ1ZTsxMjk0X1RydWU7MTMzMV9UcnVlOzEzMzJfVHJ1ZTsxMzMzX1RydWU7MTM0MF9UcnVlOzEzNDdfVHJ1ZTsxMzQ5X1RydWU7MTM2M19UcnVlOzE0MTRfVHJ1ZTsxNDIxX1RydWU7MTc5Nl9UcnVlOzE3OTdfVHJ1ZTsxODAzX1RydWU7MTgxOV9UcnVlOzE4MjVfVHJ1ZTsxODc2X1RydWU7MTg4N19UcnVlOzE5MzRfVHJ1ZTsxOTkxX1RydWU7
+[2026-08-11 16:31:59] Token extraído com sucesso
+[2026-08-11 16:31:59] Efetuando chamadas de enriquecimento para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/PesquisaAtributosUnico
+[2026-08-11 16:31:59] Resultado vazio ou Nada Consta para ALEXI PEREZ MARTINEZ com UF=BA. Tentando busca nacional...
+[2026-08-11 16:32:00] Sucesso ao enriquecer ALEXI PEREZ MARTINEZ: CPF=06610255199, Cidade=CORONEL FABRICIANO
+[2026-08-11 16:32:00] Thread de processamento iniciada para 2 registros
+[2026-08-11 16:32:00] get_nova_vida_token chamado
+[2026-08-11 16:32:00] Efetuando HTTP POST Form de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-11 16:32:01] Retorno do Token XML (parcial): <?xml version="1.0" encoding="utf-8"?>
+<string xmlns="http://tempuri.org/">bXVuZGlhbGVkaXRvcmF8U1RSQG5ld3xNVU5ESUFMRURJVE9SQXwxMDU3N3wxX1RydWU7Ml9UcnVlOzNfVHJ1ZTs0X1RydWU7Nl9UcnVlOzdfVHJ1ZTs5X1RydWU7MTBfVHJ1ZTsxMV9UcnVlOzEyX1RydWU7MTNfVHJ1ZTsxNF9UcnVlOzE2X1RydWU7MjBfVHJ1ZTs1MF9UcnVlOzUxX1RydWU7NTJfVHJ1ZTs1M19UcnVlOzU1X1RydWU7NTZfVHJ1ZTs1OF9UcnVlOzU5X1RydWU7NjBfVHJ1ZTs2MV9UcnVlOzYyX1RydWU7NjNfVHJ1ZTs2NV9UcnVlOzY3X1RydWU7NjhfVHJ1ZTs3Nl9UcnVlOzc5X1RydWU7ODBfVHJ1ZTs5NV9UcnVlOzk3X1RydWU7OThfVHJ1ZTsxMDVfVHJ1ZTsxMDZfVHJ1ZTsyMTVfVHJ1ZTs3MjFfVHJ1ZTs4OTFfVHJ1ZTs4OTJfVHJ1ZTs5MDZfVHJ1ZTs5MjhfVHJ1ZTs5MjlfVHJ1ZTs5MzBfVHJ1ZTs5MzFfVHJ1ZTs5MzJfVHJ1ZTs5NDRfVHJ1ZTs5NDVfVHJ1ZTsxMTI3X1RydWU7MTEyOF9UcnVlOzExMzJfVHJ1ZTsxMTk3X1RydWU7MTE5OF9UcnVlOzExOTlfVHJ1ZTsxMjk0X1RydWU7MTMzMV9UcnVlOzEzMzJfVHJ1ZTsxMzMzX1RydWU7MTM0MF9UcnVlOzEzNDdfVHJ1ZTsxMzQ5X1RydWU7MTM2M19UcnVlOzE0MTRfVHJ1ZTsxNDIxX1RydWU7MTc5Nl9UcnVlOzE3OTdfVHJ1ZTsxODAzX1RydWU7MTgxOV9UcnVlOzE4MjVfVHJ1ZTsxODc2X1RydWU7MTg4N19UcnVlOzE5MzRfVHJ1ZTsxOTkxX1RydWU7
+[2026-08-11 16:32:01] Token extraído com sucesso
+[2026-08-11 16:32:03] [] Thread de processamento concluída: 2 sucessos, 0 falhas.
+[2026-08-11 16:35:55] [] Thread de processamento concluída: 150 sucessos, 90 falhas.
+[2026-08-11 16:36:07] call_nova_vida_api chamado
+[2026-08-11 16:36:07] get_nova_vida_token chamado
+[2026-08-11 16:36:07] Efetuando HTTP POST Form de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-11 16:36:08] Retorno do Token XML (parcial): <?xml version="1.0" encoding="utf-8"?>
+<string xmlns="http://tempuri.org/">bXVuZGlhbGVkaXRvcmF8U1RSQG5ld3xNVU5ESUFMRURJVE9SQXwxMDU3N3wxX1RydWU7Ml9UcnVlOzNfVHJ1ZTs0X1RydWU7Nl9UcnVlOzdfVHJ1ZTs5X1RydWU7MTBfVHJ1ZTsxMV9UcnVlOzEyX1RydWU7MTNfVHJ1ZTsxNF9UcnVlOzE2X1RydWU7MjBfVHJ1ZTs1MF9UcnVlOzUxX1RydWU7NTJfVHJ1ZTs1M19UcnVlOzU1X1RydWU7NTZfVHJ1ZTs1OF9UcnVlOzU5X1RydWU7NjBfVHJ1ZTs2MV9UcnVlOzYyX1RydWU7NjNfVHJ1ZTs2NV9UcnVlOzY3X1RydWU7NjhfVHJ1ZTs3Nl9UcnVlOzc5X1RydWU7ODBfVHJ1ZTs5NV9UcnVlOzk3X1RydWU7OThfVHJ1ZTsxMDVfVHJ1ZTsxMDZfVHJ1ZTsyMTVfVHJ1ZTs3MjFfVHJ1ZTs4OTFfVHJ1ZTs4OTJfVHJ1ZTs5MDZfVHJ1ZTs5MjhfVHJ1ZTs5MjlfVHJ1ZTs5MzBfVHJ1ZTs5MzFfVHJ1ZTs5MzJfVHJ1ZTs5NDRfVHJ1ZTs5NDVfVHJ1ZTsxMTI3X1RydWU7MTEyOF9UcnVlOzExMzJfVHJ1ZTsxMTk3X1RydWU7MTE5OF9UcnVlOzExOTlfVHJ1ZTsxMjk0X1RydWU7MTMzMV9UcnVlOzEzMzJfVHJ1ZTsxMzMzX1RydWU7MTM0MF9UcnVlOzEzNDdfVHJ1ZTsxMzQ5X1RydWU7MTM2M19UcnVlOzE0MTRfVHJ1ZTsxNDIxX1RydWU7MTc5Nl9UcnVlOzE3OTdfVHJ1ZTsxODAzX1RydWU7MTgxOV9UcnVlOzE4MjVfVHJ1ZTsxODc2X1RydWU7MTg4N19UcnVlOzE5MzRfVHJ1ZTsxOTkxX1RydWU7
+[2026-08-11 16:36:08] Token extraído com sucesso
+[2026-08-11 16:36:08] Efetuando chamadas de enriquecimento para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/PesquisaAtributosUnico
+[2026-08-11 16:36:09] Resultado vazio ou Nada Consta para ALEXI PEREZ MARTINEZ com UF=BA. Tentando busca nacional...
+[2026-08-11 16:36:10] Sucesso ao enriquecer ALEXI PEREZ MARTINEZ: CPF=06610255199, Cidade=CORONEL FABRICIANO
+[2026-08-11 16:36:22] Thread de processamento iniciada para 2 registros
+[2026-08-11 16:36:22] get_nova_vida_token chamado
+[2026-08-11 16:36:22] Efetuando HTTP POST Form de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-11 16:36:23] Retorno do Token XML (parcial): <?xml version="1.0" encoding="utf-8"?>
+<string xmlns="http://tempuri.org/">bXVuZGlhbGVkaXRvcmF8U1RSQG5ld3xNVU5ESUFMRURJVE9SQXwxMDU3N3wxX1RydWU7Ml9UcnVlOzNfVHJ1ZTs0X1RydWU7Nl9UcnVlOzdfVHJ1ZTs5X1RydWU7MTBfVHJ1ZTsxMV9UcnVlOzEyX1RydWU7MTNfVHJ1ZTsxNF9UcnVlOzE2X1RydWU7MjBfVHJ1ZTs1MF9UcnVlOzUxX1RydWU7NTJfVHJ1ZTs1M19UcnVlOzU1X1RydWU7NTZfVHJ1ZTs1OF9UcnVlOzU5X1RydWU7NjBfVHJ1ZTs2MV9UcnVlOzYyX1RydWU7NjNfVHJ1ZTs2NV9UcnVlOzY3X1RydWU7NjhfVHJ1ZTs3Nl9UcnVlOzc5X1RydWU7ODBfVHJ1ZTs5NV9UcnVlOzk3X1RydWU7OThfVHJ1ZTsxMDVfVHJ1ZTsxMDZfVHJ1ZTsyMTVfVHJ1ZTs3MjFfVHJ1ZTs4OTFfVHJ1ZTs4OTJfVHJ1ZTs5MDZfVHJ1ZTs5MjhfVHJ1ZTs5MjlfVHJ1ZTs5MzBfVHJ1ZTs5MzFfVHJ1ZTs5MzJfVHJ1ZTs5NDRfVHJ1ZTs5NDVfVHJ1ZTsxMTI3X1RydWU7MTEyOF9UcnVlOzExMzJfVHJ1ZTsxMTk3X1RydWU7MTE5OF9UcnVlOzExOTlfVHJ1ZTsxMjk0X1RydWU7MTMzMV9UcnVlOzEzMzJfVHJ1ZTsxMzMzX1RydWU7MTM0MF9UcnVlOzEzNDdfVHJ1ZTsxMzQ5X1RydWU7MTM2M19UcnVlOzE0MTRfVHJ1ZTsxNDIxX1RydWU7MTc5Nl9UcnVlOzE3OTdfVHJ1ZTsxODAzX1RydWU7MTgxOV9UcnVlOzE4MjVfVHJ1ZTsxODc2X1RydWU7MTg4N19UcnVlOzE5MzRfVHJ1ZTsxOTkxX1RydWU7
+[2026-08-11 16:36:23] Token extraído com sucesso
+[2026-08-11 16:36:25] [] Thread de processamento concluída: 2 sucessos, 0 falhas.
+[2026-08-11 16:44:54] call_nova_vida_api chamado
+[2026-08-11 16:44:54] get_nova_vida_token chamado
+[2026-08-11 16:44:54] Efetuando HTTP POST Form de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-11 16:44:54] Retorno do Token XML (parcial): <?xml version="1.0" encoding="utf-8"?>
+<string xmlns="http://tempuri.org/">bXVuZGlhbGVkaXRvcmF8U1RSQG5ld3xNVU5ESUFMRURJVE9SQXwxMDU3N3wxX1RydWU7Ml9UcnVlOzNfVHJ1ZTs0X1RydWU7Nl9UcnVlOzdfVHJ1ZTs5X1RydWU7MTBfVHJ1ZTsxMV9UcnVlOzEyX1RydWU7MTNfVHJ1ZTsxNF9UcnVlOzE2X1RydWU7MjBfVHJ1ZTs1MF9UcnVlOzUxX1RydWU7NTJfVHJ1ZTs1M19UcnVlOzU1X1RydWU7NTZfVHJ1ZTs1OF9UcnVlOzU5X1RydWU7NjBfVHJ1ZTs2MV9UcnVlOzYyX1RydWU7NjNfVHJ1ZTs2NV9UcnVlOzY3X1RydWU7NjhfVHJ1ZTs3Nl9UcnVlOzc5X1RydWU7ODBfVHJ1ZTs5NV9UcnVlOzk3X1RydWU7OThfVHJ1ZTsxMDVfVHJ1ZTsxMDZfVHJ1ZTsyMTVfVHJ1ZTs3MjFfVHJ1ZTs4OTFfVHJ1ZTs4OTJfVHJ1ZTs5MDZfVHJ1ZTs5MjhfVHJ1ZTs5MjlfVHJ1ZTs5MzBfVHJ1ZTs5MzFfVHJ1ZTs5MzJfVHJ1ZTs5NDRfVHJ1ZTs5NDVfVHJ1ZTsxMTI3X1RydWU7MTEyOF9UcnVlOzExMzJfVHJ1ZTsxMTk3X1RydWU7MTE5OF9UcnVlOzExOTlfVHJ1ZTsxMjk0X1RydWU7MTMzMV9UcnVlOzEzMzJfVHJ1ZTsxMzMzX1RydWU7MTM0MF9UcnVlOzEzNDdfVHJ1ZTsxMzQ5X1RydWU7MTM2M19UcnVlOzE0MTRfVHJ1ZTsxNDIxX1RydWU7MTc5Nl9UcnVlOzE3OTdfVHJ1ZTsxODAzX1RydWU7MTgxOV9UcnVlOzE4MjVfVHJ1ZTsxODc2X1RydWU7MTg4N19UcnVlOzE5MzRfVHJ1ZTsxOTkxX1RydWU7
+[2026-08-11 16:44:54] Token extraído com sucesso
+[2026-08-11 16:44:54] Efetuando chamadas de enriquecimento para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/PesquisaAtributosUnico
+[2026-08-11 16:44:55] Resultado vazio ou Nada Consta para ALEXI PEREZ MARTINEZ com UF=BA. Tentando busca nacional...
+[2026-08-11 16:46:25] call_nova_vida_api chamado
+[2026-08-11 16:46:25] get_nova_vida_token chamado
+[2026-08-11 16:46:25] Efetuando HTTP POST Form de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-11 16:46:25] Retorno do Token XML (parcial): <?xml version="1.0" encoding="utf-8"?>
+<string xmlns="http://tempuri.org/">bXVuZGlhbGVkaXRvcmF8U1RSQG5ld3xNVU5ESUFMRURJVE9SQXwxMDU3N3wxX1RydWU7Ml9UcnVlOzNfVHJ1ZTs0X1RydWU7Nl9UcnVlOzdfVHJ1ZTs5X1RydWU7MTBfVHJ1ZTsxMV9UcnVlOzEyX1RydWU7MTNfVHJ1ZTsxNF9UcnVlOzE2X1RydWU7MjBfVHJ1ZTs1MF9UcnVlOzUxX1RydWU7NTJfVHJ1ZTs1M19UcnVlOzU1X1RydWU7NTZfVHJ1ZTs1OF9UcnVlOzU5X1RydWU7NjBfVHJ1ZTs2MV9UcnVlOzYyX1RydWU7NjNfVHJ1ZTs2NV9UcnVlOzY3X1RydWU7NjhfVHJ1ZTs3Nl9UcnVlOzc5X1RydWU7ODBfVHJ1ZTs5NV9UcnVlOzk3X1RydWU7OThfVHJ1ZTsxMDVfVHJ1ZTsxMDZfVHJ1ZTsyMTVfVHJ1ZTs3MjFfVHJ1ZTs4OTFfVHJ1ZTs4OTJfVHJ1ZTs5MDZfVHJ1ZTs5MjhfVHJ1ZTs5MjlfVHJ1ZTs5MzBfVHJ1ZTs5MzFfVHJ1ZTs5MzJfVHJ1ZTs5NDRfVHJ1ZTs5NDVfVHJ1ZTsxMTI3X1RydWU7MTEyOF9UcnVlOzExMzJfVHJ1ZTsxMTk3X1RydWU7MTE5OF9UcnVlOzExOTlfVHJ1ZTsxMjk0X1RydWU7MTMzMV9UcnVlOzEzMzJfVHJ1ZTsxMzMzX1RydWU7MTM0MF9UcnVlOzEzNDdfVHJ1ZTsxMzQ5X1RydWU7MTM2M19UcnVlOzE0MTRfVHJ1ZTsxNDIxX1RydWU7MTc5Nl9UcnVlOzE3OTdfVHJ1ZTsxODAzX1RydWU7MTgxOV9UcnVlOzE4MjVfVHJ1ZTsxODc2X1RydWU7MTg4N19UcnVlOzE5MzRfVHJ1ZTsxOTkxX1RydWU7
+[2026-08-11 16:46:25] Token extraído com sucesso
+[2026-08-11 16:46:25] Efetuando chamadas de enriquecimento para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/PesquisaAtributosUnico
+[2026-08-11 16:46:26] Resultado vazio ou Nada Consta para ALEXI PEREZ MARTINEZ com UF=BA. Tentando busca nacional...
+[2026-08-11 16:46:27] Sucesso ao enriquecer ALEXI PEREZ MARTINEZ: CPF=06610255199, Cidade=CORONEL FABRICIANO
+[2026-08-11 16:46:52] call_nova_vida_api chamado
+[2026-08-11 16:46:52] get_nova_vida_token chamado
+[2026-08-11 16:46:52] Efetuando HTTP POST Form de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-11 16:46:53] Retorno do Token XML (parcial): <?xml version="1.0" encoding="utf-8"?>
+<string xmlns="http://tempuri.org/">bXVuZGlhbGVkaXRvcmF8U1RSQG5ld3xNVU5ESUFMRURJVE9SQXwxMDU3N3wxX1RydWU7Ml9UcnVlOzNfVHJ1ZTs0X1RydWU7Nl9UcnVlOzdfVHJ1ZTs5X1RydWU7MTBfVHJ1ZTsxMV9UcnVlOzEyX1RydWU7MTNfVHJ1ZTsxNF9UcnVlOzE2X1RydWU7MjBfVHJ1ZTs1MF9UcnVlOzUxX1RydWU7NTJfVHJ1ZTs1M19UcnVlOzU1X1RydWU7NTZfVHJ1ZTs1OF9UcnVlOzU5X1RydWU7NjBfVHJ1ZTs2MV9UcnVlOzYyX1RydWU7NjNfVHJ1ZTs2NV9UcnVlOzY3X1RydWU7NjhfVHJ1ZTs3Nl9UcnVlOzc5X1RydWU7ODBfVHJ1ZTs5NV9UcnVlOzk3X1RydWU7OThfVHJ1ZTsxMDVfVHJ1ZTsxMDZfVHJ1ZTsyMTVfVHJ1ZTs3MjFfVHJ1ZTs4OTFfVHJ1ZTs4OTJfVHJ1ZTs5MDZfVHJ1ZTs5MjhfVHJ1ZTs5MjlfVHJ1ZTs5MzBfVHJ1ZTs5MzFfVHJ1ZTs5MzJfVHJ1ZTs5NDRfVHJ1ZTs5NDVfVHJ1ZTsxMTI3X1RydWU7MTEyOF9UcnVlOzExMzJfVHJ1ZTsxMTk3X1RydWU7MTE5OF9UcnVlOzExOTlfVHJ1ZTsxMjk0X1RydWU7MTMzMV9UcnVlOzEzMzJfVHJ1ZTsxMzMzX1RydWU7MTM0MF9UcnVlOzEzNDdfVHJ1ZTsxMzQ5X1RydWU7MTM2M19UcnVlOzE0MTRfVHJ1ZTsxNDIxX1RydWU7MTc5Nl9UcnVlOzE3OTdfVHJ1ZTsxODAzX1RydWU7MTgxOV9UcnVlOzE4MjVfVHJ1ZTsxODc2X1RydWU7MTg4N19UcnVlOzE5MzRfVHJ1ZTsxOTkxX1RydWU7
+[2026-08-11 16:46:53] Token extraído com sucesso
+[2026-08-11 16:46:53] Efetuando chamadas de enriquecimento para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/PesquisaAtributosUnico
+[2026-08-11 16:46:54] Resultado vazio ou Nada Consta para ALEXI PEREZ MARTINEZ com UF=BA. Tentando busca nacional...
+[2026-08-11 16:46:55] Sucesso ao enriquecer ALEXI PEREZ MARTINEZ: CPF=06610255199, Cidade=CORONEL FABRICIANO
+[2026-08-11 16:46:55] Thread de processamento iniciada para 2 registros
+[2026-08-11 16:46:55] get_nova_vida_token chamado
+[2026-08-11 16:46:55] Efetuando HTTP POST Form de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-11 16:46:55] Retorno do Token XML (parcial): <?xml version="1.0" encoding="utf-8"?>
+<string xmlns="http://tempuri.org/">bXVuZGlhbGVkaXRvcmF8U1RSQG5ld3xNVU5ESUFMRURJVE9SQXwxMDU3N3wxX1RydWU7Ml9UcnVlOzNfVHJ1ZTs0X1RydWU7Nl9UcnVlOzdfVHJ1ZTs5X1RydWU7MTBfVHJ1ZTsxMV9UcnVlOzEyX1RydWU7MTNfVHJ1ZTsxNF9UcnVlOzE2X1RydWU7MjBfVHJ1ZTs1MF9UcnVlOzUxX1RydWU7NTJfVHJ1ZTs1M19UcnVlOzU1X1RydWU7NTZfVHJ1ZTs1OF9UcnVlOzU5X1RydWU7NjBfVHJ1ZTs2MV9UcnVlOzYyX1RydWU7NjNfVHJ1ZTs2NV9UcnVlOzY3X1RydWU7NjhfVHJ1ZTs3Nl9UcnVlOzc5X1RydWU7ODBfVHJ1ZTs5NV9UcnVlOzk3X1RydWU7OThfVHJ1ZTsxMDVfVHJ1ZTsxMDZfVHJ1ZTsyMTVfVHJ1ZTs3MjFfVHJ1ZTs4OTFfVHJ1ZTs4OTJfVHJ1ZTs5MDZfVHJ1ZTs5MjhfVHJ1ZTs5MjlfVHJ1ZTs5MzBfVHJ1ZTs5MzFfVHJ1ZTs5MzJfVHJ1ZTs5NDRfVHJ1ZTs5NDVfVHJ1ZTsxMTI3X1RydWU7MTEyOF9UcnVlOzExMzJfVHJ1ZTsxMTk3X1RydWU7MTE5OF9UcnVlOzExOTlfVHJ1ZTsxMjk0X1RydWU7MTMzMV9UcnVlOzEzMzJfVHJ1ZTsxMzMzX1RydWU7MTM0MF9UcnVlOzEzNDdfVHJ1ZTsxMzQ5X1RydWU7MTM2M19UcnVlOzE0MTRfVHJ1ZTsxNDIxX1RydWU7MTc5Nl9UcnVlOzE3OTdfVHJ1ZTsxODAzX1RydWU7MTgxOV9UcnVlOzE4MjVfVHJ1ZTsxODc2X1RydWU7MTg4N19UcnVlOzE5MzRfVHJ1ZTsxOTkxX1RydWU7
+[2026-08-11 16:46:55] Token extraído com sucesso
+[2026-08-11 16:46:58] [] Thread de processamento concluída: 2 sucessos, 0 falhas.
+[2026-08-11 16:47:09] call_nova_vida_api chamado
+[2026-08-11 16:47:09] get_nova_vida_token chamado
+[2026-08-11 16:47:09] Efetuando HTTP POST Form de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-11 16:47:10] Retorno do Token XML (parcial): <?xml version="1.0" encoding="utf-8"?>
+<string xmlns="http://tempuri.org/">bXVuZGlhbGVkaXRvcmF8U1RSQG5ld3xNVU5ESUFMRURJVE9SQXwxMDU3N3wxX1RydWU7Ml9UcnVlOzNfVHJ1ZTs0X1RydWU7Nl9UcnVlOzdfVHJ1ZTs5X1RydWU7MTBfVHJ1ZTsxMV9UcnVlOzEyX1RydWU7MTNfVHJ1ZTsxNF9UcnVlOzE2X1RydWU7MjBfVHJ1ZTs1MF9UcnVlOzUxX1RydWU7NTJfVHJ1ZTs1M19UcnVlOzU1X1RydWU7NTZfVHJ1ZTs1OF9UcnVlOzU5X1RydWU7NjBfVHJ1ZTs2MV9UcnVlOzYyX1RydWU7NjNfVHJ1ZTs2NV9UcnVlOzY3X1RydWU7NjhfVHJ1ZTs3Nl9UcnVlOzc5X1RydWU7ODBfVHJ1ZTs5NV9UcnVlOzk3X1RydWU7OThfVHJ1ZTsxMDVfVHJ1ZTsxMDZfVHJ1ZTsyMTVfVHJ1ZTs3MjFfVHJ1ZTs4OTFfVHJ1ZTs4OTJfVHJ1ZTs5MDZfVHJ1ZTs5MjhfVHJ1ZTs5MjlfVHJ1ZTs5MzBfVHJ1ZTs5MzFfVHJ1ZTs5MzJfVHJ1ZTs5NDRfVHJ1ZTs5NDVfVHJ1ZTsxMTI3X1RydWU7MTEyOF9UcnVlOzExMzJfVHJ1ZTsxMTk3X1RydWU7MTE5OF9UcnVlOzExOTlfVHJ1ZTsxMjk0X1RydWU7MTMzMV9UcnVlOzEzMzJfVHJ1ZTsxMzMzX1RydWU7MTM0MF9UcnVlOzEzNDdfVHJ1ZTsxMzQ5X1RydWU7MTM2M19UcnVlOzE0MTRfVHJ1ZTsxNDIxX1RydWU7MTc5Nl9UcnVlOzE3OTdfVHJ1ZTsxODAzX1RydWU7MTgxOV9UcnVlOzE4MjVfVHJ1ZTsxODc2X1RydWU7MTg4N19UcnVlOzE5MzRfVHJ1ZTsxOTkxX1RydWU7
+[2026-08-11 16:47:10] Token extraído com sucesso
+[2026-08-11 16:47:10] Efetuando chamadas de enriquecimento para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/PesquisaAtributosUnico
+[2026-08-11 16:47:11] Resultado vazio ou Nada Consta para ALEXI PEREZ MARTINEZ com UF=BA. Tentando busca nacional...
+[2026-08-11 16:47:12] Sucesso ao enriquecer ALEXI PEREZ MARTINEZ: CPF=06610255199, Cidade=CORONEL FABRICIANO
+[2026-08-11 16:47:12] Thread de processamento iniciada para 2 registros
+[2026-08-11 16:47:12] get_nova_vida_token chamado
+[2026-08-11 16:47:12] Efetuando HTTP POST Form de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-11 16:47:12] Retorno do Token XML (parcial): <?xml version="1.0" encoding="utf-8"?>
+<string xmlns="http://tempuri.org/">bXVuZGlhbGVkaXRvcmF8U1RSQG5ld3xNVU5ESUFMRURJVE9SQXwxMDU3N3wxX1RydWU7Ml9UcnVlOzNfVHJ1ZTs0X1RydWU7Nl9UcnVlOzdfVHJ1ZTs5X1RydWU7MTBfVHJ1ZTsxMV9UcnVlOzEyX1RydWU7MTNfVHJ1ZTsxNF9UcnVlOzE2X1RydWU7MjBfVHJ1ZTs1MF9UcnVlOzUxX1RydWU7NTJfVHJ1ZTs1M19UcnVlOzU1X1RydWU7NTZfVHJ1ZTs1OF9UcnVlOzU5X1RydWU7NjBfVHJ1ZTs2MV9UcnVlOzYyX1RydWU7NjNfVHJ1ZTs2NV9UcnVlOzY3X1RydWU7NjhfVHJ1ZTs3Nl9UcnVlOzc5X1RydWU7ODBfVHJ1ZTs5NV9UcnVlOzk3X1RydWU7OThfVHJ1ZTsxMDVfVHJ1ZTsxMDZfVHJ1ZTsyMTVfVHJ1ZTs3MjFfVHJ1ZTs4OTFfVHJ1ZTs4OTJfVHJ1ZTs5MDZfVHJ1ZTs5MjhfVHJ1ZTs5MjlfVHJ1ZTs5MzBfVHJ1ZTs5MzFfVHJ1ZTs5MzJfVHJ1ZTs5NDRfVHJ1ZTs5NDVfVHJ1ZTsxMTI3X1RydWU7MTEyOF9UcnVlOzExMzJfVHJ1ZTsxMTk3X1RydWU7MTE5OF9UcnVlOzExOTlfVHJ1ZTsxMjk0X1RydWU7MTMzMV9UcnVlOzEzMzJfVHJ1ZTsxMzMzX1RydWU7MTM0MF9UcnVlOzEzNDdfVHJ1ZTsxMzQ5X1RydWU7MTM2M19UcnVlOzE0MTRfVHJ1ZTsxNDIxX1RydWU7MTc5Nl9UcnVlOzE3OTdfVHJ1ZTsxODAzX1RydWU7MTgxOV9UcnVlOzE4MjVfVHJ1ZTsxODc2X1RydWU7MTg4N19UcnVlOzE5MzRfVHJ1ZTsxOTkxX1RydWU7
+[2026-08-11 16:47:12] Token extraído com sucesso
+[2026-08-11 16:47:17] [] Thread de processamento concluída: 2 sucessos, 0 falhas.
+[2026-08-11 16:49:24] call_nova_vida_api chamado
+[2026-08-11 16:49:24] get_nova_vida_token chamado
+[2026-08-11 16:49:24] Efetuando HTTP POST Form de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-11 16:49:25] Retorno do Token XML (parcial): <?xml version="1.0" encoding="utf-8"?>
+<string xmlns="http://tempuri.org/">bXVuZGlhbGVkaXRvcmF8U1RSQG5ld3xNVU5ESUFMRURJVE9SQXwxMDU3N3wxX1RydWU7Ml9UcnVlOzNfVHJ1ZTs0X1RydWU7Nl9UcnVlOzdfVHJ1ZTs5X1RydWU7MTBfVHJ1ZTsxMV9UcnVlOzEyX1RydWU7MTNfVHJ1ZTsxNF9UcnVlOzE2X1RydWU7MjBfVHJ1ZTs1MF9UcnVlOzUxX1RydWU7NTJfVHJ1ZTs1M19UcnVlOzU1X1RydWU7NTZfVHJ1ZTs1OF9UcnVlOzU5X1RydWU7NjBfVHJ1ZTs2MV9UcnVlOzYyX1RydWU7NjNfVHJ1ZTs2NV9UcnVlOzY3X1RydWU7NjhfVHJ1ZTs3Nl9UcnVlOzc5X1RydWU7ODBfVHJ1ZTs5NV9UcnVlOzk3X1RydWU7OThfVHJ1ZTsxMDVfVHJ1ZTsxMDZfVHJ1ZTsyMTVfVHJ1ZTs3MjFfVHJ1ZTs4OTFfVHJ1ZTs4OTJfVHJ1ZTs5MDZfVHJ1ZTs5MjhfVHJ1ZTs5MjlfVHJ1ZTs5MzBfVHJ1ZTs5MzFfVHJ1ZTs5MzJfVHJ1ZTs5NDRfVHJ1ZTs5NDVfVHJ1ZTsxMTI3X1RydWU7MTEyOF9UcnVlOzExMzJfVHJ1ZTsxMTk3X1RydWU7MTE5OF9UcnVlOzExOTlfVHJ1ZTsxMjk0X1RydWU7MTMzMV9UcnVlOzEzMzJfVHJ1ZTsxMzMzX1RydWU7MTM0MF9UcnVlOzEzNDdfVHJ1ZTsxMzQ5X1RydWU7MTM2M19UcnVlOzE0MTRfVHJ1ZTsxNDIxX1RydWU7MTc5Nl9UcnVlOzE3OTdfVHJ1ZTsxODAzX1RydWU7MTgxOV9UcnVlOzE4MjVfVHJ1ZTsxODc2X1RydWU7MTg4N19UcnVlOzE5MzRfVHJ1ZTsxOTkxX1RydWU7
+[2026-08-11 16:49:25] Token extraído com sucesso
+[2026-08-11 16:49:25] Efetuando chamadas de enriquecimento para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/PesquisaAtributosUnico
+[2026-08-11 16:49:26] Resultado vazio ou Nada Consta para ALEXI PEREZ MARTINEZ com UF=BA. Tentando busca nacional...
+[2026-08-11 16:49:27] Sucesso ao enriquecer ALEXI PEREZ MARTINEZ: CPF=06610255199, Cidade=CORONEL FABRICIANO
+[2026-08-11 16:49:33] Thread de processamento iniciada para 2 registros
+[2026-08-11 16:49:33] get_nova_vida_token chamado
+[2026-08-11 16:49:33] Efetuando HTTP POST Form de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-11 16:49:33] Retorno do Token XML (parcial): <?xml version="1.0" encoding="utf-8"?>
+<string xmlns="http://tempuri.org/">bXVuZGlhbGVkaXRvcmF8U1RSQG5ld3xNVU5ESUFMRURJVE9SQXwxMDU3N3wxX1RydWU7Ml9UcnVlOzNfVHJ1ZTs0X1RydWU7Nl9UcnVlOzdfVHJ1ZTs5X1RydWU7MTBfVHJ1ZTsxMV9UcnVlOzEyX1RydWU7MTNfVHJ1ZTsxNF9UcnVlOzE2X1RydWU7MjBfVHJ1ZTs1MF9UcnVlOzUxX1RydWU7NTJfVHJ1ZTs1M19UcnVlOzU1X1RydWU7NTZfVHJ1ZTs1OF9UcnVlOzU5X1RydWU7NjBfVHJ1ZTs2MV9UcnVlOzYyX1RydWU7NjNfVHJ1ZTs2NV9UcnVlOzY3X1RydWU7NjhfVHJ1ZTs3Nl9UcnVlOzc5X1RydWU7ODBfVHJ1ZTs5NV9UcnVlOzk3X1RydWU7OThfVHJ1ZTsxMDVfVHJ1ZTsxMDZfVHJ1ZTsyMTVfVHJ1ZTs3MjFfVHJ1ZTs4OTFfVHJ1ZTs4OTJfVHJ1ZTs5MDZfVHJ1ZTs5MjhfVHJ1ZTs5MjlfVHJ1ZTs5MzBfVHJ1ZTs5MzFfVHJ1ZTs5MzJfVHJ1ZTs5NDRfVHJ1ZTs5NDVfVHJ1ZTsxMTI3X1RydWU7MTEyOF9UcnVlOzExMzJfVHJ1ZTsxMTk3X1RydWU7MTE5OF9UcnVlOzExOTlfVHJ1ZTsxMjk0X1RydWU7MTMzMV9UcnVlOzEzMzJfVHJ1ZTsxMzMzX1RydWU7MTM0MF9UcnVlOzEzNDdfVHJ1ZTsxMzQ5X1RydWU7MTM2M19UcnVlOzE0MTRfVHJ1ZTsxNDIxX1RydWU7MTc5Nl9UcnVlOzE3OTdfVHJ1ZTsxODAzX1RydWU7MTgxOV9UcnVlOzE4MjVfVHJ1ZTsxODc2X1RydWU7MTg4N19UcnVlOzE5MzRfVHJ1ZTsxOTkxX1RydWU7
+[2026-08-11 16:49:33] Token extraído com sucesso
+[2026-08-11 16:49:36] [] Thread de processamento concluída: 2 sucessos, 0 falhas.
+[2026-08-11 16:54:28] call_nova_vida_api chamado
+[2026-08-11 16:54:28] get_nova_vida_token chamado
+[2026-08-11 16:54:28] Efetuando HTTP POST Form de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-11 16:54:28] Retorno do Token XML (parcial): <?xml version="1.0" encoding="utf-8"?>
+<string xmlns="http://tempuri.org/">bXVuZGlhbGVkaXRvcmF8U1RSQG5ld3xNVU5ESUFMRURJVE9SQXwxMDU3N3wxX1RydWU7Ml9UcnVlOzNfVHJ1ZTs0X1RydWU7Nl9UcnVlOzdfVHJ1ZTs5X1RydWU7MTBfVHJ1ZTsxMV9UcnVlOzEyX1RydWU7MTNfVHJ1ZTsxNF9UcnVlOzE2X1RydWU7MjBfVHJ1ZTs1MF9UcnVlOzUxX1RydWU7NTJfVHJ1ZTs1M19UcnVlOzU1X1RydWU7NTZfVHJ1ZTs1OF9UcnVlOzU5X1RydWU7NjBfVHJ1ZTs2MV9UcnVlOzYyX1RydWU7NjNfVHJ1ZTs2NV9UcnVlOzY3X1RydWU7NjhfVHJ1ZTs3Nl9UcnVlOzc5X1RydWU7ODBfVHJ1ZTs5NV9UcnVlOzk3X1RydWU7OThfVHJ1ZTsxMDVfVHJ1ZTsxMDZfVHJ1ZTsyMTVfVHJ1ZTs3MjFfVHJ1ZTs4OTFfVHJ1ZTs4OTJfVHJ1ZTs5MDZfVHJ1ZTs5MjhfVHJ1ZTs5MjlfVHJ1ZTs5MzBfVHJ1ZTs5MzFfVHJ1ZTs5MzJfVHJ1ZTs5NDRfVHJ1ZTs5NDVfVHJ1ZTsxMTI3X1RydWU7MTEyOF9UcnVlOzExMzJfVHJ1ZTsxMTk3X1RydWU7MTE5OF9UcnVlOzExOTlfVHJ1ZTsxMjk0X1RydWU7MTMzMV9UcnVlOzEzMzJfVHJ1ZTsxMzMzX1RydWU7MTM0MF9UcnVlOzEzNDdfVHJ1ZTsxMzQ5X1RydWU7MTM2M19UcnVlOzE0MTRfVHJ1ZTsxNDIxX1RydWU7MTc5Nl9UcnVlOzE3OTdfVHJ1ZTsxODAzX1RydWU7MTgxOV9UcnVlOzE4MjVfVHJ1ZTsxODc2X1RydWU7MTg4N19UcnVlOzE5MzRfVHJ1ZTsxOTkxX1RydWU7
+[2026-08-11 16:54:28] Token extraído com sucesso
+[2026-08-11 16:54:28] Efetuando chamadas de enriquecimento para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/PesquisaAtributosUnico
+[2026-08-11 16:54:29] Sucesso ao enriquecer DELFRANK ANANIAS DE SOUZA: CPF=06236690804, Cidade=VILHENA
+[2026-08-11 16:54:36] Thread de processamento iniciada para 70497 registros
+[2026-08-11 16:54:36] get_nova_vida_token chamado
+[2026-08-11 16:54:36] Efetuando HTTP POST Form de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-11 16:54:37] Retorno do Token XML (parcial): <?xml version="1.0" encoding="utf-8"?>
+<string xmlns="http://tempuri.org/">bXVuZGlhbGVkaXRvcmF8U1RSQG5ld3xNVU5ESUFMRURJVE9SQXwxMDU3N3wxX1RydWU7Ml9UcnVlOzNfVHJ1ZTs0X1RydWU7Nl9UcnVlOzdfVHJ1ZTs5X1RydWU7MTBfVHJ1ZTsxMV9UcnVlOzEyX1RydWU7MTNfVHJ1ZTsxNF9UcnVlOzE2X1RydWU7MjBfVHJ1ZTs1MF9UcnVlOzUxX1RydWU7NTJfVHJ1ZTs1M19UcnVlOzU1X1RydWU7NTZfVHJ1ZTs1OF9UcnVlOzU5X1RydWU7NjBfVHJ1ZTs2MV9UcnVlOzYyX1RydWU7NjNfVHJ1ZTs2NV9UcnVlOzY3X1RydWU7NjhfVHJ1ZTs3Nl9UcnVlOzc5X1RydWU7ODBfVHJ1ZTs5NV9UcnVlOzk3X1RydWU7OThfVHJ1ZTsxMDVfVHJ1ZTsxMDZfVHJ1ZTsyMTVfVHJ1ZTs3MjFfVHJ1ZTs4OTFfVHJ1ZTs4OTJfVHJ1ZTs5MDZfVHJ1ZTs5MjhfVHJ1ZTs5MjlfVHJ1ZTs5MzBfVHJ1ZTs5MzFfVHJ1ZTs5MzJfVHJ1ZTs5NDRfVHJ1ZTs5NDVfVHJ1ZTsxMTI3X1RydWU7MTEyOF9UcnVlOzExMzJfVHJ1ZTsxMTk3X1RydWU7MTE5OF9UcnVlOzExOTlfVHJ1ZTsxMjk0X1RydWU7MTMzMV9UcnVlOzEzMzJfVHJ1ZTsxMzMzX1RydWU7MTM0MF9UcnVlOzEzNDdfVHJ1ZTsxMzQ5X1RydWU7MTM2M19UcnVlOzE0MTRfVHJ1ZTsxNDIxX1RydWU7MTc5Nl9UcnVlOzE3OTdfVHJ1ZTsxODAzX1RydWU7MTgxOV9UcnVlOzE4MjVfVHJ1ZTsxODc2X1RydWU7MTg4N19UcnVlOzE5MzRfVHJ1ZTsxOTkxX1RydWU7
+[2026-08-11 16:54:37] Token extraído com sucesso
+[2026-08-11 16:57:40] call_nova_vida_api chamado
+[2026-08-11 16:57:40] get_nova_vida_token chamado
+[2026-08-11 16:57:40] Efetuando HTTP POST Form de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-11 16:57:41] Retorno do Token XML (parcial): <?xml version="1.0" encoding="utf-8"?>
+<string xmlns="http://tempuri.org/">bXVuZGlhbGVkaXRvcmF8U1RSQG5ld3xNVU5ESUFMRURJVE9SQXwxMDU3N3wxX1RydWU7Ml9UcnVlOzNfVHJ1ZTs0X1RydWU7Nl9UcnVlOzdfVHJ1ZTs5X1RydWU7MTBfVHJ1ZTsxMV9UcnVlOzEyX1RydWU7MTNfVHJ1ZTsxNF9UcnVlOzE2X1RydWU7MjBfVHJ1ZTs1MF9UcnVlOzUxX1RydWU7NTJfVHJ1ZTs1M19UcnVlOzU1X1RydWU7NTZfVHJ1ZTs1OF9UcnVlOzU5X1RydWU7NjBfVHJ1ZTs2MV9UcnVlOzYyX1RydWU7NjNfVHJ1ZTs2NV9UcnVlOzY3X1RydWU7NjhfVHJ1ZTs3Nl9UcnVlOzc5X1RydWU7ODBfVHJ1ZTs5NV9UcnVlOzk3X1RydWU7OThfVHJ1ZTsxMDVfVHJ1ZTsxMDZfVHJ1ZTsyMTVfVHJ1ZTs3MjFfVHJ1ZTs4OTFfVHJ1ZTs4OTJfVHJ1ZTs5MDZfVHJ1ZTs5MjhfVHJ1ZTs5MjlfVHJ1ZTs5MzBfVHJ1ZTs5MzFfVHJ1ZTs5MzJfVHJ1ZTs5NDRfVHJ1ZTs5NDVfVHJ1ZTsxMTI3X1RydWU7MTEyOF9UcnVlOzExMzJfVHJ1ZTsxMTk3X1RydWU7MTE5OF9UcnVlOzExOTlfVHJ1ZTsxMjk0X1RydWU7MTMzMV9UcnVlOzEzMzJfVHJ1ZTsxMzMzX1RydWU7MTM0MF9UcnVlOzEzNDdfVHJ1ZTsxMzQ5X1RydWU7MTM2M19UcnVlOzE0MTRfVHJ1ZTsxNDIxX1RydWU7MTc5Nl9UcnVlOzE3OTdfVHJ1ZTsxODAzX1RydWU7MTgxOV9UcnVlOzE4MjVfVHJ1ZTsxODc2X1RydWU7MTg4N19UcnVlOzE5MzRfVHJ1ZTsxOTkxX1RydWU7
+[2026-08-11 16:57:41] Token extraído com sucesso
+[2026-08-11 16:57:41] Efetuando chamadas de enriquecimento para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/PesquisaAtributosUnico
+[2026-08-11 16:57:42] Resultado vazio ou Nada Consta para ALEXI PEREZ MARTINEZ com UF=CE. Tentando busca nacional...
+[2026-08-11 16:57:42] Não foi possível enriquecer ALEXI PEREZ MARTINEZ: Nada Consta
+[2026-08-11 16:57:42] Thread de processamento iniciada para 240 registros
+[2026-08-11 16:57:42] get_nova_vida_token chamado
+[2026-08-11 16:57:42] Efetuando HTTP POST Form de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-11 16:57:43] Retorno do Token XML (parcial): <?xml version="1.0" encoding="utf-8"?>
+<string xmlns="http://tempuri.org/">bXVuZGlhbGVkaXRvcmF8U1RSQG5ld3xNVU5ESUFMRURJVE9SQXwxMDU3N3wxX1RydWU7Ml9UcnVlOzNfVHJ1ZTs0X1RydWU7Nl9UcnVlOzdfVHJ1ZTs5X1RydWU7MTBfVHJ1ZTsxMV9UcnVlOzEyX1RydWU7MTNfVHJ1ZTsxNF9UcnVlOzE2X1RydWU7MjBfVHJ1ZTs1MF9UcnVlOzUxX1RydWU7NTJfVHJ1ZTs1M19UcnVlOzU1X1RydWU7NTZfVHJ1ZTs1OF9UcnVlOzU5X1RydWU7NjBfVHJ1ZTs2MV9UcnVlOzYyX1RydWU7NjNfVHJ1ZTs2NV9UcnVlOzY3X1RydWU7NjhfVHJ1ZTs3Nl9UcnVlOzc5X1RydWU7ODBfVHJ1ZTs5NV9UcnVlOzk3X1RydWU7OThfVHJ1ZTsxMDVfVHJ1ZTsxMDZfVHJ1ZTsyMTVfVHJ1ZTs3MjFfVHJ1ZTs4OTFfVHJ1ZTs4OTJfVHJ1ZTs5MDZfVHJ1ZTs5MjhfVHJ1ZTs5MjlfVHJ1ZTs5MzBfVHJ1ZTs5MzFfVHJ1ZTs5MzJfVHJ1ZTs5NDRfVHJ1ZTs5NDVfVHJ1ZTsxMTI3X1RydWU7MTEyOF9UcnVlOzExMzJfVHJ1ZTsxMTk3X1RydWU7MTE5OF9UcnVlOzExOTlfVHJ1ZTsxMjk0X1RydWU7MTMzMV9UcnVlOzEzMzJfVHJ1ZTsxMzMzX1RydWU7MTM0MF9UcnVlOzEzNDdfVHJ1ZTsxMzQ5X1RydWU7MTM2M19UcnVlOzE0MTRfVHJ1ZTsxNDIxX1RydWU7MTc5Nl9UcnVlOzE3OTdfVHJ1ZTsxODAzX1RydWU7MTgxOV9UcnVlOzE4MjVfVHJ1ZTsxODc2X1RydWU7MTg4N19UcnVlOzE5MzRfVHJ1ZTsxOTkxX1RydWU7
+[2026-08-11 16:57:43] Token extraído com sucesso
+[2026-08-11 16:57:43] [27734de8-832a-4f2a-a0b6-6a6dfbcf539a] Processamento cancelado pelo usuário.
+[2026-08-11 17:00:13] call_nova_vida_api chamado
+[2026-08-11 17:00:13] get_nova_vida_token chamado
+[2026-08-11 17:00:13] Efetuando HTTP POST Form de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-11 17:00:14] Retorno do Token XML (parcial): <?xml version="1.0" encoding="utf-8"?>
+<string xmlns="http://tempuri.org/">bXVuZGlhbGVkaXRvcmF8U1RSQG5ld3xNVU5ESUFMRURJVE9SQXwxMDU3N3wxX1RydWU7Ml9UcnVlOzNfVHJ1ZTs0X1RydWU7Nl9UcnVlOzdfVHJ1ZTs5X1RydWU7MTBfVHJ1ZTsxMV9UcnVlOzEyX1RydWU7MTNfVHJ1ZTsxNF9UcnVlOzE2X1RydWU7MjBfVHJ1ZTs1MF9UcnVlOzUxX1RydWU7NTJfVHJ1ZTs1M19UcnVlOzU1X1RydWU7NTZfVHJ1ZTs1OF9UcnVlOzU5X1RydWU7NjBfVHJ1ZTs2MV9UcnVlOzYyX1RydWU7NjNfVHJ1ZTs2NV9UcnVlOzY3X1RydWU7NjhfVHJ1ZTs3Nl9UcnVlOzc5X1RydWU7ODBfVHJ1ZTs5NV9UcnVlOzk3X1RydWU7OThfVHJ1ZTsxMDVfVHJ1ZTsxMDZfVHJ1ZTsyMTVfVHJ1ZTs3MjFfVHJ1ZTs4OTFfVHJ1ZTs4OTJfVHJ1ZTs5MDZfVHJ1ZTs5MjhfVHJ1ZTs5MjlfVHJ1ZTs5MzBfVHJ1ZTs5MzFfVHJ1ZTs5MzJfVHJ1ZTs5NDRfVHJ1ZTs5NDVfVHJ1ZTsxMTI3X1RydWU7MTEyOF9UcnVlOzExMzJfVHJ1ZTsxMTk3X1RydWU7MTE5OF9UcnVlOzExOTlfVHJ1ZTsxMjk0X1RydWU7MTMzMV9UcnVlOzEzMzJfVHJ1ZTsxMzMzX1RydWU7MTM0MF9UcnVlOzEzNDdfVHJ1ZTsxMzQ5X1RydWU7MTM2M19UcnVlOzE0MTRfVHJ1ZTsxNDIxX1RydWU7MTc5Nl9UcnVlOzE3OTdfVHJ1ZTsxODAzX1RydWU7MTgxOV9UcnVlOzE4MjVfVHJ1ZTsxODc2X1RydWU7MTg4N19UcnVlOzE5MzRfVHJ1ZTsxOTkxX1RydWU7
+[2026-08-11 17:00:14] Token extraído com sucesso
+[2026-08-11 17:00:14] Efetuando chamadas de enriquecimento para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/PesquisaAtributosUnico
+[2026-08-11 17:00:14] Resultado vazio ou Nada Consta para JOAO DA SILVA com UF=SP. Tentando busca nacional...
+[2026-08-11 17:00:15] Não foi possível enriquecer JOAO DA SILVA: Nada Consta
+[2026-08-11 17:00:15] Thread de processamento concorrente iniciada para 5 registros
+[2026-08-11 17:00:15] get_nova_vida_token chamado
+[2026-08-11 17:00:15] Efetuando HTTP POST Form de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-11 17:00:16] Retorno do Token XML (parcial): <?xml version="1.0" encoding="utf-8"?>
+<string xmlns="http://tempuri.org/">bXVuZGlhbGVkaXRvcmF8U1RSQG5ld3xNVU5ESUFMRURJVE9SQXwxMDU3N3wxX1RydWU7Ml9UcnVlOzNfVHJ1ZTs0X1RydWU7Nl9UcnVlOzdfVHJ1ZTs5X1RydWU7MTBfVHJ1ZTsxMV9UcnVlOzEyX1RydWU7MTNfVHJ1ZTsxNF9UcnVlOzE2X1RydWU7MjBfVHJ1ZTs1MF9UcnVlOzUxX1RydWU7NTJfVHJ1ZTs1M19UcnVlOzU1X1RydWU7NTZfVHJ1ZTs1OF9UcnVlOzU5X1RydWU7NjBfVHJ1ZTs2MV9UcnVlOzYyX1RydWU7NjNfVHJ1ZTs2NV9UcnVlOzY3X1RydWU7NjhfVHJ1ZTs3Nl9UcnVlOzc5X1RydWU7ODBfVHJ1ZTs5NV9UcnVlOzk3X1RydWU7OThfVHJ1ZTsxMDVfVHJ1ZTsxMDZfVHJ1ZTsyMTVfVHJ1ZTs3MjFfVHJ1ZTs4OTFfVHJ1ZTs4OTJfVHJ1ZTs5MDZfVHJ1ZTs5MjhfVHJ1ZTs5MjlfVHJ1ZTs5MzBfVHJ1ZTs5MzFfVHJ1ZTs5MzJfVHJ1ZTs5NDRfVHJ1ZTs5NDVfVHJ1ZTsxMTI3X1RydWU7MTEyOF9UcnVlOzExMzJfVHJ1ZTsxMTk3X1RydWU7MTE5OF9UcnVlOzExOTlfVHJ1ZTsxMjk0X1RydWU7MTMzMV9UcnVlOzEzMzJfVHJ1ZTsxMzMzX1RydWU7MTM0MF9UcnVlOzEzNDdfVHJ1ZTsxMzQ5X1RydWU7MTM2M19UcnVlOzE0MTRfVHJ1ZTsxNDIxX1RydWU7MTc5Nl9UcnVlOzE3OTdfVHJ1ZTsxODAzX1RydWU7MTgxOV9UcnVlOzE4MjVfVHJ1ZTsxODc2X1RydWU7MTg4N19UcnVlOzE5MzRfVHJ1ZTsxOTkxX1RydWU7
+[2026-08-11 17:00:16] Token extraído com sucesso
+[2026-08-11 17:00:17] [] Thread de processamento concluída: 0 sucessos, 5 falhas.
+[2026-08-11 17:02:48] call_nova_vida_api chamado
+[2026-08-11 17:02:48] get_nova_vida_token chamado
+[2026-08-11 17:02:48] Efetuando HTTP POST Form de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-11 17:02:48] Retorno do Token XML (parcial): <?xml version="1.0" encoding="utf-8"?>
+<string xmlns="http://tempuri.org/">bXVuZGlhbGVkaXRvcmF8U1RSQG5ld3xNVU5ESUFMRURJVE9SQXwxMDU3N3wxX1RydWU7Ml9UcnVlOzNfVHJ1ZTs0X1RydWU7Nl9UcnVlOzdfVHJ1ZTs5X1RydWU7MTBfVHJ1ZTsxMV9UcnVlOzEyX1RydWU7MTNfVHJ1ZTsxNF9UcnVlOzE2X1RydWU7MjBfVHJ1ZTs1MF9UcnVlOzUxX1RydWU7NTJfVHJ1ZTs1M19UcnVlOzU1X1RydWU7NTZfVHJ1ZTs1OF9UcnVlOzU5X1RydWU7NjBfVHJ1ZTs2MV9UcnVlOzYyX1RydWU7NjNfVHJ1ZTs2NV9UcnVlOzY3X1RydWU7NjhfVHJ1ZTs3Nl9UcnVlOzc5X1RydWU7ODBfVHJ1ZTs5NV9UcnVlOzk3X1RydWU7OThfVHJ1ZTsxMDVfVHJ1ZTsxMDZfVHJ1ZTsyMTVfVHJ1ZTs3MjFfVHJ1ZTs4OTFfVHJ1ZTs4OTJfVHJ1ZTs5MDZfVHJ1ZTs5MjhfVHJ1ZTs5MjlfVHJ1ZTs5MzBfVHJ1ZTs5MzFfVHJ1ZTs5MzJfVHJ1ZTs5NDRfVHJ1ZTs5NDVfVHJ1ZTsxMTI3X1RydWU7MTEyOF9UcnVlOzExMzJfVHJ1ZTsxMTk3X1RydWU7MTE5OF9UcnVlOzExOTlfVHJ1ZTsxMjk0X1RydWU7MTMzMV9UcnVlOzEzMzJfVHJ1ZTsxMzMzX1RydWU7MTM0MF9UcnVlOzEzNDdfVHJ1ZTsxMzQ5X1RydWU7MTM2M19UcnVlOzE0MTRfVHJ1ZTsxNDIxX1RydWU7MTc5Nl9UcnVlOzE3OTdfVHJ1ZTsxODAzX1RydWU7MTgxOV9UcnVlOzE4MjVfVHJ1ZTsxODc2X1RydWU7MTg4N19UcnVlOzE5MzRfVHJ1ZTsxOTkxX1RydWU7
+[2026-08-11 17:02:48] Token extraído com sucesso
+[2026-08-11 17:02:48] Efetuando chamadas de enriquecimento para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/PesquisaAtributosUnico
+[2026-08-11 17:02:49] Sucesso ao enriquecer DELFRANK ANANIAS DE SOUZA: CPF=06236690804, Cidade=VILHENA
+[2026-08-11 17:02:52] Thread de processamento concorrente iniciada para 70497 registros
+[2026-08-11 17:02:52] get_nova_vida_token chamado
+[2026-08-11 17:02:52] Efetuando HTTP POST Form de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-11 17:02:53] Retorno do Token XML (parcial): <?xml version="1.0" encoding="utf-8"?>
+<string xmlns="http://tempuri.org/">bXVuZGlhbGVkaXRvcmF8U1RSQG5ld3xNVU5ESUFMRURJVE9SQXwxMDU3N3wxX1RydWU7Ml9UcnVlOzNfVHJ1ZTs0X1RydWU7Nl9UcnVlOzdfVHJ1ZTs5X1RydWU7MTBfVHJ1ZTsxMV9UcnVlOzEyX1RydWU7MTNfVHJ1ZTsxNF9UcnVlOzE2X1RydWU7MjBfVHJ1ZTs1MF9UcnVlOzUxX1RydWU7NTJfVHJ1ZTs1M19UcnVlOzU1X1RydWU7NTZfVHJ1ZTs1OF9UcnVlOzU5X1RydWU7NjBfVHJ1ZTs2MV9UcnVlOzYyX1RydWU7NjNfVHJ1ZTs2NV9UcnVlOzY3X1RydWU7NjhfVHJ1ZTs3Nl9UcnVlOzc5X1RydWU7ODBfVHJ1ZTs5NV9UcnVlOzk3X1RydWU7OThfVHJ1ZTsxMDVfVHJ1ZTsxMDZfVHJ1ZTsyMTVfVHJ1ZTs3MjFfVHJ1ZTs4OTFfVHJ1ZTs4OTJfVHJ1ZTs5MDZfVHJ1ZTs5MjhfVHJ1ZTs5MjlfVHJ1ZTs5MzBfVHJ1ZTs5MzFfVHJ1ZTs5MzJfVHJ1ZTs5NDRfVHJ1ZTs5NDVfVHJ1ZTsxMTI3X1RydWU7MTEyOF9UcnVlOzExMzJfVHJ1ZTsxMTk3X1RydWU7MTE5OF9UcnVlOzExOTlfVHJ1ZTsxMjk0X1RydWU7MTMzMV9UcnVlOzEzMzJfVHJ1ZTsxMzMzX1RydWU7MTM0MF9UcnVlOzEzNDdfVHJ1ZTsxMzQ5X1RydWU7MTM2M19UcnVlOzE0MTRfVHJ1ZTsxNDIxX1RydWU7MTc5Nl9UcnVlOzE3OTdfVHJ1ZTsxODAzX1RydWU7MTgxOV9UcnVlOzE4MjVfVHJ1ZTsxODc2X1RydWU7MTg4N19UcnVlOzE5MzRfVHJ1ZTsxOTkxX1RydWU7
+[2026-08-11 17:02:53] Token extraído com sucesso
+[2026-08-11 21:13:46] call_nova_vida_api chamado
+[2026-08-11 21:13:46] get_nova_vida_token chamado
+[2026-08-11 21:13:46] Efetuando HTTP POST Form de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-11 21:13:49] Retorno do Token XML (parcial): <?xml version="1.0" encoding="utf-8"?>
+<string xmlns="http://tempuri.org/">bXVuZGlhbGVkaXRvcmF8U1RSQG5ld3xNVU5ESUFMRURJVE9SQXwxMDU3N3wxX1RydWU7Ml9UcnVlOzNfVHJ1ZTs0X1RydWU7Nl9UcnVlOzdfVHJ1ZTs5X1RydWU7MTBfVHJ1ZTsxMV9UcnVlOzEyX1RydWU7MTNfVHJ1ZTsxNF9UcnVlOzE2X1RydWU7MjBfVHJ1ZTs1MF9UcnVlOzUxX1RydWU7NTJfVHJ1ZTs1M19UcnVlOzU1X1RydWU7NTZfVHJ1ZTs1OF9UcnVlOzU5X1RydWU7NjBfVHJ1ZTs2MV9UcnVlOzYyX1RydWU7NjNfVHJ1ZTs2NV9UcnVlOzY3X1RydWU7NjhfVHJ1ZTs3Nl9UcnVlOzc5X1RydWU7ODBfVHJ1ZTs5NV9UcnVlOzk3X1RydWU7OThfVHJ1ZTsxMDVfVHJ1ZTsxMDZfVHJ1ZTsyMTVfVHJ1ZTs3MjFfVHJ1ZTs4OTFfVHJ1ZTs4OTJfVHJ1ZTs5MDZfVHJ1ZTs5MjhfVHJ1ZTs5MjlfVHJ1ZTs5MzBfVHJ1ZTs5MzFfVHJ1ZTs5MzJfVHJ1ZTs5NDRfVHJ1ZTs5NDVfVHJ1ZTsxMTI3X1RydWU7MTEyOF9UcnVlOzExMzJfVHJ1ZTsxMTk3X1RydWU7MTE5OF9UcnVlOzExOTlfVHJ1ZTsxMjk0X1RydWU7MTMzMV9UcnVlOzEzMzJfVHJ1ZTsxMzMzX1RydWU7MTM0MF9UcnVlOzEzNDdfVHJ1ZTsxMzQ5X1RydWU7MTM2M19UcnVlOzE0MTRfVHJ1ZTsxNDIxX1RydWU7MTc5Nl9UcnVlOzE3OTdfVHJ1ZTsxODAzX1RydWU7MTgxOV9UcnVlOzE4MjVfVHJ1ZTsxODc2X1RydWU7MTg4N19UcnVlOzE5MzRfVHJ1ZTsxOTkxX1RydWU7
+[2026-08-11 21:13:49] Token extraído com sucesso
+[2026-08-11 21:13:49] Efetuando chamadas de enriquecimento para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/PesquisaAtributosUnico
+[2026-08-11 21:13:50] Resultado vazio ou Nada Consta para Maria Silva com UF=SP. Tentando busca nacional...
+[2026-08-11 21:13:51] Não foi possível enriquecer Maria Silva: Nada Consta
+[2026-08-11 21:14:19] call_nova_vida_api chamado
+[2026-08-11 21:14:19] get_nova_vida_token chamado
+[2026-08-11 21:14:19] Efetuando HTTP POST Form de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-11 21:14:20] Retorno do Token XML (parcial): <?xml version="1.0" encoding="utf-8"?>
+<string xmlns="http://tempuri.org/">bXVuZGlhbGVkaXRvcmF8U1RSQG5ld3xNVU5ESUFMRURJVE9SQXwxMDU3N3wxX1RydWU7Ml9UcnVlOzNfVHJ1ZTs0X1RydWU7Nl9UcnVlOzdfVHJ1ZTs5X1RydWU7MTBfVHJ1ZTsxMV9UcnVlOzEyX1RydWU7MTNfVHJ1ZTsxNF9UcnVlOzE2X1RydWU7MjBfVHJ1ZTs1MF9UcnVlOzUxX1RydWU7NTJfVHJ1ZTs1M19UcnVlOzU1X1RydWU7NTZfVHJ1ZTs1OF9UcnVlOzU5X1RydWU7NjBfVHJ1ZTs2MV9UcnVlOzYyX1RydWU7NjNfVHJ1ZTs2NV9UcnVlOzY3X1RydWU7NjhfVHJ1ZTs3Nl9UcnVlOzc5X1RydWU7ODBfVHJ1ZTs5NV9UcnVlOzk3X1RydWU7OThfVHJ1ZTsxMDVfVHJ1ZTsxMDZfVHJ1ZTsyMTVfVHJ1ZTs3MjFfVHJ1ZTs4OTFfVHJ1ZTs4OTJfVHJ1ZTs5MDZfVHJ1ZTs5MjhfVHJ1ZTs5MjlfVHJ1ZTs5MzBfVHJ1ZTs5MzFfVHJ1ZTs5MzJfVHJ1ZTs5NDRfVHJ1ZTs5NDVfVHJ1ZTsxMTI3X1RydWU7MTEyOF9UcnVlOzExMzJfVHJ1ZTsxMTk3X1RydWU7MTE5OF9UcnVlOzExOTlfVHJ1ZTsxMjk0X1RydWU7MTMzMV9UcnVlOzEzMzJfVHJ1ZTsxMzMzX1RydWU7MTM0MF9UcnVlOzEzNDdfVHJ1ZTsxMzQ5X1RydWU7MTM2M19UcnVlOzE0MTRfVHJ1ZTsxNDIxX1RydWU7MTc5Nl9UcnVlOzE3OTdfVHJ1ZTsxODAzX1RydWU7MTgxOV9UcnVlOzE4MjVfVHJ1ZTsxODc2X1RydWU7MTg4N19UcnVlOzE5MzRfVHJ1ZTsxOTkxX1RydWU7
+[2026-08-11 21:14:20] Token extraído com sucesso
+[2026-08-11 21:14:20] Efetuando chamadas de enriquecimento para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/PesquisaAtributosUnico
+[2026-08-11 21:14:21] Resultado vazio ou Nada Consta para Maria Silva com UF=SP. Tentando busca nacional...
+[2026-08-11 21:14:21] Não foi possível enriquecer Maria Silva: Nada Consta
+[2026-08-11 21:19:27] call_nova_vida_api chamado
+[2026-08-11 21:19:27] get_nova_vida_token chamado
+[2026-08-11 21:19:27] Efetuando HTTP POST Form de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-11 21:19:27] Retorno do Token XML (parcial): <?xml version="1.0" encoding="utf-8"?>
+<string xmlns="http://tempuri.org/">bXVuZGlhbGVkaXRvcmF8U1RSQG5ld3xNVU5ESUFMRURJVE9SQXwxMDU3N3wxX1RydWU7Ml9UcnVlOzNfVHJ1ZTs0X1RydWU7Nl9UcnVlOzdfVHJ1ZTs5X1RydWU7MTBfVHJ1ZTsxMV9UcnVlOzEyX1RydWU7MTNfVHJ1ZTsxNF9UcnVlOzE2X1RydWU7MjBfVHJ1ZTs1MF9UcnVlOzUxX1RydWU7NTJfVHJ1ZTs1M19UcnVlOzU1X1RydWU7NTZfVHJ1ZTs1OF9UcnVlOzU5X1RydWU7NjBfVHJ1ZTs2MV9UcnVlOzYyX1RydWU7NjNfVHJ1ZTs2NV9UcnVlOzY3X1RydWU7NjhfVHJ1ZTs3Nl9UcnVlOzc5X1RydWU7ODBfVHJ1ZTs5NV9UcnVlOzk3X1RydWU7OThfVHJ1ZTsxMDVfVHJ1ZTsxMDZfVHJ1ZTsyMTVfVHJ1ZTs3MjFfVHJ1ZTs4OTFfVHJ1ZTs4OTJfVHJ1ZTs5MDZfVHJ1ZTs5MjhfVHJ1ZTs5MjlfVHJ1ZTs5MzBfVHJ1ZTs5MzFfVHJ1ZTs5MzJfVHJ1ZTs5NDRfVHJ1ZTs5NDVfVHJ1ZTsxMTI3X1RydWU7MTEyOF9UcnVlOzExMzJfVHJ1ZTsxMTk3X1RydWU7MTE5OF9UcnVlOzExOTlfVHJ1ZTsxMjk0X1RydWU7MTMzMV9UcnVlOzEzMzJfVHJ1ZTsxMzMzX1RydWU7MTM0MF9UcnVlOzEzNDdfVHJ1ZTsxMzQ5X1RydWU7MTM2M19UcnVlOzE0MTRfVHJ1ZTsxNDIxX1RydWU7MTc5Nl9UcnVlOzE3OTdfVHJ1ZTsxODAzX1RydWU7MTgxOV9UcnVlOzE4MjVfVHJ1ZTsxODc2X1RydWU7MTg4N19UcnVlOzE5MzRfVHJ1ZTsxOTkxX1RydWU7
+[2026-08-11 21:19:27] Token extraído com sucesso
+[2026-08-11 21:19:27] Efetuando chamadas de enriquecimento para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/PesquisaAtributosUnico
+[2026-08-11 21:19:28] Resultado vazio ou Nada Consta para Maria Silva com UF=SP. Tentando busca nacional...
+[2026-08-11 21:19:29] Não foi possível enriquecer Maria Silva: Nada Consta
+[2026-08-11 21:38:22] Thread de processamento concorrente iniciada para 5 registros
+[2026-08-11 21:38:22] get_nova_vida_token chamado
+[2026-08-11 21:38:22] Efetuando HTTP POST Form de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-11 21:38:23] Retorno do Token XML (parcial): <?xml version="1.0" encoding="utf-8"?>
+<string xmlns="http://tempuri.org/">bXVuZGlhbGVkaXRvcmF8U1RSQG5ld3xNVU5ESUFMRURJVE9SQXwxMDU3N3wxX1RydWU7Ml9UcnVlOzNfVHJ1ZTs0X1RydWU7Nl9UcnVlOzdfVHJ1ZTs5X1RydWU7MTBfVHJ1ZTsxMV9UcnVlOzEyX1RydWU7MTNfVHJ1ZTsxNF9UcnVlOzE2X1RydWU7MjBfVHJ1ZTs1MF9UcnVlOzUxX1RydWU7NTJfVHJ1ZTs1M19UcnVlOzU1X1RydWU7NTZfVHJ1ZTs1OF9UcnVlOzU5X1RydWU7NjBfVHJ1ZTs2MV9UcnVlOzYyX1RydWU7NjNfVHJ1ZTs2NV9UcnVlOzY3X1RydWU7NjhfVHJ1ZTs3Nl9UcnVlOzc5X1RydWU7ODBfVHJ1ZTs5NV9UcnVlOzk3X1RydWU7OThfVHJ1ZTsxMDVfVHJ1ZTsxMDZfVHJ1ZTsyMTVfVHJ1ZTs3MjFfVHJ1ZTs4OTFfVHJ1ZTs4OTJfVHJ1ZTs5MDZfVHJ1ZTs5MjhfVHJ1ZTs5MjlfVHJ1ZTs5MzBfVHJ1ZTs5MzFfVHJ1ZTs5MzJfVHJ1ZTs5NDRfVHJ1ZTs5NDVfVHJ1ZTsxMTI3X1RydWU7MTEyOF9UcnVlOzExMzJfVHJ1ZTsxMTk3X1RydWU7MTE5OF9UcnVlOzExOTlfVHJ1ZTsxMjk0X1RydWU7MTMzMV9UcnVlOzEzMzJfVHJ1ZTsxMzMzX1RydWU7MTM0MF9UcnVlOzEzNDdfVHJ1ZTsxMzQ5X1RydWU7MTM2M19UcnVlOzE0MTRfVHJ1ZTsxNDIxX1RydWU7MTc5Nl9UcnVlOzE3OTdfVHJ1ZTsxODAzX1RydWU7MTgxOV9UcnVlOzE4MjVfVHJ1ZTsxODc2X1RydWU7MTg4N19UcnVlOzE5MzRfVHJ1ZTsxOTkxX1RydWU7
+[2026-08-11 21:38:23] Token extraído com sucesso
+[2026-08-11 21:38:25] [] Thread de processamento concluída: 0 sucessos, 5 falhas.
+[2026-08-11 22:23:14] Supabase request failed (POST https://yaresjmqcrpuiorpvbck.supabase.co/rest/v1/records): HTTP Error 400: Bad Request
+[2026-08-11 22:23:14] Fallback to in-memory STATE['records']
+[2026-08-11 22:23:22] Supabase request failed (POST https://yaresjmqcrpuiorpvbck.supabase.co/rest/v1/queue): HTTP Error 400: Bad Request
+[2026-08-11 22:23:22] Fallback to in-memory STATE['queue']
+[2026-08-11 22:23:22] Thread de processamento concorrente iniciada para 5 registros
+[2026-08-11 22:23:22] get_nova_vida_token chamado
+[2026-08-11 22:23:22] Efetuando HTTP POST Form de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-11 22:23:23] Retorno do Token XML (parcial): <?xml version="1.0" encoding="utf-8"?>
+<string xmlns="http://tempuri.org/">bXVuZGlhbGVkaXRvcmF8U1RSQG5ld3xNVU5ESUFMRURJVE9SQXwxMDU3N3wxX1RydWU7Ml9UcnVlOzNfVHJ1ZTs0X1RydWU7Nl9UcnVlOzdfVHJ1ZTs5X1RydWU7MTBfVHJ1ZTsxMV9UcnVlOzEyX1RydWU7MTNfVHJ1ZTsxNF9UcnVlOzE2X1RydWU7MjBfVHJ1ZTs1MF9UcnVlOzUxX1RydWU7NTJfVHJ1ZTs1M19UcnVlOzU1X1RydWU7NTZfVHJ1ZTs1OF9UcnVlOzU5X1RydWU7NjBfVHJ1ZTs2MV9UcnVlOzYyX1RydWU7NjNfVHJ1ZTs2NV9UcnVlOzY3X1RydWU7NjhfVHJ1ZTs3Nl9UcnVlOzc5X1RydWU7ODBfVHJ1ZTs5NV9UcnVlOzk3X1RydWU7OThfVHJ1ZTsxMDVfVHJ1ZTsxMDZfVHJ1ZTsyMTVfVHJ1ZTs3MjFfVHJ1ZTs4OTFfVHJ1ZTs4OTJfVHJ1ZTs5MDZfVHJ1ZTs5MjhfVHJ1ZTs5MjlfVHJ1ZTs5MzBfVHJ1ZTs5MzFfVHJ1ZTs5MzJfVHJ1ZTs5NDRfVHJ1ZTs5NDVfVHJ1ZTsxMTI3X1RydWU7MTEyOF9UcnVlOzExMzJfVHJ1ZTsxMTk3X1RydWU7MTE5OF9UcnVlOzExOTlfVHJ1ZTsxMjk0X1RydWU7MTMzMV9UcnVlOzEzMzJfVHJ1ZTsxMzMzX1RydWU7MTM0MF9UcnVlOzEzNDdfVHJ1ZTsxMzQ5X1RydWU7MTM2M19UcnVlOzE0MTRfVHJ1ZTsxNDIxX1RydWU7MTc5Nl9UcnVlOzE3OTdfVHJ1ZTsxODAzX1RydWU7MTgxOV9UcnVlOzE4MjVfVHJ1ZTsxODc2X1RydWU7MTg4N19UcnVlOzE5MzRfVHJ1ZTsxOTkxX1RydWU7
+[2026-08-11 22:23:23] Token extraído com sucesso
+[2026-08-11 22:23:26] [] Thread de processamento concluída: 0 sucessos, 5 falhas.
+[2026-08-11 22:23:44] Supabase request failed (POST https://yaresjmqcrpuiorpvbck.supabase.co/rest/v1/notifications): HTTP Error 401: Unauthorized
+[2026-08-11 22:23:44] Fallback to in-memory STATE['notifications']
+[2026-08-11 22:27:21] Supabase request failed (POST https://yaresjmqcrpuiorpvbck.supabase.co/rest/v1/records): HTTP Error 400: Bad Request
+[2026-08-11 22:27:21] Fallback to in-memory STATE['records']
+[2026-08-11 22:27:27] Supabase request failed (POST https://yaresjmqcrpuiorpvbck.supabase.co/rest/v1/queue): HTTP Error 400: Bad Request
+[2026-08-11 22:27:27] Fallback to in-memory STATE['queue']
+[2026-08-11 22:27:27] Thread de processamento concorrente iniciada para 5 registros
+[2026-08-11 22:27:27] get_nova_vida_token chamado
+[2026-08-11 22:27:27] Efetuando HTTP POST Form de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-11 22:27:28] Retorno do Token XML (parcial): <?xml version="1.0" encoding="utf-8"?>
+<string xmlns="http://tempuri.org/">bXVuZGlhbGVkaXRvcmF8U1RSQG5ld3xNVU5ESUFMRURJVE9SQXwxMDU3N3wxX1RydWU7Ml9UcnVlOzNfVHJ1ZTs0X1RydWU7Nl9UcnVlOzdfVHJ1ZTs5X1RydWU7MTBfVHJ1ZTsxMV9UcnVlOzEyX1RydWU7MTNfVHJ1ZTsxNF9UcnVlOzE2X1RydWU7MjBfVHJ1ZTs1MF9UcnVlOzUxX1RydWU7NTJfVHJ1ZTs1M19UcnVlOzU1X1RydWU7NTZfVHJ1ZTs1OF9UcnVlOzU5X1RydWU7NjBfVHJ1ZTs2MV9UcnVlOzYyX1RydWU7NjNfVHJ1ZTs2NV9UcnVlOzY3X1RydWU7NjhfVHJ1ZTs3Nl9UcnVlOzc5X1RydWU7ODBfVHJ1ZTs5NV9UcnVlOzk3X1RydWU7OThfVHJ1ZTsxMDVfVHJ1ZTsxMDZfVHJ1ZTsyMTVfVHJ1ZTs3MjFfVHJ1ZTs4OTFfVHJ1ZTs4OTJfVHJ1ZTs5MDZfVHJ1ZTs5MjhfVHJ1ZTs5MjlfVHJ1ZTs5MzBfVHJ1ZTs5MzFfVHJ1ZTs5MzJfVHJ1ZTs5NDRfVHJ1ZTs5NDVfVHJ1ZTsxMTI3X1RydWU7MTEyOF9UcnVlOzExMzJfVHJ1ZTsxMTk3X1RydWU7MTE5OF9UcnVlOzExOTlfVHJ1ZTsxMjk0X1RydWU7MTMzMV9UcnVlOzEzMzJfVHJ1ZTsxMzMzX1RydWU7MTM0MF9UcnVlOzEzNDdfVHJ1ZTsxMzQ5X1RydWU7MTM2M19UcnVlOzE0MTRfVHJ1ZTsxNDIxX1RydWU7MTc5Nl9UcnVlOzE3OTdfVHJ1ZTsxODAzX1RydWU7MTgxOV9UcnVlOzE4MjVfVHJ1ZTsxODc2X1RydWU7MTg4N19UcnVlOzE5MzRfVHJ1ZTsxOTkxX1RydWU7
+[2026-08-11 22:27:28] Token extraído com sucesso
+[2026-08-11 22:27:29] [] Thread de processamento concluída: 0 sucessos, 5 falhas.
+[2026-08-11 22:33:50] Supabase request failed (POST https://yaresjmqcrpuiorpvbck.supabase.co/rest/v1/records): HTTP Error 400: Bad Request
+[2026-08-11 22:33:50] Fallback to in-memory STATE['records']
+[2026-08-11 22:33:56] Supabase request failed (POST https://yaresjmqcrpuiorpvbck.supabase.co/rest/v1/queue): HTTP Error 400: Bad Request
+[2026-08-11 22:33:56] Fallback to in-memory STATE['queue']
+[2026-08-11 22:33:56] Thread de processamento concorrente iniciada para 5 registros
+[2026-08-11 22:33:56] get_nova_vida_token chamado
+[2026-08-11 22:33:56] Efetuando HTTP POST Form de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-11 22:33:58] Retorno do Token XML (parcial): <?xml version="1.0" encoding="utf-8"?>
+<string xmlns="http://tempuri.org/">bXVuZGlhbGVkaXRvcmF8U1RSQG5ld3xNVU5ESUFMRURJVE9SQXwxMDU3N3wxX1RydWU7Ml9UcnVlOzNfVHJ1ZTs0X1RydWU7Nl9UcnVlOzdfVHJ1ZTs5X1RydWU7MTBfVHJ1ZTsxMV9UcnVlOzEyX1RydWU7MTNfVHJ1ZTsxNF9UcnVlOzE2X1RydWU7MjBfVHJ1ZTs1MF9UcnVlOzUxX1RydWU7NTJfVHJ1ZTs1M19UcnVlOzU1X1RydWU7NTZfVHJ1ZTs1OF9UcnVlOzU5X1RydWU7NjBfVHJ1ZTs2MV9UcnVlOzYyX1RydWU7NjNfVHJ1ZTs2NV9UcnVlOzY3X1RydWU7NjhfVHJ1ZTs3Nl9UcnVlOzc5X1RydWU7ODBfVHJ1ZTs5NV9UcnVlOzk3X1RydWU7OThfVHJ1ZTsxMDVfVHJ1ZTsxMDZfVHJ1ZTsyMTVfVHJ1ZTs3MjFfVHJ1ZTs4OTFfVHJ1ZTs4OTJfVHJ1ZTs5MDZfVHJ1ZTs5MjhfVHJ1ZTs5MjlfVHJ1ZTs5MzBfVHJ1ZTs5MzFfVHJ1ZTs5MzJfVHJ1ZTs5NDRfVHJ1ZTs5NDVfVHJ1ZTsxMTI3X1RydWU7MTEyOF9UcnVlOzExMzJfVHJ1ZTsxMTk3X1RydWU7MTE5OF9UcnVlOzExOTlfVHJ1ZTsxMjk0X1RydWU7MTMzMV9UcnVlOzEzMzJfVHJ1ZTsxMzMzX1RydWU7MTM0MF9UcnVlOzEzNDdfVHJ1ZTsxMzQ5X1RydWU7MTM2M19UcnVlOzE0MTRfVHJ1ZTsxNDIxX1RydWU7MTc5Nl9UcnVlOzE3OTdfVHJ1ZTsxODAzX1RydWU7MTgxOV9UcnVlOzE4MjVfVHJ1ZTsxODc2X1RydWU7MTg4N19UcnVlOzE5MzRfVHJ1ZTsxOTkxX1RydWU7
+[2026-08-11 22:33:58] Token extraído com sucesso
+[2026-08-11 22:34:00] [] Thread de processamento concluída: 0 sucessos, 5 falhas.
+[2026-08-12 14:19:45] Supabase request failed (POST https://yaresjmqcrpuiorpvbck.supabase.co/rest/v1/records): HTTP Error 400: Bad Request
+[2026-08-12 14:19:45] Fallback to in-memory STATE['records']
+[2026-08-12 14:19:52] Supabase request failed (POST https://yaresjmqcrpuiorpvbck.supabase.co/rest/v1/queue): HTTP Error 400: Bad Request
+[2026-08-12 14:19:52] Fallback to in-memory STATE['queue']
+[2026-08-12 14:19:53] Thread de processamento concorrente iniciada para 8116 registros
+[2026-08-12 14:19:53] get_nova_vida_token chamado
+[2026-08-12 14:19:53] Efetuando HTTP POST Form de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-12 14:19:53] Retorno do Token XML (parcial): <?xml version="1.0" encoding="utf-8"?>
+<string xmlns="http://tempuri.org/">bXVuZGlhbGVkaXRvcmF8U1RSQG5ld3xNVU5ESUFMRURJVE9SQXwxMDU3N3wxX1RydWU7Ml9UcnVlOzNfVHJ1ZTs0X1RydWU7Nl9UcnVlOzdfVHJ1ZTs5X1RydWU7MTBfVHJ1ZTsxMV9UcnVlOzEyX1RydWU7MTNfVHJ1ZTsxNF9UcnVlOzE2X1RydWU7MjBfVHJ1ZTs1MF9UcnVlOzUxX1RydWU7NTJfVHJ1ZTs1M19UcnVlOzU1X1RydWU7NTZfVHJ1ZTs1OF9UcnVlOzU5X1RydWU7NjBfVHJ1ZTs2MV9UcnVlOzYyX1RydWU7NjNfVHJ1ZTs2NV9UcnVlOzY3X1RydWU7NjhfVHJ1ZTs3Nl9UcnVlOzc5X1RydWU7ODBfVHJ1ZTs5NV9UcnVlOzk3X1RydWU7OThfVHJ1ZTsxMDVfVHJ1ZTsxMDZfVHJ1ZTsyMTVfVHJ1ZTs3MjFfVHJ1ZTs4OTFfVHJ1ZTs4OTJfVHJ1ZTs5MDZfVHJ1ZTs5MjhfVHJ1ZTs5MjlfVHJ1ZTs5MzBfVHJ1ZTs5MzFfVHJ1ZTs5MzJfVHJ1ZTs5NDRfVHJ1ZTs5NDVfVHJ1ZTsxMTI3X1RydWU7MTEyOF9UcnVlOzExMzJfVHJ1ZTsxMTk3X1RydWU7MTE5OF9UcnVlOzExOTlfVHJ1ZTsxMjk0X1RydWU7MTMzMV9UcnVlOzEzMzJfVHJ1ZTsxMzMzX1RydWU7MTM0MF9UcnVlOzEzNDdfVHJ1ZTsxMzQ5X1RydWU7MTM2M19UcnVlOzE0MTRfVHJ1ZTsxNDIxX1RydWU7MTc5Nl9UcnVlOzE3OTdfVHJ1ZTsxODAzX1RydWU7MTgxOV9UcnVlOzE4MjVfVHJ1ZTsxODc2X1RydWU7MTg4N19UcnVlOzE5MzRfVHJ1ZTsxOTkxX1RydWU7
+[2026-08-12 14:19:53] Token extraído com sucesso
+[2026-08-12 14:22:49] Supabase request failed (POST https://yaresjmqcrpuiorpvbck.supabase.co/rest/v1/records): HTTP Error 400: Bad Request
+[2026-08-12 14:22:49] Fallback to in-memory STATE['records']
+[2026-08-12 14:22:55] Thread de processamento concorrente iniciada para 8116 registros
+[2026-08-12 14:22:55] get_nova_vida_token chamado
+[2026-08-12 14:22:55] Efetuando HTTP POST Form de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-12 14:22:55] Retorno do Token XML (parcial): <?xml version="1.0" encoding="utf-8"?>
+<string xmlns="http://tempuri.org/">bXVuZGlhbGVkaXRvcmF8U1RSQG5ld3xNVU5ESUFMRURJVE9SQXwxMDU3N3wxX1RydWU7Ml9UcnVlOzNfVHJ1ZTs0X1RydWU7Nl9UcnVlOzdfVHJ1ZTs5X1RydWU7MTBfVHJ1ZTsxMV9UcnVlOzEyX1RydWU7MTNfVHJ1ZTsxNF9UcnVlOzE2X1RydWU7MjBfVHJ1ZTs1MF9UcnVlOzUxX1RydWU7NTJfVHJ1ZTs1M19UcnVlOzU1X1RydWU7NTZfVHJ1ZTs1OF9UcnVlOzU5X1RydWU7NjBfVHJ1ZTs2MV9UcnVlOzYyX1RydWU7NjNfVHJ1ZTs2NV9UcnVlOzY3X1RydWU7NjhfVHJ1ZTs3Nl9UcnVlOzc5X1RydWU7ODBfVHJ1ZTs5NV9UcnVlOzk3X1RydWU7OThfVHJ1ZTsxMDVfVHJ1ZTsxMDZfVHJ1ZTsyMTVfVHJ1ZTs3MjFfVHJ1ZTs4OTFfVHJ1ZTs4OTJfVHJ1ZTs5MDZfVHJ1ZTs5MjhfVHJ1ZTs5MjlfVHJ1ZTs5MzBfVHJ1ZTs5MzFfVHJ1ZTs5MzJfVHJ1ZTs5NDRfVHJ1ZTs5NDVfVHJ1ZTsxMTI3X1RydWU7MTEyOF9UcnVlOzExMzJfVHJ1ZTsxMTk3X1RydWU7MTE5OF9UcnVlOzExOTlfVHJ1ZTsxMjk0X1RydWU7MTMzMV9UcnVlOzEzMzJfVHJ1ZTsxMzMzX1RydWU7MTM0MF9UcnVlOzEzNDdfVHJ1ZTsxMzQ5X1RydWU7MTM2M19UcnVlOzE0MTRfVHJ1ZTsxNDIxX1RydWU7MTc5Nl9UcnVlOzE3OTdfVHJ1ZTsxODAzX1RydWU7MTgxOV9UcnVlOzE4MjVfVHJ1ZTsxODc2X1RydWU7MTg4N19UcnVlOzE5MzRfVHJ1ZTsxOTkxX1RydWU7
+[2026-08-12 14:22:55] Token extraído com sucesso
+[2026-08-12 14:34:02] Supabase request failed (POST https://yaresjmqcrpuiorpvbck.supabase.co/rest/v1/records): HTTP Error 400: Bad Request
+[2026-08-12 14:34:02] Fallback to in-memory STATE['records']
+[2026-08-12 14:34:30] Thread de processamento concorrente iniciada para 8116 registros
+[2026-08-12 14:34:30] get_nova_vida_token chamado
+[2026-08-12 14:34:30] Efetuando HTTP POST Form de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-12 14:34:31] Retorno do Token XML (parcial): <?xml version="1.0" encoding="utf-8"?>
+<string xmlns="http://tempuri.org/">bXVuZGlhbGVkaXRvcmF8U1RSQG5ld3xNVU5ESUFMRURJVE9SQXwxMDU3N3wxX1RydWU7Ml9UcnVlOzNfVHJ1ZTs0X1RydWU7Nl9UcnVlOzdfVHJ1ZTs5X1RydWU7MTBfVHJ1ZTsxMV9UcnVlOzEyX1RydWU7MTNfVHJ1ZTsxNF9UcnVlOzE2X1RydWU7MjBfVHJ1ZTs1MF9UcnVlOzUxX1RydWU7NTJfVHJ1ZTs1M19UcnVlOzU1X1RydWU7NTZfVHJ1ZTs1OF9UcnVlOzU5X1RydWU7NjBfVHJ1ZTs2MV9UcnVlOzYyX1RydWU7NjNfVHJ1ZTs2NV9UcnVlOzY3X1RydWU7NjhfVHJ1ZTs3Nl9UcnVlOzc5X1RydWU7ODBfVHJ1ZTs5NV9UcnVlOzk3X1RydWU7OThfVHJ1ZTsxMDVfVHJ1ZTsxMDZfVHJ1ZTsyMTVfVHJ1ZTs3MjFfVHJ1ZTs4OTFfVHJ1ZTs4OTJfVHJ1ZTs5MDZfVHJ1ZTs5MjhfVHJ1ZTs5MjlfVHJ1ZTs5MzBfVHJ1ZTs5MzFfVHJ1ZTs5MzJfVHJ1ZTs5NDRfVHJ1ZTs5NDVfVHJ1ZTsxMTI3X1RydWU7MTEyOF9UcnVlOzExMzJfVHJ1ZTsxMTk3X1RydWU7MTE5OF9UcnVlOzExOTlfVHJ1ZTsxMjk0X1RydWU7MTMzMV9UcnVlOzEzMzJfVHJ1ZTsxMzMzX1RydWU7MTM0MF9UcnVlOzEzNDdfVHJ1ZTsxMzQ5X1RydWU7MTM2M19UcnVlOzE0MTRfVHJ1ZTsxNDIxX1RydWU7MTc5Nl9UcnVlOzE3OTdfVHJ1ZTsxODAzX1RydWU7MTgxOV9UcnVlOzE4MjVfVHJ1ZTsxODc2X1RydWU7MTg4N19UcnVlOzE5MzRfVHJ1ZTsxOTkxX1RydWU7
+[2026-08-12 14:34:31] Token extraído com sucesso
+[2026-08-12 14:35:18] [] Thread de processamento concluída: 0 sucessos, 8116 falhas.
+[2026-08-12 14:43:11] Supabase request failed (POST https://yaresjmqcrpuiorpvbck.supabase.co/rest/v1/records): HTTP Error 400: Bad Request
+[2026-08-12 14:43:11] Fallback to in-memory STATE['records']
+[2026-08-12 14:44:03] Thread de processamento concorrente iniciada para 10527 registros
+[2026-08-12 14:44:03] get_nova_vida_token chamado
+[2026-08-12 14:44:03] Efetuando HTTP POST Form de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-12 14:44:04] Retorno do Token XML (parcial): <?xml version="1.0" encoding="utf-8"?>
+<string xmlns="http://tempuri.org/">bXVuZGlhbGVkaXRvcmF8U1RSQG5ld3xNVU5ESUFMRURJVE9SQXwxMDU3N3wxX1RydWU7Ml9UcnVlOzNfVHJ1ZTs0X1RydWU7Nl9UcnVlOzdfVHJ1ZTs5X1RydWU7MTBfVHJ1ZTsxMV9UcnVlOzEyX1RydWU7MTNfVHJ1ZTsxNF9UcnVlOzE2X1RydWU7MjBfVHJ1ZTs1MF9UcnVlOzUxX1RydWU7NTJfVHJ1ZTs1M19UcnVlOzU1X1RydWU7NTZfVHJ1ZTs1OF9UcnVlOzU5X1RydWU7NjBfVHJ1ZTs2MV9UcnVlOzYyX1RydWU7NjNfVHJ1ZTs2NV9UcnVlOzY3X1RydWU7NjhfVHJ1ZTs3Nl9UcnVlOzc5X1RydWU7ODBfVHJ1ZTs5NV9UcnVlOzk3X1RydWU7OThfVHJ1ZTsxMDVfVHJ1ZTsxMDZfVHJ1ZTsyMTVfVHJ1ZTs3MjFfVHJ1ZTs4OTFfVHJ1ZTs4OTJfVHJ1ZTs5MDZfVHJ1ZTs5MjhfVHJ1ZTs5MjlfVHJ1ZTs5MzBfVHJ1ZTs5MzFfVHJ1ZTs5MzJfVHJ1ZTs5NDRfVHJ1ZTs5NDVfVHJ1ZTsxMTI3X1RydWU7MTEyOF9UcnVlOzExMzJfVHJ1ZTsxMTk3X1RydWU7MTE5OF9UcnVlOzExOTlfVHJ1ZTsxMjk0X1RydWU7MTMzMV9UcnVlOzEzMzJfVHJ1ZTsxMzMzX1RydWU7MTM0MF9UcnVlOzEzNDdfVHJ1ZTsxMzQ5X1RydWU7MTM2M19UcnVlOzE0MTRfVHJ1ZTsxNDIxX1RydWU7MTc5Nl9UcnVlOzE3OTdfVHJ1ZTsxODAzX1RydWU7MTgxOV9UcnVlOzE4MjVfVHJ1ZTsxODc2X1RydWU7MTg4N19UcnVlOzE5MzRfVHJ1ZTsxOTkxX1RydWU7
+[2026-08-12 14:44:04] Token extraído com sucesso
+[2026-08-12 15:47:08] Supabase request failed (POST https://yaresjmqcrpuiorpvbck.supabase.co/rest/v1/records): HTTP Error 400: Bad Request
+[2026-08-12 15:47:08] Fallback to in-memory STATE['records']
+[2026-08-12 15:47:21] Thread de processamento concorrente iniciada para 49 registros
+[2026-08-12 15:47:21] get_nova_vida_token chamado
+[2026-08-12 15:47:21] Efetuando HTTP POST Form de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-12 15:47:22] Retorno do Token XML (parcial): <?xml version="1.0" encoding="utf-8"?>
+<string xmlns="http://tempuri.org/">bXVuZGlhbGVkaXRvcmF8U1RSQG5ld3xNVU5ESUFMRURJVE9SQXwxMDU3N3wxX1RydWU7Ml9UcnVlOzNfVHJ1ZTs0X1RydWU7Nl9UcnVlOzdfVHJ1ZTs5X1RydWU7MTBfVHJ1ZTsxMV9UcnVlOzEyX1RydWU7MTNfVHJ1ZTsxNF9UcnVlOzE2X1RydWU7MjBfVHJ1ZTs1MF9UcnVlOzUxX1RydWU7NTJfVHJ1ZTs1M19UcnVlOzU1X1RydWU7NTZfVHJ1ZTs1OF9UcnVlOzU5X1RydWU7NjBfVHJ1ZTs2MV9UcnVlOzYyX1RydWU7NjNfVHJ1ZTs2NV9UcnVlOzY3X1RydWU7NjhfVHJ1ZTs3Nl9UcnVlOzc5X1RydWU7ODBfVHJ1ZTs5NV9UcnVlOzk3X1RydWU7OThfVHJ1ZTsxMDVfVHJ1ZTsxMDZfVHJ1ZTsyMTVfVHJ1ZTs3MjFfVHJ1ZTs4OTFfVHJ1ZTs4OTJfVHJ1ZTs5MDZfVHJ1ZTs5MjhfVHJ1ZTs5MjlfVHJ1ZTs5MzBfVHJ1ZTs5MzFfVHJ1ZTs5MzJfVHJ1ZTs5NDRfVHJ1ZTs5NDVfVHJ1ZTsxMTI3X1RydWU7MTEyOF9UcnVlOzExMzJfVHJ1ZTsxMTk3X1RydWU7MTE5OF9UcnVlOzExOTlfVHJ1ZTsxMjk0X1RydWU7MTMzMV9UcnVlOzEzMzJfVHJ1ZTsxMzMzX1RydWU7MTM0MF9UcnVlOzEzNDdfVHJ1ZTsxMzQ5X1RydWU7MTM2M19UcnVlOzE0MTRfVHJ1ZTsxNDIxX1RydWU7MTc5Nl9UcnVlOzE3OTdfVHJ1ZTsxODAzX1RydWU7MTgxOV9UcnVlOzE4MjVfVHJ1ZTsxODc2X1RydWU7MTg4N19UcnVlOzE5MzRfVHJ1ZTsxOTkxX1RydWU7
+[2026-08-12 15:47:22] Token extraído com sucesso
+[2026-08-12 15:47:24] [] Thread de processamento concluída: 21 sucessos, 28 falhas.
+[2026-08-12 15:48:14] Supabase request failed (POST https://yaresjmqcrpuiorpvbck.supabase.co/rest/v1/notifications): HTTP Error 401: Unauthorized
+[2026-08-12 15:48:14] Fallback to in-memory STATE['notifications']
+[2026-08-12 15:51:39] Supabase request failed (POST https://yaresjmqcrpuiorpvbck.supabase.co/rest/v1/records): HTTP Error 400: Bad Request
+[2026-08-12 15:51:39] Fallback to in-memory STATE['records']
+[2026-08-12 15:51:41] Supabase request failed (POST https://yaresjmqcrpuiorpvbck.supabase.co/rest/v1/queue): HTTP Error 400: Bad Request
+[2026-08-12 15:51:41] Fallback to in-memory STATE['queue']
+[2026-08-12 15:51:42] Thread de processamento concorrente iniciada para 49 registros
+[2026-08-12 15:51:42] get_nova_vida_token chamado
+[2026-08-12 15:51:42] Efetuando HTTP POST Form de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-12 15:51:42] Retorno do Token XML (parcial): <?xml version="1.0" encoding="utf-8"?>
+<string xmlns="http://tempuri.org/">bXVuZGlhbGVkaXRvcmF8U1RSQG5ld3xNVU5ESUFMRURJVE9SQXwxMDU3N3wxX1RydWU7Ml9UcnVlOzNfVHJ1ZTs0X1RydWU7Nl9UcnVlOzdfVHJ1ZTs5X1RydWU7MTBfVHJ1ZTsxMV9UcnVlOzEyX1RydWU7MTNfVHJ1ZTsxNF9UcnVlOzE2X1RydWU7MjBfVHJ1ZTs1MF9UcnVlOzUxX1RydWU7NTJfVHJ1ZTs1M19UcnVlOzU1X1RydWU7NTZfVHJ1ZTs1OF9UcnVlOzU5X1RydWU7NjBfVHJ1ZTs2MV9UcnVlOzYyX1RydWU7NjNfVHJ1ZTs2NV9UcnVlOzY3X1RydWU7NjhfVHJ1ZTs3Nl9UcnVlOzc5X1RydWU7ODBfVHJ1ZTs5NV9UcnVlOzk3X1RydWU7OThfVHJ1ZTsxMDVfVHJ1ZTsxMDZfVHJ1ZTsyMTVfVHJ1ZTs3MjFfVHJ1ZTs4OTFfVHJ1ZTs4OTJfVHJ1ZTs5MDZfVHJ1ZTs5MjhfVHJ1ZTs5MjlfVHJ1ZTs5MzBfVHJ1ZTs5MzFfVHJ1ZTs5MzJfVHJ1ZTs5NDRfVHJ1ZTs5NDVfVHJ1ZTsxMTI3X1RydWU7MTEyOF9UcnVlOzExMzJfVHJ1ZTsxMTk3X1RydWU7MTE5OF9UcnVlOzExOTlfVHJ1ZTsxMjk0X1RydWU7MTMzMV9UcnVlOzEzMzJfVHJ1ZTsxMzMzX1RydWU7MTM0MF9UcnVlOzEzNDdfVHJ1ZTsxMzQ5X1RydWU7MTM2M19UcnVlOzE0MTRfVHJ1ZTsxNDIxX1RydWU7MTc5Nl9UcnVlOzE3OTdfVHJ1ZTsxODAzX1RydWU7MTgxOV9UcnVlOzE4MjVfVHJ1ZTsxODc2X1RydWU7MTg4N19UcnVlOzE5MzRfVHJ1ZTsxOTkxX1RydWU7
+[2026-08-12 15:51:42] Token extraído com sucesso
+[2026-08-12 15:51:45] [] Thread de processamento concluída: 21 sucessos, 28 falhas.
+[2026-08-12 15:52:09] Supabase request failed (POST https://yaresjmqcrpuiorpvbck.supabase.co/rest/v1/notifications): HTTP Error 401: Unauthorized
+[2026-08-12 15:52:09] Fallback to in-memory STATE['notifications']
+[2026-08-12 15:54:08] Supabase request failed (POST https://yaresjmqcrpuiorpvbck.supabase.co/rest/v1/records): HTTP Error 400: Bad Request
+[2026-08-12 15:54:08] Fallback to in-memory STATE['records']
+[2026-08-12 15:54:10] Supabase request failed (POST https://yaresjmqcrpuiorpvbck.supabase.co/rest/v1/queue): HTTP Error 400: Bad Request
+[2026-08-12 15:54:10] Fallback to in-memory STATE['queue']
+[2026-08-12 15:54:11] Thread de processamento concorrente iniciada para 49 registros
+[2026-08-12 15:54:11] get_nova_vida_token chamado
+[2026-08-12 15:54:11] Efetuando HTTP POST Form de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-12 15:54:11] Retorno do Token XML (parcial): <?xml version="1.0" encoding="utf-8"?>
+<string xmlns="http://tempuri.org/">bXVuZGlhbGVkaXRvcmF8U1RSQG5ld3xNVU5ESUFMRURJVE9SQXwxMDU3N3wxX1RydWU7Ml9UcnVlOzNfVHJ1ZTs0X1RydWU7Nl9UcnVlOzdfVHJ1ZTs5X1RydWU7MTBfVHJ1ZTsxMV9UcnVlOzEyX1RydWU7MTNfVHJ1ZTsxNF9UcnVlOzE2X1RydWU7MjBfVHJ1ZTs1MF9UcnVlOzUxX1RydWU7NTJfVHJ1ZTs1M19UcnVlOzU1X1RydWU7NTZfVHJ1ZTs1OF9UcnVlOzU5X1RydWU7NjBfVHJ1ZTs2MV9UcnVlOzYyX1RydWU7NjNfVHJ1ZTs2NV9UcnVlOzY3X1RydWU7NjhfVHJ1ZTs3Nl9UcnVlOzc5X1RydWU7ODBfVHJ1ZTs5NV9UcnVlOzk3X1RydWU7OThfVHJ1ZTsxMDVfVHJ1ZTsxMDZfVHJ1ZTsyMTVfVHJ1ZTs3MjFfVHJ1ZTs4OTFfVHJ1ZTs4OTJfVHJ1ZTs5MDZfVHJ1ZTs5MjhfVHJ1ZTs5MjlfVHJ1ZTs5MzBfVHJ1ZTs5MzFfVHJ1ZTs5MzJfVHJ1ZTs5NDRfVHJ1ZTs5NDVfVHJ1ZTsxMTI3X1RydWU7MTEyOF9UcnVlOzExMzJfVHJ1ZTsxMTk3X1RydWU7MTE5OF9UcnVlOzExOTlfVHJ1ZTsxMjk0X1RydWU7MTMzMV9UcnVlOzEzMzJfVHJ1ZTsxMzMzX1RydWU7MTM0MF9UcnVlOzEzNDdfVHJ1ZTsxMzQ5X1RydWU7MTM2M19UcnVlOzE0MTRfVHJ1ZTsxNDIxX1RydWU7MTc5Nl9UcnVlOzE3OTdfVHJ1ZTsxODAzX1RydWU7MTgxOV9UcnVlOzE4MjVfVHJ1ZTsxODc2X1RydWU7MTg4N19UcnVlOzE5MzRfVHJ1ZTsxOTkxX1RydWU7
+[2026-08-12 15:54:11] Token extraído com sucesso
+[2026-08-12 15:54:14] [] Thread de processamento concluída: 21 sucessos, 28 falhas.
+[2026-08-12 15:54:31] Supabase request failed (POST https://yaresjmqcrpuiorpvbck.supabase.co/rest/v1/notifications): HTTP Error 401: Unauthorized
+[2026-08-12 15:54:31] Fallback to in-memory STATE['notifications']
+[2026-08-12 16:02:41] Supabase request failed (POST https://yaresjmqcrpuiorpvbck.supabase.co/rest/v1/records): HTTP Error 400: Bad Request
+[2026-08-12 16:02:41] Fallback to in-memory STATE['records']
+[2026-08-12 16:02:44] Supabase request failed (POST https://yaresjmqcrpuiorpvbck.supabase.co/rest/v1/queue): HTTP Error 400: Bad Request
+[2026-08-12 16:02:44] Fallback to in-memory STATE['queue']
+[2026-08-12 16:02:44] Thread de processamento concorrente iniciada para 49 registros
+[2026-08-12 16:02:44] get_nova_vida_token chamado
+[2026-08-12 16:02:44] Efetuando HTTP POST Form de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-12 16:02:45] Retorno do Token XML (parcial): <?xml version="1.0" encoding="utf-8"?>
+<string xmlns="http://tempuri.org/">bXVuZGlhbGVkaXRvcmF8U1RSQG5ld3xNVU5ESUFMRURJVE9SQXwxMDU3N3wxX1RydWU7Ml9UcnVlOzNfVHJ1ZTs0X1RydWU7Nl9UcnVlOzdfVHJ1ZTs5X1RydWU7MTBfVHJ1ZTsxMV9UcnVlOzEyX1RydWU7MTNfVHJ1ZTsxNF9UcnVlOzE2X1RydWU7MjBfVHJ1ZTs1MF9UcnVlOzUxX1RydWU7NTJfVHJ1ZTs1M19UcnVlOzU1X1RydWU7NTZfVHJ1ZTs1OF9UcnVlOzU5X1RydWU7NjBfVHJ1ZTs2MV9UcnVlOzYyX1RydWU7NjNfVHJ1ZTs2NV9UcnVlOzY3X1RydWU7NjhfVHJ1ZTs3Nl9UcnVlOzc5X1RydWU7ODBfVHJ1ZTs5NV9UcnVlOzk3X1RydWU7OThfVHJ1ZTsxMDVfVHJ1ZTsxMDZfVHJ1ZTsyMTVfVHJ1ZTs3MjFfVHJ1ZTs4OTFfVHJ1ZTs4OTJfVHJ1ZTs5MDZfVHJ1ZTs5MjhfVHJ1ZTs5MjlfVHJ1ZTs5MzBfVHJ1ZTs5MzFfVHJ1ZTs5MzJfVHJ1ZTs5NDRfVHJ1ZTs5NDVfVHJ1ZTsxMTI3X1RydWU7MTEyOF9UcnVlOzExMzJfVHJ1ZTsxMTk3X1RydWU7MTE5OF9UcnVlOzExOTlfVHJ1ZTsxMjk0X1RydWU7MTMzMV9UcnVlOzEzMzJfVHJ1ZTsxMzMzX1RydWU7MTM0MF9UcnVlOzEzNDdfVHJ1ZTsxMzQ5X1RydWU7MTM2M19UcnVlOzE0MTRfVHJ1ZTsxNDIxX1RydWU7MTc5Nl9UcnVlOzE3OTdfVHJ1ZTsxODAzX1RydWU7MTgxOV9UcnVlOzE4MjVfVHJ1ZTsxODc2X1RydWU7MTg4N19UcnVlOzE5MzRfVHJ1ZTsxOTkxX1RydWU7
+[2026-08-12 16:02:45] Token extraído com sucesso
+[2026-08-12 16:02:47] [] Thread de processamento concluída: 21 sucessos, 28 falhas.
+[2026-08-12 16:03:01] Supabase request failed (POST https://yaresjmqcrpuiorpvbck.supabase.co/rest/v1/notifications): HTTP Error 401: Unauthorized
+[2026-08-12 16:03:01] Fallback to in-memory STATE['notifications']
+[2026-08-12 16:20:25] Thread de processamento concorrente iniciada para 49 registros
+[2026-08-12 16:20:25] get_nova_vida_token chamado
+[2026-08-12 16:20:25] Efetuando HTTP POST Form de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-12 16:20:25] Retorno do Token XML (parcial): <?xml version="1.0" encoding="utf-8"?>
+<string xmlns="http://tempuri.org/">bXVuZGlhbGVkaXRvcmF8U1RSQG5ld3xNVU5ESUFMRURJVE9SQXwxMDU3N3wxX1RydWU7Ml9UcnVlOzNfVHJ1ZTs0X1RydWU7Nl9UcnVlOzdfVHJ1ZTs5X1RydWU7MTBfVHJ1ZTsxMV9UcnVlOzEyX1RydWU7MTNfVHJ1ZTsxNF9UcnVlOzE2X1RydWU7MjBfVHJ1ZTs1MF9UcnVlOzUxX1RydWU7NTJfVHJ1ZTs1M19UcnVlOzU1X1RydWU7NTZfVHJ1ZTs1OF9UcnVlOzU5X1RydWU7NjBfVHJ1ZTs2MV9UcnVlOzYyX1RydWU7NjNfVHJ1ZTs2NV9UcnVlOzY3X1RydWU7NjhfVHJ1ZTs3Nl9UcnVlOzc5X1RydWU7ODBfVHJ1ZTs5NV9UcnVlOzk3X1RydWU7OThfVHJ1ZTsxMDVfVHJ1ZTsxMDZfVHJ1ZTsyMTVfVHJ1ZTs3MjFfVHJ1ZTs4OTFfVHJ1ZTs4OTJfVHJ1ZTs5MDZfVHJ1ZTs5MjhfVHJ1ZTs5MjlfVHJ1ZTs5MzBfVHJ1ZTs5MzFfVHJ1ZTs5MzJfVHJ1ZTs5NDRfVHJ1ZTs5NDVfVHJ1ZTsxMTI3X1RydWU7MTEyOF9UcnVlOzExMzJfVHJ1ZTsxMTk3X1RydWU7MTE5OF9UcnVlOzExOTlfVHJ1ZTsxMjk0X1RydWU7MTMzMV9UcnVlOzEzMzJfVHJ1ZTsxMzMzX1RydWU7MTM0MF9UcnVlOzEzNDdfVHJ1ZTsxMzQ5X1RydWU7MTM2M19UcnVlOzE0MTRfVHJ1ZTsxNDIxX1RydWU7MTc5Nl9UcnVlOzE3OTdfVHJ1ZTsxODAzX1RydWU7MTgxOV9UcnVlOzE4MjVfVHJ1ZTsxODc2X1RydWU7MTg4N19UcnVlOzE5MzRfVHJ1ZTsxOTkxX1RydWU7
+[2026-08-12 16:20:25] Token extraído com sucesso
+[2026-08-12 16:20:28] [] Thread de processamento concluída: 21 sucessos, 28 falhas.
+[2026-08-12 16:26:18] Thread de processamento concorrente iniciada para 49 registros
+[2026-08-12 16:26:18] get_nova_vida_token chamado
+[2026-08-12 16:26:18] Efetuando HTTP POST Form de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-12 16:26:19] Retorno do Token XML (parcial): <?xml version="1.0" encoding="utf-8"?>
+<string xmlns="http://tempuri.org/">bXVuZGlhbGVkaXRvcmF8U1RSQG5ld3xNVU5ESUFMRURJVE9SQXwxMDU3N3wxX1RydWU7Ml9UcnVlOzNfVHJ1ZTs0X1RydWU7Nl9UcnVlOzdfVHJ1ZTs5X1RydWU7MTBfVHJ1ZTsxMV9UcnVlOzEyX1RydWU7MTNfVHJ1ZTsxNF9UcnVlOzE2X1RydWU7MjBfVHJ1ZTs1MF9UcnVlOzUxX1RydWU7NTJfVHJ1ZTs1M19UcnVlOzU1X1RydWU7NTZfVHJ1ZTs1OF9UcnVlOzU5X1RydWU7NjBfVHJ1ZTs2MV9UcnVlOzYyX1RydWU7NjNfVHJ1ZTs2NV9UcnVlOzY3X1RydWU7NjhfVHJ1ZTs3Nl9UcnVlOzc5X1RydWU7ODBfVHJ1ZTs5NV9UcnVlOzk3X1RydWU7OThfVHJ1ZTsxMDVfVHJ1ZTsxMDZfVHJ1ZTsyMTVfVHJ1ZTs3MjFfVHJ1ZTs4OTFfVHJ1ZTs4OTJfVHJ1ZTs5MDZfVHJ1ZTs5MjhfVHJ1ZTs5MjlfVHJ1ZTs5MzBfVHJ1ZTs5MzFfVHJ1ZTs5MzJfVHJ1ZTs5NDRfVHJ1ZTs5NDVfVHJ1ZTsxMTI3X1RydWU7MTEyOF9UcnVlOzExMzJfVHJ1ZTsxMTk3X1RydWU7MTE5OF9UcnVlOzExOTlfVHJ1ZTsxMjk0X1RydWU7MTMzMV9UcnVlOzEzMzJfVHJ1ZTsxMzMzX1RydWU7MTM0MF9UcnVlOzEzNDdfVHJ1ZTsxMzQ5X1RydWU7MTM2M19UcnVlOzE0MTRfVHJ1ZTsxNDIxX1RydWU7MTc5Nl9UcnVlOzE3OTdfVHJ1ZTsxODAzX1RydWU7MTgxOV9UcnVlOzE4MjVfVHJ1ZTsxODc2X1RydWU7MTg4N19UcnVlOzE5MzRfVHJ1ZTsxOTkxX1RydWU7
+[2026-08-12 16:26:19] Token extraído com sucesso
+[2026-08-12 16:26:22] [] Thread de processamento concluída: 21 sucessos, 28 falhas.
+[2026-08-13 16:42:36] Supabase request failed (POST https://yaresjmqcrpuiorpvbck.supabase.co/rest/v1/queue): HTTP Error 400: Bad Request
+[2026-08-13 16:42:36] Fallback to in-memory STATE['queue']
+[2026-08-13 16:42:36] Thread de processamento concorrente iniciada para 4 registros
+[2026-08-13 16:42:36] get_nova_vida_token chamado
+[2026-08-13 16:42:36] Efetuando HTTP POST Form de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-13 16:42:37] Retorno do Token XML (parcial): <?xml version="1.0" encoding="utf-8"?>
+<string xmlns="http://tempuri.org/">bXVuZGlhbGVkaXRvcmF8U1RSQG5ld3xNVU5ESUFMRURJVE9SQXwxMDU3N3wxX1RydWU7Ml9UcnVlOzNfVHJ1ZTs0X1RydWU7Nl9UcnVlOzdfVHJ1ZTs5X1RydWU7MTBfVHJ1ZTsxMV9UcnVlOzEyX1RydWU7MTNfVHJ1ZTsxNF9UcnVlOzE2X1RydWU7MjBfVHJ1ZTs1MF9UcnVlOzUxX1RydWU7NTJfVHJ1ZTs1M19UcnVlOzU1X1RydWU7NTZfVHJ1ZTs1OF9UcnVlOzU5X1RydWU7NjBfVHJ1ZTs2MV9UcnVlOzYyX1RydWU7NjNfVHJ1ZTs2NV9UcnVlOzY3X1RydWU7NjhfVHJ1ZTs3Nl9UcnVlOzc5X1RydWU7ODBfVHJ1ZTs5NV9UcnVlOzk3X1RydWU7OThfVHJ1ZTsxMDVfVHJ1ZTsxMDZfVHJ1ZTsyMTVfVHJ1ZTs3MjFfVHJ1ZTs4OTFfVHJ1ZTs4OTJfVHJ1ZTs5MDZfVHJ1ZTs5MjhfVHJ1ZTs5MjlfVHJ1ZTs5MzBfVHJ1ZTs5MzFfVHJ1ZTs5MzJfVHJ1ZTs5NDRfVHJ1ZTs5NDVfVHJ1ZTsxMTI3X1RydWU7MTEyOF9UcnVlOzExMzJfVHJ1ZTsxMTk3X1RydWU7MTE5OF9UcnVlOzExOTlfVHJ1ZTsxMjk0X1RydWU7MTMzMV9UcnVlOzEzMzJfVHJ1ZTsxMzMzX1RydWU7MTM0MF9UcnVlOzEzNDdfVHJ1ZTsxMzQ5X1RydWU7MTM2M19UcnVlOzE0MTRfVHJ1ZTsxNDIxX1RydWU7MTc5Nl9UcnVlOzE3OTdfVHJ1ZTsxODAzX1RydWU7MTgxOV9UcnVlOzE4MjVfVHJ1ZTsxODc2X1RydWU7MTg4N19UcnVlOzE5MzRfVHJ1ZTsxOTkxX1RydWU7
+[2026-08-13 16:42:37] Token extraído com sucesso
+[2026-08-13 16:42:39] [] Thread de processamento concluída: 4 sucessos, 0 falhas.
+[2026-08-13 16:45:31] Supabase request failed (POST https://yaresjmqcrpuiorpvbck.supabase.co/rest/v1/queue): HTTP Error 400: Bad Request
+[2026-08-13 16:45:31] Fallback to in-memory STATE['queue']
+[2026-08-13 16:45:32] Supabase request failed (PATCH https://yaresjmqcrpuiorpvbck.supabase.co/rest/v1/queue?id=eq.4088fcf0-3cdd-4249-873d-6d6325e4d6aa): HTTP Error 400: Bad Request
+[2026-08-13 16:45:32] Fallback to update in-memory STATE['queue']
+[2026-08-13 16:45:43] Supabase request failed (POST https://yaresjmqcrpuiorpvbck.supabase.co/rest/v1/queue): HTTP Error 400: Bad Request
+[2026-08-13 16:45:43] Fallback to in-memory STATE['queue']
+[2026-08-13 16:45:43] Thread de processamento concorrente iniciada para 4 registros
+[2026-08-13 16:45:43] get_nova_vida_token chamado
+[2026-08-13 16:45:43] Efetuando HTTP POST Form de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-13 16:45:44] Retorno do Token XML (parcial): <?xml version="1.0" encoding="utf-8"?>
+<string xmlns="http://tempuri.org/">bXVuZGlhbGVkaXRvcmF8U1RSQG5ld3xNVU5ESUFMRURJVE9SQXwxMDU3N3wxX1RydWU7Ml9UcnVlOzNfVHJ1ZTs0X1RydWU7Nl9UcnVlOzdfVHJ1ZTs5X1RydWU7MTBfVHJ1ZTsxMV9UcnVlOzEyX1RydWU7MTNfVHJ1ZTsxNF9UcnVlOzE2X1RydWU7MjBfVHJ1ZTs1MF9UcnVlOzUxX1RydWU7NTJfVHJ1ZTs1M19UcnVlOzU1X1RydWU7NTZfVHJ1ZTs1OF9UcnVlOzU5X1RydWU7NjBfVHJ1ZTs2MV9UcnVlOzYyX1RydWU7NjNfVHJ1ZTs2NV9UcnVlOzY3X1RydWU7NjhfVHJ1ZTs3Nl9UcnVlOzc5X1RydWU7ODBfVHJ1ZTs5NV9UcnVlOzk3X1RydWU7OThfVHJ1ZTsxMDVfVHJ1ZTsxMDZfVHJ1ZTsyMTVfVHJ1ZTs3MjFfVHJ1ZTs4OTFfVHJ1ZTs4OTJfVHJ1ZTs5MDZfVHJ1ZTs5MjhfVHJ1ZTs5MjlfVHJ1ZTs5MzBfVHJ1ZTs5MzFfVHJ1ZTs5MzJfVHJ1ZTs5NDRfVHJ1ZTs5NDVfVHJ1ZTsxMTI3X1RydWU7MTEyOF9UcnVlOzExMzJfVHJ1ZTsxMTk3X1RydWU7MTE5OF9UcnVlOzExOTlfVHJ1ZTsxMjk0X1RydWU7MTMzMV9UcnVlOzEzMzJfVHJ1ZTsxMzMzX1RydWU7MTM0MF9UcnVlOzEzNDdfVHJ1ZTsxMzQ5X1RydWU7MTM2M19UcnVlOzE0MTRfVHJ1ZTsxNDIxX1RydWU7MTc5Nl9UcnVlOzE3OTdfVHJ1ZTsxODAzX1RydWU7MTgxOV9UcnVlOzE4MjVfVHJ1ZTsxODc2X1RydWU7MTg4N19UcnVlOzE5MzRfVHJ1ZTsxOTkxX1RydWU7
+[2026-08-13 16:45:44] Token extraído com sucesso
+[2026-08-13 16:45:45] [] Thread de processamento concluída: 4 sucessos, 0 falhas.
+[2026-08-13 16:50:24] Supabase request failed (PATCH https://yaresjmqcrpuiorpvbck.supabase.co/rest/v1/queue?id=eq.10f638f3-5da7-4912-8ba4-ea72823e6c69): HTTP Error 400: Bad Request
+[2026-08-13 16:50:24] Fallback to update in-memory STATE['queue']
+[2026-08-13 16:54:54] Supabase request failed (POST https://yaresjmqcrpuiorpvbck.supabase.co/rest/v1/queue): HTTP Error 400: Bad Request
+[2026-08-13 16:54:54] Fallback to in-memory STATE['queue']
+[2026-08-13 16:54:54] Thread de processamento concorrente iniciada para 4 registros
+[2026-08-13 16:54:54] get_nova_vida_token chamado
+[2026-08-13 16:54:54] Efetuando HTTP POST Form de Token para: https://wsnv.novavidati.com.br/WSLocalizador.asmx/GerarToken
+[2026-08-13 16:54:55] Retorno do Token XML (parcial): <?xml version="1.0" encoding="utf-8"?>
+<string xmlns="http://tempuri.org/">bXVuZGlhbGVkaXRvcmF8U1RSQG5ld3xNVU5ESUFMRURJVE9SQXwxMDU3N3wxX1RydWU7Ml9UcnVlOzNfVHJ1ZTs0X1RydWU7Nl9UcnVlOzdfVHJ1ZTs5X1RydWU7MTBfVHJ1ZTsxMV9UcnVlOzEyX1RydWU7MTNfVHJ1ZTsxNF9UcnVlOzE2X1RydWU7MjBfVHJ1ZTs1MF9UcnVlOzUxX1RydWU7NTJfVHJ1ZTs1M19UcnVlOzU1X1RydWU7NTZfVHJ1ZTs1OF9UcnVlOzU5X1RydWU7NjBfVHJ1ZTs2MV9UcnVlOzYyX1RydWU7NjNfVHJ1ZTs2NV9UcnVlOzY3X1RydWU7NjhfVHJ1ZTs3Nl9UcnVlOzc5X1RydWU7ODBfVHJ1ZTs5NV9UcnVlOzk3X1RydWU7OThfVHJ1ZTsxMDVfVHJ1ZTsxMDZfVHJ1ZTsyMTVfVHJ1ZTs3MjFfVHJ1ZTs4OTFfVHJ1ZTs4OTJfVHJ1ZTs5MDZfVHJ1ZTs5MjhfVHJ1ZTs5MjlfVHJ1ZTs5MzBfVHJ1ZTs5MzFfVHJ1ZTs5MzJfVHJ1ZTs5NDRfVHJ1ZTs5NDVfVHJ1ZTsxMTI3X1RydWU7MTEyOF9UcnVlOzExMzJfVHJ1ZTsxMTk3X1RydWU7MTE5OF9UcnVlOzExOTlfVHJ1ZTsxMjk0X1RydWU7MTMzMV9UcnVlOzEzMzJfVHJ1ZTsxMzMzX1RydWU7MTM0MF9UcnVlOzEzNDdfVHJ1ZTsxMzQ5X1RydWU7MTM2M19UcnVlOzE0MTRfVHJ1ZTsxNDIxX1RydWU7MTc5Nl9UcnVlOzE3OTdfVHJ1ZTsxODAzX1RydWU7MTgxOV9UcnVlOzE4MjVfVHJ1ZTsxODc2X1RydWU7MTg4N19UcnVlOzE5MzRfVHJ1ZTsxOTkxX1RydWU7
+[2026-08-13 16:54:55] Token extraído com sucesso
+[2026-08-13 16:54:56] [] Thread de processamento concluída: 4 sucessos, 0 falhas.
+[2026-08-13 16:55:46] Supabase request failed (PATCH https://yaresjmqcrpuiorpvbck.supabase.co/rest/v1/queue?id=eq.70a226bf-00a8-4730-a03d-fd33f52f2448): HTTP Error 400: Bad Request
+[2026-08-13 16:55:46] Fallback to update in-memory STATE['queue']

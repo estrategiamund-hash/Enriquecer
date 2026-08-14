@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Enriquecimento de Dados - Nova Vida</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  </head>
+  <body data-user-role="{{ user_role }}">
+    <header class="topbar">
+      <div class="brand-wrapper">
+        <img src="{{ url_for('static', filename='Bookplay.png.webp') }}" alt="Bookplay Logo" class="brand-logo" />
+        <h1>Nova Vida - Enriquecimento</h1>
+      </div>
+      <div class="header-actions">
+        <div class="theme-selector" style="display: flex; align-items: center; gap: 0.5rem; margin-right: 0.5rem;">
+          <span style="font-size: 0.8rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em;">Tema</span>
+          <div style="display: flex; gap: 0.4rem;">
+            <button class="theme-btn" data-theme-name="classic" style="width: 16px; height: 16px; border-radius: 50%; background: #0099ff; border: 2px solid transparent; cursor: pointer; padding: 0;" title="Clássico"></button>
+            <button class="theme-btn" data-theme-name="emerald" style="width: 16px; height: 16px; border-radius: 50%; background: #10b981; border: 2px solid transparent; cursor: pointer; padding: 0;" title="Esmeralda"></button>
+            <button class="theme-btn" data-theme-name="purple" style="width: 16px; height: 16px; border-radius: 50%; background: #b68fff; border: 2px solid transparent; cursor: pointer; padding: 0;" title="Roxo Velvet"></button>
+            <button class="theme-btn" data-theme-name="sunset" style="width: 16px; height: 16px; border-radius: 50%; background: #f59e0b; border: 2px solid transparent; cursor: pointer; padding: 0;" title="Sunset"></button>
+          </div>
+        </div>
+        <div class="user-info">
+          <span>Olá, {{ user_name }}</span>
+          <a href="{{ url_for('logout') }}" class="logout-link">Sair</a>
+        </div>
+        {% if user_role == 'admin' %}
+        <label class="role-switcher-wrap" for="roleSwitcher">
+          <span>Painel</span>
+          <select id="roleSwitcher" class="role-switcher">
+            <option value="admin" selected>Estratégia (Admin)</option>
+            <option value="admin-logs">Histórico / Logs</option>
+          </select>
+        </label>
+        {% endif %}
+      </div>
+    </header>
+
+    <main class="container">
+      <section id="user-panel" class="panel is-visible">
+        <div class="panel-header">
+          <h2>Importação e enriquecimento</h2>
+        </div>
+
+        <div id="actionSelectionContainer" class="action-selection">
+          <div class="actions-row" style="justify-content: flex-start; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.75rem;">
+            <button type="button" class="mode-btn is-active" data-action-type="enrich_only">Apenas enriquecer</button>
+            <button type="button" class="mode-btn" data-action-type="queue_only">Subir fila</button>
+            <button type="button" class="mode-btn" data-action-type="enrich_and_queue">Enriquecer e subir</button>
+          </div>
+        </div>
+
+        <form id="uploadForm" class="upload-form hidden">
+          <div id="dropZone" class="drop-zone">
+            <span class="drop-zone-text">Arrastar e soltar arquivo aqui (.xlsx, .csv) ou clique para selecionar</span>
+            <input id="excelFile" name="file" type="file" accept=".xlsx,.xls,.csv" required />
+          </div>
+          <button type="submit">Validar arquivo</button>
+        </form>
+
+        <div id="validationMessage" class="message hidden"></div>
+
+        <div id="validationWarningBox" class="warning-box hidden">
+          <div class="warning-box-content">
+            <span class="warning-icon">⚠</span>
+            <div class="warning-text-container">
+              <h4>Alerta de Pré-Validação de Dados</h4>
+              <p id="validationWarningText">Identificamos contatos com telefones sem DDD ou formato inválido.</p>
+            </div>
+          </div>
+          <div class="error-details-container">
+            <div class="error-details-header">Contatos com erro identificados:</div>
+            <div id="errorDetailsList" class="error-details-list"></div>
+          </div>
+          <div class="warning-box-actions">
+            <button id="btnProceedValidation" class="primary" type="button">Prosseguir mesmo assim</button>
+            <button id="btnCancelValidation" class="secondary" type="button">Corrigir planilha</button>
+          </div>
+        </div>
+
+        <div id="userNotifications" class="notification-list"></div>
+
+        <!-- PASSO 1: SELEÇÃO DE VARIÁVEIS PARA CONSULTA -->
+        <div id="step1Container" class="step-container hidden">
+          <div class="section-title" style="margin-bottom: 0.5rem; font-weight: bold;">Selecione as variáveis da planilha para realizar a busca no enriquecimento</div>
+          <p class="step-help" style="margin-bottom: 1rem; font-size: 0.9rem; color: #6c757d;">Selecione os campos identificadores. Cores indicam assertividade: Verde (Alto), Amarelo (Médio), Cinza (Auxiliar).</p>
+          <div id="queryFieldsSelection" class="field-list" style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem;"></div>
+          <div class="actions-row">
+            <button id="enrichButton" class="primary" type="button">Continuar</button>
+          </div>
+        </div>
+
+        <!-- PASSO 2: PROGRESSO DO PROCESSAMENTO -->
+        <div id="step2Container" class="step-container hidden">
+          <div class="section-title" style="margin-bottom: 0.5rem; font-weight: bold;">Passo 2: Processando enriquecimento no plano de fundo...</div>
+          
+          <div class="stats-grid">
+            <div class="stat-card">
+              <span class="stat-label">Processados</span>
+              <span id="statProcessed" class="stat-value">0 / 0</span>
+            </div>
+            <div class="stat-card success">
+              <span class="stat-label">Sucesso</span>
+              <span id="statSuccess" class="stat-value">0 (0%)</span>
+            </div>
+            <div class="stat-card danger">
+              <span class="stat-label">Falhas</span>
+              <span id="statError" class="stat-value">0 (0%)</span>
+            </div>
+            <div class="stat-card warning">
+              <span class="stat-label">Tempo Restante</span>
+              <span id="statTimeRemaining" class="stat-value">Calculando...</span>
+            </div>
+          </div>
+
+          <div class="progress-bar-container" style="margin-bottom: 0.5rem;">
+            <div id="progressBarFill" class="progress-bar-fill" style="width: 0%;"></div>
+          </div>
+          <p id="progressText" class="progress-text" style="margin-bottom: 1rem;">Aguardando início...</p>
+          <div id="uploadLogsBox" class="logs-console-box upload-logs-console" style="height: 200px; overflow-y: auto; white-space: pre-wrap; line-height: 1.4;"></div>
+          <div class="actions-row" style="margin-top: 1rem; display: flex; justify-content: flex-end;">
+            <button id="cancelEnrichButton" class="secondary" type="button">Cancelar Enriquecimento</button>
+          </div>
+        </div>
+
+        <!-- PASSO 3: MAPEAMENTO DE ATRIBUTOS PARA A PLANILHA FINAL -->
+        <div id="step3Container" class="step-container hidden">
+          <div class="section-title" style="margin-bottom: 0.5rem; font-weight: bold;">Passo 3: Selecione os atributos do enriquecimento para adicionar à importação final</div>
+          <div class="mapping-panel">
+            <div class="mapping-section">
+              <div class="section-title">Campos disponíveis</div>
+              <div id="availableFields" class="field-list" aria-label="Campos disponíveis"></div>
+            </div>
+            <div class="mapping-section">
+              <div class="section-title">Importação solicitada</div>
+              <div id="selectedFields" class="field-list selected-list" aria-label="Campos selecionados"></div>
+            </div>
+          </div>
+          
+          <div id="previewCard" class="preview-card" style="margin-top: 1.5rem; background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 1rem;">
+            <div class="section-title" style="font-weight: bold; margin-bottom: 0.5rem;">Pré-visualização da Concatenação</div>
+            <div id="previewText" class="preview-text" style="font-family: monospace; color: var(--text);">Selecione os campos acima para gerar a prévia.</div>
+          </div>
+
+          <div class="actions-row" style="margin-top: 1.5rem;">
+            <button id="finalizeButton" class="primary" type="button">Finalizar</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="strategy-panel" class="panel hidden">
+        <div class="panel-header">
+          <h2>2. Fila de estratégia</h2>
+        </div>
+
+        <div id="strategyNotifications" class="notification-list"></div>
+        <div id="strategyQueue" class="queue-list"></div>
+      </section>
+
+      <section id="logs-panel" class="panel hidden">
+        <div class="panel-header">
+          <h2>3. Histórico de Importações e Logs</h2>
+        </div>
+        <div id="logsQueue" class="queue-list">
+          <div class="queue-item"><strong>Carregando histórico...</strong></div>
+        </div>
+      </section>
+    </main>
+
+    <div id="requestModal" class="modal hidden" role="dialog" aria-modal="true">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Dados da solicitação</h3>
+          <button type="button" class="close-modal" aria-label="Fechar modal">×</button>
+        </div>
+
+        <form id="requestForm" class="request-form">
+          <label>
+            Número da fila (6 dígitos)
+            <input id="queueNumber" name="queueNumber" type="text" inputmode="numeric" maxlength="6" required />
+          </label>
+
+          <label>
+            Nome da pessoa que está solicitando
+            <input id="requesterName" name="requesterName" type="text" required />
+          </label>
+
+          <label>
+            Observações opcionais
+            <textarea id="observacoes" name="observacoes" rows="3"></textarea>
+          </label>
+
+          <div class="modal-actions">
+            <button type="button" class="secondary close-modal">Cancelar</button>
+            <button type="submit" class="primary">Enviar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div id="logsModal" class="modal hidden" role="dialog" aria-modal="true">
+      <div class="modal-content log-modal-content">
+        <div class="modal-header">
+          <h3 id="logsModalTitle">Logs da solicitação</h3>
+          <button type="button" class="close-logs-modal close-modal" aria-label="Fechar modal">×</button>
+        </div>
+        <div class="log-summary-counters">
+          <div>Total de registros: <span id="logCounterTotal">0</span></div>
+          <div>Sucesso: <span id="logCounterSuccess" class="text-success">0</span></div>
+          <div>Falhas: <span id="logCounterError" class="text-danger">0</span></div>
+        </div>
+        <div id="logsModalContent" class="logs-console-box"></div>
+        <div class="modal-actions">
+          <button type="button" class="secondary close-logs-modal close-modal">Fechar</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+  </body>
+</html>
