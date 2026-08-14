@@ -31,13 +31,16 @@ USERS = {
 }
 
 BASE_DIR = Path(__file__).resolve().parent
-# On Serverless platforms like Vercel, write permission is only granted inside /tmp
 import tempfile
+
+# On Vercel/Serverless, the project folder is usually read-only.
+# Keep runtime files and exports under /tmp to avoid FUNCTION_INVOCATION_FAILED.
 is_vercel = os.environ.get("VERCEL") == "1" or os.environ.get("VERCEL_ENV") is not None
 TEMP_PARENT = Path(tempfile.gettempdir()) if is_vercel else BASE_DIR
 
 UPLOAD_DIR = TEMP_PARENT / "uploads"
 EXPORT_DIR = TEMP_PARENT / "exports"
+LOG_PATH = TEMP_PARENT / "api_debug.log"
 UPLOAD_DIR.mkdir(exist_ok=True)
 EXPORT_DIR.mkdir(exist_ok=True)
 
@@ -602,8 +605,8 @@ def ensure_api_row_shape(row: Dict[str, Any], detected_type: str) -> Dict[str, A
 
 def log_api_debug(message: str) -> None:
     try:
-        log_file = Path(__file__).resolve().parent / "api_debug.log"
-        with open(log_file, "a", encoding="utf-8") as f:
+        LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
+        with open(LOG_PATH, "a", encoding="utf-8") as f:
             f.write(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] {message}\n")
     except Exception:
         pass
@@ -1357,8 +1360,9 @@ def process_enrichment_background_task(queue_item_id: str, raw_rows: List[Dict[s
             return enriched
 
         # Execução concorrente em lotes para economizar memória e evitar limites de rede
-        MAX_WORKERS = int(LOCAL_CONFIG.get("MAX_WORKERS") or os.getenv("MAX_WORKERS") or 30000)
-        CHUNK_SIZE = 100000
+        requested_workers = int(LOCAL_CONFIG.get("MAX_WORKERS") or os.getenv("MAX_WORKERS") or 8)
+        MAX_WORKERS = max(2, min(32, requested_workers))
+        CHUNK_SIZE = 5000 if is_vercel else 100000
         
         # Mapeamento de cache (Seen Keys -> Enriched Result)
         cache = {}
