@@ -46,6 +46,12 @@ const logCounterTotal = document.getElementById('logCounterTotal');
 const logCounterSuccess = document.getElementById('logCounterSuccess');
 const logCounterError = document.getElementById('logCounterError');
 
+// Queue active/history elements
+const strategyQueueActive = document.getElementById('strategyQueueActive');
+const strategyQueueHistory = document.getElementById('strategyQueueHistory');
+const activeBadge = document.getElementById('activeBadge');
+const historyBadge = document.getElementById('historyBadge');
+
 // Usability selectors
 const dropZone = document.getElementById('dropZone');
 const validationWarningBox = document.getElementById('validationWarningBox');
@@ -565,20 +571,26 @@ async function loadQueue() {
 
     const payload = await response.json();
     state.queue = payload.queue || [];
-    renderQueue();
+    renderQueueActive();
+    renderQueueHistory();
   } catch (error) {
     console.error(error);
   }
 }
 
-function renderQueue() {
-  if (!state.queue.length) {
-    queueList.innerHTML = '<div class="queue-item"><strong>Sem solicitações pendentes.</strong></div>';
+function renderQueueActive() {
+  // Filtrar apenas itens ativos (não completados)
+  const activeItems = state.queue.filter(item => item.status !== 'completed');
+  
+  if (!activeItems.length) {
+    strategyQueueActive.innerHTML = '<div class="queue-item"><strong>Sem solicitações ativas no momento.</strong></div>';
+    activeBadge.textContent = '0';
     return;
   }
 
-  queueList.innerHTML = '';
-  state.queue.forEach((item) => {
+  activeBadge.textContent = activeItems.length;
+  strategyQueueActive.innerHTML = '';
+  activeItems.forEach((item) => {
     const row = document.createElement('article');
     row.className = 'queue-item';
     const formattedFields = formatSelectedFields(item.selected_fields || []);
@@ -599,10 +611,6 @@ function renderQueue() {
       statusText = `Processando (${pct}%)`;
       badgeClass = 'processing';
       actionsHtml = `<span class="badge processing">Processando no plano de fundo...</span>`;
-    } else if (item.status === 'completed') {
-      statusText = 'Concluído';
-      badgeClass = 'completed';
-      actionsHtml = `<span class="badge completed">Importado com sucesso</span>`;
     } else if (item.status === 'error') {
       statusText = 'Erro';
       badgeClass = 'error';
@@ -635,8 +643,54 @@ function renderQueue() {
         <button type="button" class="button secondary" onclick="viewDetailedLogs('${item.id}')">Logs</button>
       </div>
     `;
-    queueList.appendChild(row);
+    strategyQueueActive.appendChild(row);
   });
+}
+
+function renderQueueHistory() {
+  // Filtrar apenas itens completados
+  const historyItems = state.queue.filter(item => item.status === 'completed');
+  
+  if (!historyItems.length) {
+    strategyQueueHistory.innerHTML = '<div class="queue-item"><strong>Nenhum histórico disponível.</strong></div>';
+    historyBadge.textContent = '0';
+    return;
+  }
+
+  historyBadge.textContent = historyItems.length;
+  strategyQueueHistory.innerHTML = '';
+  historyItems.forEach((item) => {
+    const row = document.createElement('article');
+    row.className = 'queue-item';
+    const formattedFields = formatSelectedFields(item.selected_fields || []);
+
+    row.innerHTML = `
+      <div class="queue-header">
+        <strong>Fila ${item.queue_number}</strong>
+        <span class="badge completed">Concluído</span>
+      </div>
+      <div class="queue-meta">Solicitante: ${item.requester_name}</div>
+      <div class="queue-meta">Horário: ${item.request_time}</div>
+      <div class="queue-meta">Campos: ${formattedFields}</div>
+      <div class="queue-actions">
+        <span class="badge completed">Importado com sucesso</span>
+        <a href="/api/request/${item.id}/download" target="_blank" class="download-link-premium" title="Baixar Planilha">
+          <svg viewBox="0 0 256 256" height="24" width="28" xmlns="http://www.w3.org/2000/svg">
+            <path d="M74.34 85.66a8 8 0 0 1 11.32-11.32L120 108.69V24a8 8 0 0 1 16 0v84.69l34.34-34.35a8 8 0 0 1 11.32 11.32l-48 48a8 8 0 0 1-11.32 0ZM240 136v64a16 16 0 0 1-16 16H32a16 16 0 0 1-16-16v-64a16 16 0 0 1 16-16h52.4a4 4 0 0 1 2.83 1.17L111 145a24 24 0 0 0 34 0l23.8-23.8a4 4 0 0 1 2.8-1.2H224a16 16 0 0 1 16 16m-40 32a12 12 0 1 0-12 12a12 12 0 0 0 12-12" fill="currentColor"></path>
+          </svg>
+          <span>Download</span>
+        </a>
+        <button type="button" class="button secondary" onclick="viewDetailedLogs('${item.id}')">Logs</button>
+      </div>
+    `;
+    strategyQueueHistory.appendChild(row);
+  });
+}
+
+function renderQueue() {
+  // Manter para compatibilidade, mas agora chama as duas
+  renderQueueActive();
+  renderQueueHistory();
 }
 
 async function submitSummary(event) {
@@ -762,7 +816,29 @@ enrichButton.addEventListener('click', startEnrichment);
 requestForm.addEventListener('submit', submitRequest);
 document.querySelectorAll('.close-modal').forEach((button) => button.addEventListener('click', closeRequestModal));
 document.querySelectorAll('.close-logs-modal').forEach((button) => button.addEventListener('click', closeLogsModal));
-queueList.addEventListener('click', submitSummary);
+
+// Queue tabs event listeners
+document.querySelectorAll('.queue-tab').forEach((tab) => {
+  tab.addEventListener('click', (e) => {
+    e.preventDefault();
+    const tabName = tab.dataset.queueTab;
+    
+    // Update active tab
+    document.querySelectorAll('.queue-tab').forEach((t) => t.classList.remove('is-active'));
+    tab.classList.add('is-active');
+    
+    // Show/hide content
+    strategyQueueActive.classList.toggle('hidden', tabName !== 'active');
+    strategyQueueActive.classList.toggle('is-visible', tabName === 'active');
+    strategyQueueHistory.classList.toggle('hidden', tabName !== 'history');
+    strategyQueueHistory.classList.toggle('is-visible', tabName === 'history');
+  });
+});
+
+// Add click listeners to both queue containers
+[strategyQueueActive, strategyQueueHistory].forEach((container) => {
+  container.addEventListener('click', submitSummary);
+});
 
 // Logs Queue functions and polling
 async function loadLogsQueue() {

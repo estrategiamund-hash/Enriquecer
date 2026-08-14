@@ -158,8 +158,21 @@
           <h2>2. Fila de estratégia</h2>
         </div>
 
+        <div class="queue-tabs-wrapper">
+          <button class="queue-tab is-active" data-queue-tab="active">
+            <span>Fila Ativa</span>
+            <span class="queue-tab-badge" id="activeBadge">0</span>
+          </button>
+          <button class="queue-tab" data-queue-tab="history">
+            <span>Histórico</span>
+            <span class="queue-tab-badge" id="historyBadge">0</span>
+          </button>
+        </div>
+
         <div id="strategyNotifications" class="notification-list"></div>
-        <div id="strategyQueue" class="queue-list"></div>
+        
+        <div id="strategyQueueActive" class="queue-list queue-tab-content is-visible"></div>
+        <div id="strategyQueueHistory" class="queue-list queue-tab-content hidden"></div>
       </section>
 
       <section id="logs-panel" class="panel hidden">
