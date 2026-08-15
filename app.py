@@ -1286,24 +1286,37 @@ def process_batch_for_request(item: Dict[str, Any], batch_size: int = 100) -> Di
 
         try:
             def query_single(p_map: dict) -> str:
-                query_str = urllib.parse.urlencode(p_map)
-                url_get = f"{endpoint}?{query_str}" if "?" not in endpoint else f"{endpoint}&{query_str}"
+                full_params = {
+                    "nome": p_map.get("nome", ""),
+                    "endereco": p_map.get("endereco", ""),
+                    "cidade": p_map.get("cidade", ""),
+                    "uf": p_map.get("uf", ""),
+                    "telefone": p_map.get("telefone", ""),
+                    "celular": p_map.get("celular", ""),
+                    "email": p_map.get("email", ""),
+                    "nascimento": p_map.get("nascimento", ""),
+                    "token": token
+                }
+                data_bytes = urllib.parse.urlencode(full_params).encode("utf-8")
                 req = urllib.request.Request(
-                    url_get,
+                    endpoint,
+                    data=data_bytes,
                     headers={
                         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+                        "Content-Type": "application/x-www-form-urlencoded",
                         "Connection": "keep-alive"
                     },
-                    method="GET"
+                    method="POST"
                 )
                 try:
                     context = ssl._create_unverified_context()
                     with urllib.request.urlopen(req, timeout=4.0, context=context) as resp:
                         return resp.read().decode("utf-8", errors="ignore")
-                except Exception:
+                except Exception as e:
+                    log_api_debug(f"Erro na requisição POST Nova Vida: {e}")
                     return ""
 
-            params = {"token": token}
+            params = {}
             if nome_val:
                 params["nome"] = nome_val
             if uf_val:
@@ -1317,7 +1330,7 @@ def process_batch_for_request(item: Dict[str, Any], batch_size: int = 100) -> Di
 
             # Fallback inteligente: Se buscou com UF/Cidade e deu Nada Consta ou Registro Múltiplo, tenta apenas pelo Nome
             if (not xml_response or "Nada Consta" in xml_response or "REGISTRO MULTIPLO" in xml_response) and nome_val and (uf_val or cidade_val):
-                fallback_params = {"token": token, "nome": nome_val}
+                fallback_params = {"nome": nome_val}
                 xml_response = query_single(fallback_params)
 
             import html
