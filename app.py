@@ -1246,10 +1246,21 @@ def process_batch_for_request(item: Dict[str, Any], batch_size: int = 100) -> Di
 
     endpoint = (NOVA_VIDA_API_URL or "").rstrip("/") + "/" + NOVA_VIDA_API_ENDPOINT.lstrip("/")
 
-    use_nome = any(f.lower() in [q.lower() for q in query_fields] for f in ["nome", "nome_completo", "nome_cliente"]) if query_fields else True
-    use_uf = any(f.lower() in [q.lower() for q in query_fields] for f in ["uf", "estado"]) if query_fields else True
-    use_cidade = any(f.lower() in [q.lower() for q in query_fields] for f in ["cidade"]) if query_fields else True
-    use_telefone = any(f.lower() in [q.lower() for q in query_fields] for f in ["telefone", "celular", "fone", "tel"]) if query_fields else True
+    def is_field_requested(keywords: List[str]) -> bool:
+        if not query_fields:
+            return True
+        for q in query_fields:
+            q_clean = re.sub(r"[^\w]", "", str(q).lower())
+            for kw in keywords:
+                kw_clean = re.sub(r"[^\w]", "", str(kw).lower())
+                if kw_clean in q_clean or q_clean in kw_clean:
+                    return True
+        return False
+
+    use_nome = is_field_requested(["nome", "cliente", "razao"])
+    use_uf = is_field_requested(["uf", "estado", "sigla"])
+    use_cidade = is_field_requested(["cidade", "municipio"])
+    use_telefone = is_field_requested(["telefone", "celular", "fone", "tel", "phone", "contato"])
 
     lock = threading.Lock()
     logs = item.get("logs") or []
@@ -1274,7 +1285,24 @@ def process_batch_for_request(item: Dict[str, Any], batch_size: int = 100) -> Di
             return enriched
 
         try:
-            # Monta APENAS os parâmetros que possuem conteúdo para reproduzir exatamente a chamada da plataforma Nova Vida
+            def query_single(p_map: dict) -> str:
+                query_str = urllib.parse.urlencode(p_map)
+                url_get = f"{endpoint}?{query_str}" if "?" not in endpoint else f"{endpoint}&{query_str}"
+                req = urllib.request.Request(
+                    url_get,
+                    headers={
+                        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+                        "Connection": "keep-alive"
+                    },
+                    method="GET"
+                )
+                try:
+                    context = ssl._create_unverified_context()
+                    with urllib.request.urlopen(req, timeout=4.0, context=context) as resp:
+                        return resp.read().decode("utf-8", errors="ignore")
+                except Exception:
+                    return ""
+
             params = {"token": token}
             if nome_val:
                 params["nome"] = nome_val
@@ -1285,25 +1313,12 @@ def process_batch_for_request(item: Dict[str, Any], batch_size: int = 100) -> Di
             if telefone_val:
                 params["telefone"] = telefone_val
 
-            query_str = urllib.parse.urlencode(params)
-            url_get = f"{endpoint}?{query_str}" if "?" not in endpoint else f"{endpoint}&{query_str}"
-            
-            req = urllib.request.Request(
-                url_get,
-                headers={
-                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-                    "Connection": "keep-alive"
-                },
-                method="GET"
-            )
-            
-            xml_response = None
-            try:
-                context = ssl._create_unverified_context()
-                with urllib.request.urlopen(req, timeout=4.0, context=context) as resp:
-                    xml_response = resp.read().decode("utf-8", errors="ignore")
-            except Exception:
-                xml_response = None
+            xml_response = query_single(params)
+
+            # Fallback inteligente: Se buscou com UF/Cidade e deu Nada Consta ou Registro Múltiplo, tenta apenas pelo Nome
+            if (not xml_response or "Nada Consta" in xml_response or "REGISTRO MULTIPLO" in xml_response) and nome_val and (uf_val or cidade_val):
+                fallback_params = {"token": token, "nome": nome_val}
+                xml_response = query_single(fallback_params)
 
             import html
             xml_content = html.unescape(xml_response or "")
