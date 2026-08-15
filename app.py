@@ -89,6 +89,46 @@ def make_supabase_request(table: str, method: str = "GET", data: Any = None, que
         log_api_debug(f"Supabase request failed ({method} {url}): {e}")
         return None
 
+UF_MAP = {
+    "ACRE": "AC", "ALAGOAS": "AL", "AMAPA": "AP", "AMAZONAS": "AM", "BAHIA": "BA",
+    "CEARA": "CE", "DISTRITO FEDERAL": "DF", "ESPIRITO SANTO": "ES", "GOIAS": "GO",
+    "MARANHAO": "MA", "MATO GROSSO": "MT", "MATO GROSSO DO SUL": "MS", "MINAS GERAIS": "MG",
+    "PARA": "PA", "PARAIBA": "PB", "PARANA": "PR", "PERNAMBUCO": "PE", "PIAUI": "PI",
+    "RIO DE JANEIRO": "RJ", "RIO GRANDE DO NORTE": "RN", "RIO GRANDE DO SUL": "RS",
+    "RONDONIA": "RO", "RORAIMA": "RR", "SANTA CATARINA": "SC", "SAO PAULO": "SP",
+    "SERGIPE": "SE", "TOCANTINS": "TO"
+}
+
+def normalize_uf(uf_str: str) -> str:
+    if not uf_str:
+        return ""
+    clean = re.sub(r"[^\w]", "", unicodedata.normalize("NFKD", str(uf_str)).encode("ASCII", "ignore").decode("utf-8").upper()).strip()
+    if len(clean) == 2:
+        return clean
+    return UF_MAP.get(clean, clean[:2] if len(clean) >= 2 else clean)
+
+def find_column_val(row: Dict[str, Any], keywords: List[str]) -> str:
+    if not row:
+        return ""
+    normalized_map = {}
+    for k, v in row.items():
+        if k is not None and v is not None:
+            clean_k = re.sub(r"[^\w]", "", unicodedata.normalize("NFKD", str(k)).encode("ASCII", "ignore").decode("utf-8").lower())
+            normalized_map[clean_k] = str(v).strip()
+            
+    for kw in keywords:
+        clean_kw = re.sub(r"[^\w]", "", unicodedata.normalize("NFKD", str(kw)).encode("ASCII", "ignore").decode("utf-8").lower())
+        if clean_kw in normalized_map and normalized_map[clean_kw]:
+            return normalized_map[clean_kw]
+            
+    for clean_k, val in normalized_map.items():
+        if val:
+            for kw in keywords:
+                clean_kw = re.sub(r"[^\w]", "", unicodedata.normalize("NFKD", str(kw)).encode("ASCII", "ignore").decode("utf-8").lower())
+                if clean_kw in clean_k or clean_k in clean_kw:
+                    return val
+    return ""
+
 def upload_to_supabase_storage(file_bytes: bytes, filename: str, content_type: str = "image/png") -> str | None:
     storage_base_url = "https://yaresjmqcrpuiorpvbck.supabase.co/storage/v1/object/devolutivas/"
     url = f"{storage_base_url}{filename}"
@@ -1218,10 +1258,10 @@ def process_batch_for_request(item: Dict[str, Any], batch_size: int = 100) -> Di
 
     def enrich_one(row: Dict[str, Any], idx_pos: int):
         nonlocal success_count, error_count
-        nome_val = str(row.get("nome") or row.get("nome_completo") or row.get("nome_cliente") or "").strip() if use_nome else ""
-        uf_val = str(row.get("uf") or row.get("estado") or "").strip() if use_uf else ""
-        cidade_val = str(row.get("cidade") or "").strip() if use_cidade else ""
-        telefone_val = str(row.get("telefone") or row.get("celular") or "").strip() if use_telefone else ""
+        nome_val = find_column_val(row, ["nome", "nome_completo", "nome_cliente", "cliente", "razao_social", "nome_do_cliente"]) if use_nome else ""
+        uf_val = normalize_uf(find_column_val(row, ["uf", "estado", "uf_cliente", "sg_uf", "sigla_uf"])) if use_uf else ""
+        cidade_val = find_column_val(row, ["cidade", "municipio", "ds_municipio"]) if use_cidade else ""
+        telefone_val = find_column_val(row, ["telefone", "celular", "fone", "tel", "phone", "contato", "whatsapp"]) if use_telefone else ""
 
         enriched = None
         if not is_api_configured:
@@ -1234,13 +1274,13 @@ def process_batch_for_request(item: Dict[str, Any], batch_size: int = 100) -> Di
             return enriched
 
         try:
-            def query_api(uf_filter: str) -> str | None:
+            def query_api(nome_q: str, uf_q: str, cidade_q: str, tel_q: str = "") -> str | None:
                 data = {
-                    "nome": nome_val,
+                    "nome": nome_q,
                     "endereco": "",
-                    "cidade": cidade_val,
-                    "uf": uf_filter,
-                    "telefone": telefone_val,
+                    "cidade": cidade_q,
+                    "uf": uf_q,
+                    "telefone": tel_q,
                     "celular": "",
                     "email": "",
                     "nascimento": "",
@@ -1263,9 +1303,20 @@ def process_batch_for_request(item: Dict[str, Any], batch_size: int = 100) -> Di
                 except Exception as e:
                     return None
 
-            xml_response = query_api(uf_val)
-            if not xml_response or "Nada Consta" in xml_response or "REGISTRO MULTIPLO" in xml_response:
-                xml_response = query_api("")
+            # 1. Tentativa estrita com Nome + UF + Cidade
+            xml_response = query_api(nome_val, uf_val, cidade_val)
+            
+            # 2. Se falhar ou der Registro Múltiplo / Nada Consta, tenta sem cidade
+            if (not xml_response or "Nada Consta" in xml_response or "REGISTRO MULTIPLO" in xml_response) and cidade_val:
+                xml_response = query_api(nome_val, uf_val, "")
+
+            # 3. Se ainda falhar, tenta sem UF (busca em todo o Brasil)
+            if (not xml_response or "Nada Consta" in xml_response or "REGISTRO MULTIPLO" in xml_response) and uf_val:
+                xml_response = query_api(nome_val, "", "")
+
+            # 4. Se houver telefone e o nome deu registro múltiplo/nada consta, tenta pelo telefone
+            if (not xml_response or "Nada Consta" in xml_response or "REGISTRO MULTIPLO" in xml_response) and telefone_val:
+                xml_response = query_api("", "", "", telefone_val)
 
             import html
             xml_content = html.unescape(xml_response or "")
