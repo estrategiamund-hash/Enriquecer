@@ -1744,17 +1744,20 @@ function pollUploadProgress(requestId) {
           if (stepTratandoDetail) stepTratandoDetail.textContent = `E-mails em minúsculo e dados tratados com sucesso`;
           if (stepFinalizandoDetail) stepFinalizandoDetail.textContent = `Planilha Excel compilada e pronta para download!`;
 
-          // Mantém a tela visível por 2.5 segundos antes de transicionar
+          // Mantém a tela visível por 2.5 segundos antes de transicionar para o Passo 3
           setTimeout(() => {
+            if (step2Container) step2Container.classList.add('hidden');
+            if (step3Container) step3Container.classList.remove('hidden');
+            renderAvailableFields();
+            renderSelectedFields();
+            renderPreview();
+
             if (state.currentAction === 'enrich_and_queue') {
-              if (step2Container) step2Container.classList.add('hidden');
-              openRequestModal();
+              finalizeButton.textContent = 'Solicitar envio para a fila';
+              finalizeButton.onclick = () => {
+                openRequestModal();
+              };
             } else {
-              step2Container.classList.add('hidden');
-              step3Container.classList.remove('hidden');
-              renderAvailableFields();
-              renderSelectedFields();
-              renderPreview();
               finalizeButton.textContent = 'Baixar arquivo enriquecido';
               finalizeButton.onclick = () => {
                 if (state.activeRequestImportId) {
