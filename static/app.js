@@ -176,8 +176,8 @@ function formatPreviewFields(fields, previewData) {
   const remaining = fields.filter((f) => f !== 'nome' && f !== 'telefone');
   if (remaining.length > 0) {
     const parts = remaining.map((field) => {
-      const val = (previewData[field] !== undefined && previewData[field] !== null && String(previewData[field]).trim() !== '') 
-        ? previewData[field] 
+      const val = (previewData[field] !== undefined && previewData[field] !== null && String(previewData[field]).trim() !== '')
+        ? previewData[field]
         : '—';
       return `${labelize(field)}: ${val}`;
     });
@@ -637,8 +637,8 @@ function renderNormalUserHistory() {
   if (!container) return;
 
   // Filter completed requests that have a summary image (strategist uploaded devolutiva), OR rejected requests
-  const items = state.queue.filter(item => 
-    (item.status === 'completed' && item.summary_name) || 
+  const items = state.queue.filter(item =>
+    (item.status === 'completed' && item.summary_name) ||
     item.status === 'rejected'
   );
 
@@ -653,7 +653,7 @@ function renderNormalUserHistory() {
     const isCollapsed = !expandedCardIds.has(item.id);
     row.className = `queue-item ${isCollapsed ? 'collapsed' : ''}`;
     const rotation = isCollapsed ? '0deg' : '-180deg';
-    
+
     let actionBtnHtml = '';
     if (item.status === 'rejected') {
       const reason = getItemRejectReason(item);
@@ -749,12 +749,12 @@ window.resetZoom = resetZoom;
 
 function renderQueueActive() {
   // Filtrar apenas itens ativos (não completados), excluindo 'enrich_only'
-  const activeItems = state.queue.filter(item => 
-    item.status !== 'completed' && 
-    item.status !== 'rejected' && 
+  const activeItems = state.queue.filter(item =>
+    item.status !== 'completed' &&
+    item.status !== 'rejected' &&
     item.mode !== 'enrich_only'
   );
-  
+
   if (!activeItems.length) {
     strategyQueueActive.innerHTML = '<div class="queue-item"><strong>Sem solicitações ativas no momento.</strong></div>';
     activeBadge.textContent = '0';
@@ -769,7 +769,7 @@ function renderQueueActive() {
     row.className = `queue-item ${isCollapsed ? 'collapsed' : ''}`;
     const rotation = isCollapsed ? '0deg' : '-180deg';
     const formattedFields = formatSelectedFields(item.selected_fields || []);
-    
+
     // Verificar se está aguardando confirmação (queue_number === "TEMP")
     const isAwaitingConfirmation = item.queue_number === "TEMP";
     let queueNumberDisplay = item.queue_number;
@@ -794,7 +794,7 @@ function renderQueueActive() {
     }
 
     const isEnrichOnly = item.queue_number === "ENRICH";
-    
+
     let refuseBtnHtml = '';
     if (item.status === 'pending' || item.status === 'processing') {
       refuseBtnHtml = `<button type="button" class="button secondary" onclick="openRefuseModal('${item.id}')" style="background-color: var(--danger-color); color: white; border-color: var(--danger-color); font-size: 0.8rem; padding: 0.4rem 1rem; border-radius: var(--radius-sm);">Recusar</button>`;
@@ -831,7 +831,7 @@ function renderQueueActive() {
     } else {
       actionsHtml = `<span class="badge pending">Aguardando dados da fila</span>`;
     }
-    
+
     let rejectReasonHtml = '';
     if (item.status === 'rejected' && item.reject_reason) {
       rejectReasonHtml = `<div class="queue-meta" style="color: var(--danger-color);"><strong>Motivo da Recusa:</strong> ${item.reject_reason}</div>`;
@@ -883,12 +883,12 @@ function renderQueue() {
 
 function renderQueueHistoryQueue() {
   if (!strategyQueueHistoryQueue) return;
-  const historyItems = state.queue.filter(item => 
+  const historyItems = state.queue.filter(item =>
     (item.status === 'completed' || item.status === 'rejected') &&
     item.queue_number !== "ENRICH" &&
     item.mode !== "enrich_only"
   );
-  
+
   if (!historyItems.length) {
     strategyQueueHistoryQueue.innerHTML = '<div class="queue-item"><strong>Nenhum histórico de fila disponível.</strong></div>';
     if (historyQueueBadge) historyQueueBadge.textContent = '0';
@@ -896,10 +896,10 @@ function renderQueueHistoryQueue() {
   }
 
   if (historyQueueBadge) historyQueueBadge.textContent = historyItems.length;
-  
+
   const sortedItems = historyItems.sort((a, b) => parseDate(b.completed_at || b.request_time) - parseDate(a.completed_at || a.request_time));
   strategyQueueHistoryQueue.innerHTML = '';
-  
+
   sortedItems.forEach((item) => {
     const row = createHistoryRowElement(item);
     strategyQueueHistoryQueue.appendChild(row);
@@ -908,11 +908,11 @@ function renderQueueHistoryQueue() {
 
 function renderQueueHistoryEnrich() {
   if (!strategyQueueHistoryEnrich) return;
-  const historyItems = state.queue.filter(item => 
+  const historyItems = state.queue.filter(item =>
     (item.status === 'completed' || item.status === 'rejected') &&
     (item.queue_number === "ENRICH" || item.mode === "enrich_only")
   );
-  
+
   if (!historyItems.length) {
     strategyQueueHistoryEnrich.innerHTML = '<div class="queue-item"><strong>Nenhum histórico de enriquecimento direto disponível.</strong></div>';
     if (historyEnrichBadge) historyEnrichBadge.textContent = '0';
@@ -920,10 +920,10 @@ function renderQueueHistoryEnrich() {
   }
 
   if (historyEnrichBadge) historyEnrichBadge.textContent = historyItems.length;
-  
+
   const sortedItems = historyItems.sort((a, b) => parseDate(b.completed_at || b.request_time) - parseDate(a.completed_at || a.request_time));
   strategyQueueHistoryEnrich.innerHTML = '';
-  
+
   sortedItems.forEach((item) => {
     const row = createHistoryRowElement(item);
     strategyQueueHistoryEnrich.appendChild(row);
@@ -1101,11 +1101,11 @@ if (userTabButtons.length > 0) {
       btn.classList.add('is-active');
       const tabName = btn.getAttribute('data-user-tab');
       if (tabName === 'import') {
-        if(userImportSection) userImportSection.classList.remove('hidden');
-        if(normalUserHistoryContainer) normalUserHistoryContainer.classList.add('hidden');
+        if (userImportSection) userImportSection.classList.remove('hidden');
+        if (normalUserHistoryContainer) normalUserHistoryContainer.classList.add('hidden');
       } else if (tabName === 'history') {
-        if(userImportSection) userImportSection.classList.add('hidden');
-        if(normalUserHistoryContainer) normalUserHistoryContainer.classList.remove('hidden');
+        if (userImportSection) userImportSection.classList.add('hidden');
+        if (normalUserHistoryContainer) normalUserHistoryContainer.classList.remove('hidden');
         renderNormalUserHistory(); // refresh the view
       }
     });
@@ -1207,10 +1207,10 @@ if (refuseForm) {
   refuseForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     if (!activeRefuseRequestId) return;
-    
+
     const reason = document.getElementById('refuseReasonInput').value.trim();
     if (!reason) return;
-    
+
     try {
       const response = await fetch(`/api/request/${activeRefuseRequestId}/refuse`, {
         method: 'POST',
@@ -1303,11 +1303,11 @@ document.querySelectorAll('.queue-tab').forEach((tab) => {
   tab.addEventListener('click', (e) => {
     e.preventDefault();
     const tabName = tab.dataset.queueTab;
-    
+
     // Update active tab
     document.querySelectorAll('.queue-tab').forEach((t) => t.classList.remove('is-active'));
     tab.classList.add('is-active');
-    
+
     // Show/hide content
     if (strategyQueueActive) {
       strategyQueueActive.classList.toggle('hidden', tabName !== 'active');
@@ -1732,7 +1732,7 @@ function pollUploadProgress(requestId) {
         } else {
           // PROCESSO 100% CONCLUÍDO
           progressBarFill.style.width = '100%';
-          progressText.textContent = '✨ Processamento 100% Concluído com Sucesso!';
+          progressText.textContent = 'Processamento 100% Concluído com Sucesso!';
 
           setStepStatus('carregando', 'completed');
           setStepStatus('enriquecendo', 'completed');

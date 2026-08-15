@@ -99,13 +99,29 @@ UF_MAP = {
     "SERGIPE": "SE", "TOCANTINS": "TO"
 }
 
-def normalize_uf(uf_str: str) -> str:
+def normalize_uf(uf_str: Any) -> str:
     if not uf_str:
         return ""
-    clean = re.sub(r"[^\w]", "", unicodedata.normalize("NFKD", str(uf_str)).encode("ASCII", "ignore").decode("utf-8").upper()).strip()
-    if len(clean) == 2:
-        return clean
-    return UF_MAP.get(clean, clean[:2] if len(clean) >= 2 else clean)
+    raw = str(uf_str).strip()
+    if not raw:
+        return ""
+    
+    norm = unicodedata.normalize("NFKD", raw)
+    ascii_clean = "".join(c for c in norm if not unicodedata.combining(c)).upper().strip()
+    
+    letters_only = re.sub(r"[^A-Z]", "", ascii_clean)
+    if len(letters_only) == 2:
+        return letters_only
+        
+    words_clean = re.sub(r"[^A-Z\s]", "", ascii_clean).strip()
+    if words_clean in UF_MAP:
+        return UF_MAP[words_clean]
+        
+    for name, sigla in UF_MAP.items():
+        if name in words_clean or words_clean in name:
+            return sigla
+            
+    return letters_only[:2] if len(letters_only) >= 2 else letters_only
 
 def find_column_val(row: Dict[str, Any], keywords: List[str]) -> str:
     if not row:
@@ -712,11 +728,14 @@ def extract_xml_tag(xml_str: str, tag_name: str) -> str:
 
 _TOKEN_CACHE: Dict[str, Any] = {"token": None, "expires_at": 0}
 
-def get_nova_vida_token() -> str | None:
+def get_nova_vida_token(force_refresh: bool = False) -> str | None:
     import time
     now = time.time()
-    if _TOKEN_CACHE["token"] and _TOKEN_CACHE["expires_at"] > now:
+    if not force_refresh and _TOKEN_CACHE["token"] and _TOKEN_CACHE["expires_at"] > now:
         return _TOKEN_CACHE["token"]
+
+    _TOKEN_CACHE["token"] = None
+    _TOKEN_CACHE["expires_at"] = 0
 
     log_api_debug("get_nova_vida_token chamado (gerando novo token com validade de 24h via GET)")
     if NOVA_VIDA_API_KEY:
@@ -1263,9 +1282,17 @@ def process_batch_for_request(item: Dict[str, Any], batch_size: int = 100) -> Di
     use_telefone = is_field_requested(["telefone", "celular", "fone", "tel", "phone", "contato"])
 
     lock = threading.Lock()
-    logs = item.get("logs") or []
+    summary_counts = item.get("summary_counts") or {
+        "SUCESSO": 0, "REGISTRO_MULTIPLO": 0, "NADA_CONSTA": 0,
+        "LOGIN_INCORRETO": 0, "SEM_ACESSO": 0, "BLOQUEIO_CLIENTE": 0, "BLOQUEIO_USUARIO": 0,
+        "HTTP_400": 0, "HTTP_404": 0, "HTTP_500": 0, "HTTP_502": 0, "HTTP_503": 0, "HTTP_504": 0, "HTTP_505": 0, "HTTP_OUTROS": 0
+    }
     success_count = item.get("success_count", 0)
     error_count = item.get("error_count", 0)
+
+    def record_status(cat: str):
+        with lock:
+            summary_counts[cat] = summary_counts.get(cat, 0) + 1
 
     def enrich_one(row: Dict[str, Any], idx_pos: int):
         nonlocal success_count, error_count
@@ -1279,13 +1306,11 @@ def process_batch_for_request(item: Dict[str, Any], batch_size: int = 100) -> Di
             enriched = generate_mock_row(row, detected_type)
             with lock:
                 success_count += 1
-                curr_p = start_idx + idx_pos + 1
-                if len(logs) < 300:
-                    logs.append(f"[{curr_p}/{total_rows}] Sucesso (Simulado): {nome_val or f'Linha {curr_p}'}")
+                record_status("SUCESSO")
             return enriched
 
         try:
-            def query_single(p_map: dict) -> str:
+            def query_single(p_map: dict, active_tok: str) -> Tuple[int, str]:
                 full_params = {
                     "nome": p_map.get("nome", ""),
                     "endereco": p_map.get("endereco", ""),
@@ -1295,7 +1320,7 @@ def process_batch_for_request(item: Dict[str, Any], batch_size: int = 100) -> Di
                     "celular": p_map.get("celular", ""),
                     "email": p_map.get("email", ""),
                     "nascimento": p_map.get("nascimento", ""),
-                    "token": token
+                    "token": active_tok
                 }
                 data_bytes = urllib.parse.urlencode(full_params).encode("utf-8")
                 req = urllib.request.Request(
@@ -1311,54 +1336,89 @@ def process_batch_for_request(item: Dict[str, Any], batch_size: int = 100) -> Di
                 try:
                     context = ssl._create_unverified_context()
                     with urllib.request.urlopen(req, timeout=4.0, context=context) as resp:
-                        return resp.read().decode("utf-8", errors="ignore")
+                        return (resp.status, resp.read().decode("utf-8", errors="ignore"))
+                except urllib.error.HTTPError as herr:
+                    return (herr.code, "")
                 except Exception as e:
                     log_api_debug(f"Erro na requisição POST Nova Vida: {e}")
-                    return ""
+                    return (0, "")
 
             params = {}
-            if nome_val:
-                params["nome"] = nome_val
-            if uf_val:
-                params["uf"] = uf_val
-            if cidade_val:
-                params["cidade"] = cidade_val
-            if telefone_val:
-                params["telefone"] = telefone_val
+            if nome_val: params["nome"] = nome_val
+            if uf_val: params["uf"] = uf_val
+            if cidade_val: params["cidade"] = cidade_val
+            if telefone_val: params["telefone"] = telefone_val
 
-            xml_response = query_single(params)
-
-            # Fallback inteligente: Se buscou com UF/Cidade e deu Nada Consta ou Registro Múltiplo, tenta apenas pelo Nome
-            if (not xml_response or "Nada Consta" in xml_response or "REGISTRO MULTIPLO" in xml_response) and nome_val and (uf_val or cidade_val):
-                fallback_params = {"nome": nome_val}
-                xml_response = query_single(fallback_params)
+            cur_token = get_nova_vida_token()
+            http_status, xml_raw = query_single(params, cur_token)
 
             import html
-            xml_content = html.unescape(xml_response or "")
+            xml_content = html.unescape(xml_raw or "")
 
-            curr_p = start_idx + idx_pos + 1
-            if "REGISTRO MULTIPLO" in xml_content:
-                api_status = "REGISTRO MULTIPLO"
-            elif "Nada Consta" in xml_content or not xml_content:
-                api_status = "NADA CONSTA"
-            else:
-                api_status = "REGISTRO ENCONTRADO"
+            # Se o token expirou, renova forçadamente e repete 1 vez
+            if "TOKEN EXPIRADO" in xml_content.upper() or "TOKEN INCORRETO" in xml_content.upper():
+                cur_token = get_nova_vida_token(force_refresh=True)
+                http_status, xml_raw = query_single(params, cur_token)
+                xml_content = html.unescape(xml_raw or "")
 
-            print(f"[CLIENTE {curr_p}/{total_rows}] Nome: '{nome_val}' | UF: '{uf_val}' | Resposta Nova Vida: {api_status}", flush=True)
+            # Fallback por Nome puro se enviou UF/Cidade e deu Nada Consta ou Registro Múltiplo
+            if (http_status == 200) and ("Nada Consta" in xml_content or "REGISTRO MULTIPLO" in xml_content) and nome_val and (uf_val or cidade_val):
+                fallback_params = {"nome": nome_val}
+                f_status, f_raw = query_single(fallback_params, cur_token)
+                f_content = html.unescape(f_raw or "")
+                if f_status == 200 and ("REGISTRO ENCONTRADO" in f_content or ("Nada Consta" not in f_content and "REGISTRO MULTIPLO" not in f_content and "<NOME>" in f_content)):
+                    http_status = f_status
+                    xml_content = f_content
 
-            if api_status != "REGISTRO ENCONTRADO":
-                # Quando houver Registro Múltiplo ou Nada Consta, não atribui dados para evitar informações incorretas
+            if http_status != 200:
+                if http_status == 400: record_status("HTTP_400")
+                elif http_status == 404: record_status("HTTP_404")
+                elif http_status == 500: record_status("HTTP_500")
+                elif http_status == 502: record_status("HTTP_502")
+                elif http_status == 503: record_status("HTTP_503")
+                elif http_status == 504: record_status("HTTP_504")
+                elif http_status == 505: record_status("HTTP_505")
+                else: record_status("HTTP_OUTROS")
+
                 enriched = dict(row)
                 for field in ALL_ENRICH_FIELDS:
-                    if field not in enriched:
-                        enriched[field] = ""
+                    if field not in enriched: enriched[field] = ""
                 with lock:
                     error_count += 1
-                    if len(logs) < 300:
-                        logs.append(f"[{curr_p}/{total_rows}] Não enriquecido {nome_val}: {api_status}")
                 return enriched
 
-            # ÚNICO CLIENTE LOCALIZADO PELA API NOVA VIDA:
+            xml_upper = xml_content.upper()
+            if "USUARIO, SENHA OU CLIENTE INCORRETO" in xml_upper:
+                record_status("LOGIN_INCORRETO")
+                api_status = "LOGIN INCORRETO"
+            elif "SEM ACESSO AO SISTEMA" in xml_upper:
+                record_status("SEM_ACESSO")
+                api_status = "SEM ACESSO"
+            elif "QUANTIDADE CONFIGURADA ATINGIDA AO CLIENTE" in xml_upper:
+                record_status("BLOQUEIO_CLIENTE")
+                api_status = "BLOQUEIO CLIENTE"
+            elif "QUANTIDADE CONFIGURADA ATINGIDA AO USUARIO" in xml_upper or "QUANTIDADE CONFIGURADA ATINGIDA AO USUÁRIO" in xml_upper:
+                record_status("BLOQUEIO_USUARIO")
+                api_status = "BLOQUEIO USUARIO"
+            elif "REGISTRO MULTIPLO" in xml_upper:
+                record_status("REGISTRO_MULTIPLO")
+                api_status = "REGISTRO MULTIPLO"
+            elif "NADA CONSTA" in xml_upper or not xml_content:
+                record_status("NADA_CONSTA")
+                api_status = "NADA CONSTA"
+            else:
+                record_status("SUCESSO")
+                api_status = "REGISTRO ENCONTRADO"
+
+            if api_status != "REGISTRO ENCONTRADO":
+                enriched = dict(row)
+                for field in ALL_ENRICH_FIELDS:
+                    if field not in enriched: enriched[field] = ""
+                with lock:
+                    error_count += 1
+                return enriched
+
+            # REGISTRO ÚNICO LOCALIZADO COM SUCESSO:
             cpf = extract_xml_tag(xml_content, "CPF")
             nome_ret = extract_xml_tag(xml_content, "NOME") or nome_val
             sexo_ret = extract_xml_tag(xml_content, "SEXO") or row.get("sexo") or ""
@@ -1392,21 +1452,15 @@ def process_batch_for_request(item: Dict[str, Any], batch_size: int = 100) -> Di
 
             with lock:
                 success_count += 1
-                if len(logs) < 300:
-                    logs.append(f"[{curr_p}/{total_rows}] Sucesso: {nome_ret} -> CPF={cpf}, Cidade={cidade_ret}")
             return enriched
 
         except Exception as exc:
-            curr_p = start_idx + idx_pos + 1
-            print(f"[CLIENTE {curr_p}/{total_rows}] Erro ao consultar '{nome_val}': {exc}", flush=True)
+            record_status("HTTP_OUTROS")
             enriched = dict(row)
             for field in ALL_ENRICH_FIELDS:
-                if field not in enriched:
-                    enriched[field] = ""
+                if field not in enriched: enriched[field] = ""
             with lock:
                 error_count += 1
-                if len(logs) < 300:
-                    logs.append(f"[{curr_p}/{total_rows}] Falha ao consultar {nome_val}: {exc}")
             return enriched
 
     MAX_WORKERS = 500
@@ -1430,15 +1484,45 @@ def process_batch_for_request(item: Dict[str, Any], batch_size: int = 100) -> Di
     new_processed_count = end_idx
     new_status = "pending" if new_processed_count >= total_rows else "processing"
 
-    if new_status == "pending":
-        if len(logs) < 300:
-            logs.append(f"Processamento concluído. {success_count} registros enriquecidos com sucesso, {error_count} falhas.")
+    # Monta os logs consolidados por categoria
+    logs_summary = [
+        f"=== RESUMO CONSOLIDADOS DO PROCESSAMENTO ({new_processed_count}/{total_rows}) ===",
+        f"✓ Registros Enriquecidos com Sucesso: {summary_counts.get('SUCESSO', 0):,}".replace(",", "."),
+        f"⚠ Registro Múltiplo (mais de 1 cliente encontrado): {summary_counts.get('REGISTRO_MULTIPLO', 0):,}".replace(",", "."),
+        f"ℹ Nada Consta: {summary_counts.get('NADA_CONSTA', 0):,}".replace(",", "."),
+    ]
+    if summary_counts.get("LOGIN_INCORRETO", 0) > 0:
+        logs_summary.append(f"🔴 Falhas de Login (Usuário/Senha/Cliente Incorreto): {summary_counts.get('LOGIN_INCORRETO', 0):,}".replace(",", "."))
+    if summary_counts.get("SEM_ACESSO", 0) > 0:
+        logs_summary.append(f"🔴 Consulta Não Liberada (Sem Acesso ao Sistema): {summary_counts.get('SEM_ACESSO', 0):,}".replace(",", "."))
+    if summary_counts.get("BLOQUEIO_CLIENTE", 0) > 0:
+        logs_summary.append(f"🔴 Bloqueio Mensal no Cliente (Limite Atingido): {summary_counts.get('BLOQUEIO_CLIENTE', 0):,}".replace(",", "."))
+    if summary_counts.get("BLOQUEIO_USUARIO", 0) > 0:
+        logs_summary.append(f"🔴 Bloqueio Mensal no Usuário (Limite Atingido): {summary_counts.get('BLOQUEIO_USUARIO', 0):,}".replace(",", "."))
+    if summary_counts.get("HTTP_400", 0) > 0:
+        logs_summary.append(f"🔴 Erro HTTP 400 (Solicitação Inválida): {summary_counts.get('HTTP_400', 0):,}".replace(",", "."))
+    if summary_counts.get("HTTP_404", 0) > 0:
+        logs_summary.append(f"🔴 Erro HTTP 404 (Não Encontrado): {summary_counts.get('HTTP_404', 0):,}".replace(",", "."))
+    if summary_counts.get("HTTP_500", 0) > 0:
+        logs_summary.append(f"🔴 Erro HTTP 500 (Erro Interno no Servidor): {summary_counts.get('HTTP_500', 0):,}".replace(",", "."))
+    if summary_counts.get("HTTP_502", 0) > 0:
+        logs_summary.append(f"🔴 Erro HTTP 502 (Bad Gateway): {summary_counts.get('HTTP_502', 0):,}".replace(",", "."))
+    if summary_counts.get("HTTP_503", 0) > 0:
+        logs_summary.append(f"🔴 Erro HTTP 503 (Serviço Indisponível): {summary_counts.get('HTTP_503', 0):,}".replace(",", "."))
+    if summary_counts.get("HTTP_504", 0) > 0:
+        logs_summary.append(f"🔴 Erro HTTP 504 (Gateway Timeout): {summary_counts.get('HTTP_504', 0):,}".replace(",", "."))
+    if summary_counts.get("HTTP_505", 0) > 0:
+        logs_summary.append(f"🔴 Erro HTTP 505 (HTTP Version Not Supported): {summary_counts.get('HTTP_505', 0):,}".replace(",", "."))
+    if summary_counts.get("HTTP_OUTROS", 0) > 0:
+        logs_summary.append(f"🔴 Erros de Conexão/Rede Outros: {summary_counts.get('HTTP_OUTROS', 0):,}".replace(",", "."))
+    logs_summary.append("==================================================")
 
     item["rows"] = raw_rows
     item["processed_count"] = new_processed_count
     item["success_count"] = success_count
     item["error_count"] = error_count
-    item["logs"] = logs
+    item["summary_counts"] = summary_counts
+    item["logs"] = logs_summary
     item["status"] = new_status
 
     QUEUE_ROWS[item["id"]] = raw_rows
