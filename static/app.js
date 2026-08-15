@@ -1471,6 +1471,13 @@ function renderQueryFieldsSelection(columns) {
 async function startEnrichment(requesterName) {
   if (!state.currentRecord) return;
 
+  // Transição IMEDIATA para a tela de progresso (Passo 2)
+  step1Container.classList.add('hidden');
+  step2Container.classList.remove('hidden');
+  progressBarFill.style.width = '0%';
+  progressText.textContent = 'Inicializando registros e preparando o enriquecimento...';
+  uploadLogsBox.innerHTML = 'Conectando ao servidor...';
+
   const actionMode = state.currentAction || 'enrich_only';
   const queryFields = Array.from(state.selectedQueryFields || []);
 
@@ -1491,9 +1498,6 @@ async function startEnrichment(requesterName) {
     if (!response.ok) {
       throw new Error(payload.error || 'Falha ao iniciar enriquecimento.');
     }
-
-    step1Container.classList.add('hidden');
-    step2Container.classList.remove('hidden');
 
     state.activeRequestImportId = payload.request_id;
     pollUploadProgress(payload.request_id);
@@ -1525,7 +1529,7 @@ function pollUploadProgress(requestId) {
   }
 
   progressBarFill.style.width = '0%';
-  progressText.textContent = 'Enviando requisição...';
+  progressText.textContent = 'Processando enriquecimento...';
   uploadLogsBox.innerHTML = '';
 
   // Reset stat fields at start
@@ -1540,7 +1544,7 @@ function pollUploadProgress(requestId) {
     try {
       const response = await fetch(`/api/request/${requestId}/logs`);
       if (!response.ok) {
-        throw new Error('Falha ao obter progresso.');
+        return; // Ignora falhas pontuais e tenta no próximo ciclo
       }
       const data = await response.json();
 

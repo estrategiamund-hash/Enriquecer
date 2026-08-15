@@ -1244,7 +1244,7 @@ def process_batch_for_request(item: Dict[str, Any], batch_size: int = 100) -> Di
                 enriched[field] = ""
         return enriched
 
-    MAX_WORKERS = 20
+    MAX_WORKERS = 40
     enriched_batch_results = [None] * len(batch_rows)
 
     with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
@@ -1372,9 +1372,6 @@ def create_import_request():
             "request_id": queue_item["id"],
             "mode": mode,
         })
-
-    # Processa o primeiro lote (batch) de 100 registros imediatamente
-    process_batch_for_request(queue_item, batch_size=100)
 
     return jsonify({
         "message": "Enriquecimento iniciado com sucesso.",
@@ -1602,9 +1599,9 @@ def get_request_logs(request_id: str):
     if item is None:
         return jsonify({"error": "Solicitação não encontrada."}), 404
         
-    # Se o item ainda está sendo processado, executa o próximo lote de 100 registros
+    # Se o item ainda está sendo processado, executa o próximo lote de 200 registros com 40 workers de alta velocidade
     if item.get("status") == "processing":
-        item = process_batch_for_request(item, batch_size=100)
+        item = process_batch_for_request(item, batch_size=200)
 
     preview_row = {}
     csv_path = EXPORT_DIR / f"raw_{request_id}.csv"
