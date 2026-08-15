@@ -1477,6 +1477,9 @@ async function startEnrichment(requesterName) {
   // Transição IMEDIATA para a tela de progresso (Passo 2)
   step1Container.classList.add('hidden');
   step2Container.classList.remove('hidden');
+  if (cancelEnrichButton) {
+    cancelEnrichButton.classList.remove('hidden');
+  }
   progressBarFill.style.width = '0%';
   progressText.textContent = 'Inicializando registros e preparando o enriquecimento...';
   uploadLogsBox.innerHTML = 'Conectando ao servidor...';
@@ -1657,6 +1660,9 @@ function pollUploadProgress(requestId) {
       } else if (data.status !== 'processing') {
         clearInterval(uploadProgressInterval);
         uploadProgressInterval = null;
+        if (cancelEnrichButton) {
+          cancelEnrichButton.classList.add('hidden');
+        }
 
         const sampleRow = (data.rows && data.rows.length > 0) ? data.rows[0] : (data.preview || {});
         state.currentRecord = {
