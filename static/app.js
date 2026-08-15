@@ -600,8 +600,7 @@ async function loadQueue() {
     const payload = await response.json();
     state.queue = payload.queue || [];
     if (state.currentRole === 'admin') {
-      renderQueueActive();
-      renderQueueHistory();
+      renderQueue();
     } else {
       renderNormalUserHistory();
     }
@@ -980,20 +979,14 @@ function parseDate(dateStr) {
 }
 
 function goToHistoryPage(page) {
-  const historyItems = state.queue.filter(item => item.status === 'completed' || item.status === 'rejected');
-  const totalPages = Math.ceil(historyItems.length / state.historyItemsPerPage);
-  
-  if (page < 1) page = 1;
-  if (page > totalPages) page = totalPages;
-  
   state.historyCurrentPage = page;
-  renderQueueHistory();
+  renderQueue();
 }
 
 function renderQueue() {
-  // Manter para compatibilidade, mas agora chama as duas
   renderQueueActive();
-  renderQueueHistory();
+  renderQueueHistoryQueue();
+  renderQueueHistoryEnrich();
 }
 
 async function submitSummary(event) {
