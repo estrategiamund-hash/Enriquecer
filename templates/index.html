@@ -10,7 +10,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=20260815" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=20260815_2" />
   <link rel="icon" href="{{ url_for('static', filename='favicon.png') }}?v=2" type="image/png">
   <link rel="shortcut icon" href="/favicon.ico?v=2" type="image/png">
 </head>
@@ -130,24 +130,7 @@
           Passo 2: Processamento e Acompanhamento em Tempo Real
         </div>
 
-        <div class="stats-grid">
-          <div class="stat-card">
-            <span class="stat-label">Processados</span>
-            <span id="statProcessed" class="stat-value">0 / 0</span>
-          </div>
-          <div class="stat-card success">
-            <span class="stat-label">Sucesso (Único)</span>
-            <span id="statSuccess" class="stat-value">0 (0%)</span>
-          </div>
-          <div class="stat-card danger">
-            <span class="stat-label">Sem Registro / Múltiplo</span>
-            <span id="statError" class="stat-value">0 (0%)</span>
-          </div>
-          <div class="stat-card warning">
-            <span class="stat-label">Tempo Restante Est.</span>
-            <span id="statTimeRemaining" class="stat-value">Calculando...</span>
-          </div>
-        </div>
+
 
         <div class="progress-bar-container" style="margin-top: 1rem; margin-bottom: 0.5rem;">
           <div id="progressBarFill" class="progress-bar-fill" style="width: 0%;"></div>
@@ -244,16 +227,21 @@
           <span>Fila Ativa</span>
           <span class="queue-tab-badge" id="activeBadge">0</span>
         </button>
-        <button class="queue-tab" data-queue-tab="history">
-          <span>Histórico</span>
-          <span class="queue-tab-badge" id="historyBadge">0</span>
+        <button class="queue-tab" data-queue-tab="history_queue">
+          <span>Hist Fila</span>
+          <span class="queue-tab-badge" id="historyQueueBadge">0</span>
+        </button>
+        <button class="queue-tab" data-queue-tab="history_enrich">
+          <span>Hist Enri</span>
+          <span class="queue-tab-badge" id="historyEnrichBadge">0</span>
         </button>
       </div>
 
       <div id="strategyNotifications" class="notification-list" style="display: none;"></div>
 
       <div id="strategyQueueActive" class="queue-list queue-tab-content is-visible"></div>
-      <div id="strategyQueueHistory" class="queue-list queue-tab-content hidden"></div>
+      <div id="strategyQueueHistoryQueue" class="queue-list queue-tab-content hidden"></div>
+      <div id="strategyQueueHistoryEnrich" class="queue-list queue-tab-content hidden"></div>
     </section>
 
     <section id="logs-panel" class="panel hidden">

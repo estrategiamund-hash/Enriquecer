@@ -61,9 +61,11 @@ const logCounterError = document.getElementById('logCounterError');
 
 // Queue active/history elements
 const strategyQueueActive = document.getElementById('strategyQueueActive');
-const strategyQueueHistory = document.getElementById('strategyQueueHistory');
+const strategyQueueHistoryQueue = document.getElementById('strategyQueueHistoryQueue');
+const strategyQueueHistoryEnrich = document.getElementById('strategyQueueHistoryEnrich');
 const activeBadge = document.getElementById('activeBadge');
-const historyBadge = document.getElementById('historyBadge');
+const historyQueueBadge = document.getElementById('historyQueueBadge');
+const historyEnrichBadge = document.getElementById('historyEnrichBadge');
 
 // Usability selectors
 const dropZone = document.getElementById('dropZone');
@@ -851,110 +853,117 @@ function renderQueueActive() {
   });
 }
 
-function renderQueueHistory() {
-  // Filtrar apenas itens completados ou recusados
-  const historyItems = state.queue.filter(item => item.status === 'completed' || item.status === 'rejected');
+function renderQueue() {
+  renderQueueActive();
+  renderQueueHistoryQueue();
+  renderQueueHistoryEnrich();
+}
+
+function renderQueueHistoryQueue() {
+  if (!strategyQueueHistoryQueue) return;
+  const historyItems = state.queue.filter(item => 
+    (item.status === 'completed' || item.status === 'rejected') &&
+    item.queue_number !== "ENRICH" &&
+    item.mode !== "enrich_only"
+  );
   
   if (!historyItems.length) {
-    strategyQueueHistory.innerHTML = '<div class="queue-item"><strong>Nenhum histórico disponível.</strong></div>';
-    historyBadge.textContent = '0';
+    strategyQueueHistoryQueue.innerHTML = '<div class="queue-item"><strong>Nenhum histórico de fila disponível.</strong></div>';
+    if (historyQueueBadge) historyQueueBadge.textContent = '0';
     return;
   }
 
-  historyBadge.textContent = historyItems.length;
+  if (historyQueueBadge) historyQueueBadge.textContent = historyItems.length;
   
-  // Ordenar por data (mais recente primeiro)
-  const sortedItems = historyItems.sort((a, b) => {
-    const dateA = parseDate(a.completed_at || a.request_time);
-    const dateB = parseDate(b.completed_at || b.request_time);
-    return dateB - dateA; // Mais recente primeiro
-  });
-
-  // Calcular paginação
-  const totalPages = Math.ceil(sortedItems.length / state.historyItemsPerPage);
-  const startIdx = (state.historyCurrentPage - 1) * state.historyItemsPerPage;
-  const endIdx = startIdx + state.historyItemsPerPage;
-  const paginatedItems = sortedItems.slice(startIdx, endIdx);
-
-  strategyQueueHistory.innerHTML = '';
+  const sortedItems = historyItems.sort((a, b) => parseDate(b.completed_at || b.request_time) - parseDate(a.completed_at || a.request_time));
+  strategyQueueHistoryQueue.innerHTML = '';
   
-  // Renderizar items da página atual
-  paginatedItems.forEach((item) => {
-    const row = document.createElement('article');
-    const isCollapsed = !expandedCardIds.has(item.id);
-    row.className = `queue-item ${isCollapsed ? 'collapsed' : ''}`;
-    const rotation = isCollapsed ? '0deg' : '-180deg';
-    const formattedFields = formatSelectedFields(item.selected_fields || []);
-    
-    const isEnrichOnly = item.queue_number === "ENRICH";
-
-    const devolutivaBtnHtml = item.summary_name
-      ? `<button type="button" class="primary" style="padding: 0.4rem 1rem; border-radius: var(--radius-sm); font-size: 0.8rem;" onclick="openImageViewer('/api/summary/${item.id}')">Visualizar Devolutiva</button>`
-      : '';
-
-    row.innerHTML = `
-      <div class="queue-header" style="cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
-        <div style="display: flex; align-items: center; gap: 0.5rem;">
-          <span class="collapse-icon" style="display: inline-block; transition: transform 0.2s; font-size: 0.8rem; color: var(--text-muted); transform: rotate(${rotation});">▼</span>
-          <strong>Fila ${item.queue_number}</strong>
-        </div>
-        <span class="badge ${item.status === 'rejected' ? 'error' : 'completed'}">
-          ${item.status === 'rejected' ? 'Recusado' : (isEnrichOnly ? 'Apenas Enriquecido' : 'Concluído')}
-        </span>
-      </div>
-      <div class="queue-collapsible-content">
-        <div class="queue-meta">Solicitante: ${item.requester_name}</div>
-        <div class="queue-meta">Horário: ${item.completed_at || item.request_time}</div>
-        <div class="queue-meta">Campos: ${formattedFields}</div>
-        <div class="queue-actions">
-          <span class="badge ${item.status === 'rejected' ? 'error' : 'completed'}">
-            ${item.status === 'rejected' ? 'Recusado' : (isEnrichOnly ? 'Apenas Enriquecido' : 'Importado com sucesso')}
-          </span>
-          <button type="button" class="download-link-premium" style="display: inline-flex; align-items: center; gap: 8px; border: none; font-family: inherit;" onclick="downloadFileDirectly('/api/request/${item.id}/download')" title="Baixar Planilha">
-            <svg viewBox="0 0 256 256" height="24" width="28" xmlns="http://www.w3.org/2000/svg">
-              <path d="M74.34 85.66a8 8 0 0 1 11.32-11.32L120 108.69V24a8 8 0 0 1 16 0v84.69l34.34-34.35a8 8 0 0 1 11.32 11.32l-48 48a8 8 0 0 1-11.32 0ZM240 136v64a16 16 0 0 1-16 16H32a16 16 0 0 1-16-16v-64a16 16 0 0 1 16-16h52.4a4 4 0 0 1 2.83 1.17L111 145a24 24 0 0 0 34 0l23.8-23.8a4 4 0 0 1 2.8-1.2H224a16 16 0 0 1 16 16m-40 32a12 12 0 1 0-12 12a12 12 0 0 0 12-12" fill="currentColor"></path>
-            </svg>
-            <span>Download</span>
-          </button>
-          ${item.status === 'rejected' ? `<button type="button" class="button secondary" style="background-color: var(--danger-color); color: white; border-color: var(--danger-color);" onclick="openViewReasonModal('${encodeURIComponent(getItemRejectReason(item))}')">Motivo da Recusa</button>` : ''}
-          ${devolutivaBtnHtml}
-          <button type="button" class="button secondary" onclick="viewDetailedLogs('${item.id}')">Logs</button>
-        </div>
-      </div>
-    `;
-
-    // Add collapse toggle handler
-    const header = row.querySelector('.queue-header');
-    header.addEventListener('click', (e) => {
-      row.classList.toggle('collapsed');
-      const icon = header.querySelector('.collapse-icon');
-      if (row.classList.contains('collapsed')) {
-        icon.style.transform = 'rotate(0deg)';
-        expandedCardIds.delete(item.id);
-      } else {
-        icon.style.transform = 'rotate(-180deg)';
-        expandedCardIds.add(item.id);
-      }
-    });
-
-    strategyQueueHistory.appendChild(row);
+  sortedItems.forEach((item) => {
+    const row = createHistoryRowElement(item);
+    strategyQueueHistoryQueue.appendChild(row);
   });
+}
 
-  // Adicionar controles de paginação se houver mais de uma página
-  if (totalPages > 1) {
-    const paginationContainer = document.createElement('div');
-    paginationContainer.className = 'pagination-container';
-    paginationContainer.innerHTML = `
-      <div class="pagination-controls">
-        <button type="button" class="pagination-btn" onclick="goToHistoryPage(1)" ${state.historyCurrentPage === 1 ? 'disabled' : ''}>«</button>
-        <button type="button" class="pagination-btn" onclick="goToHistoryPage(${state.historyCurrentPage - 1})" ${state.historyCurrentPage === 1 ? 'disabled' : ''}>‹</button>
-        <span class="pagination-info">Página ${state.historyCurrentPage} de ${totalPages}</span>
-        <button type="button" class="pagination-btn" onclick="goToHistoryPage(${state.historyCurrentPage + 1})" ${state.historyCurrentPage === totalPages ? 'disabled' : ''}>›</button>
-        <button type="button" class="pagination-btn" onclick="goToHistoryPage(${totalPages})" ${state.historyCurrentPage === totalPages ? 'disabled' : ''}>»</button>
-      </div>
-    `;
-    strategyQueueHistory.appendChild(paginationContainer);
+function renderQueueHistoryEnrich() {
+  if (!strategyQueueHistoryEnrich) return;
+  const historyItems = state.queue.filter(item => 
+    (item.status === 'completed' || item.status === 'rejected') &&
+    (item.queue_number === "ENRICH" || item.mode === "enrich_only")
+  );
+  
+  if (!historyItems.length) {
+    strategyQueueHistoryEnrich.innerHTML = '<div class="queue-item"><strong>Nenhum histórico de enriquecimento direto disponível.</strong></div>';
+    if (historyEnrichBadge) historyEnrichBadge.textContent = '0';
+    return;
   }
+
+  if (historyEnrichBadge) historyEnrichBadge.textContent = historyItems.length;
+  
+  const sortedItems = historyItems.sort((a, b) => parseDate(b.completed_at || b.request_time) - parseDate(a.completed_at || a.request_time));
+  strategyQueueHistoryEnrich.innerHTML = '';
+  
+  sortedItems.forEach((item) => {
+    const row = createHistoryRowElement(item);
+    strategyQueueHistoryEnrich.appendChild(row);
+  });
+}
+
+function createHistoryRowElement(item) {
+  const row = document.createElement('article');
+  const isCollapsed = !expandedCardIds.has(item.id);
+  row.className = `queue-item ${isCollapsed ? 'collapsed' : ''}`;
+  const rotation = isCollapsed ? '0deg' : '-180deg';
+  const formattedFields = formatSelectedFields(item.selected_fields || []);
+  const isEnrichOnly = item.queue_number === "ENRICH" || item.mode === "enrich_only";
+  const devolutivaBtnHtml = item.summary_name
+    ? `<button type="button" class="primary" style="padding: 0.4rem 1rem; border-radius: var(--radius-sm); font-size: 0.8rem;" onclick="openImageViewer('/api/summary/${item.id}')">Visualizar Devolutiva</button>`
+    : '';
+
+  row.innerHTML = `
+    <div class="queue-header" style="cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
+      <div style="display: flex; align-items: center; gap: 0.5rem;">
+        <span class="collapse-icon" style="display: inline-block; transition: transform 0.2s; font-size: 0.8rem; color: var(--text-muted); transform: rotate(${rotation});">▼</span>
+        <strong>${isEnrichOnly ? 'Enriquecimento Direto' : 'Fila ' + item.queue_number}</strong>
+      </div>
+      <span class="badge ${item.status === 'rejected' ? 'error' : 'completed'}">
+        ${item.status === 'rejected' ? 'Recusado' : (isEnrichOnly ? 'Enriquecido' : 'Concluído')}
+      </span>
+    </div>
+    <div class="queue-collapsible-content">
+      <div class="queue-meta">Solicitante: ${item.requester_name}</div>
+      <div class="queue-meta">Horário: ${item.completed_at || item.request_time}</div>
+      <div class="queue-meta">Campos: ${formattedFields}</div>
+      <div class="queue-actions">
+        <span class="badge ${item.status === 'rejected' ? 'error' : 'completed'}">
+          ${item.status === 'rejected' ? 'Recusado' : (isEnrichOnly ? 'Apenas Enriquecido' : 'Importado com sucesso')}
+        </span>
+        <button type="button" class="download-link-premium" style="display: inline-flex; align-items: center; gap: 8px; border: none; font-family: inherit;" onclick="downloadFileDirectly('/api/request/${item.id}/download')" title="Baixar Planilha">
+          <svg viewBox="0 0 256 256" height="24" width="28" xmlns="http://www.w3.org/2000/svg">
+            <path d="M74.34 85.66a8 8 0 0 1 11.32-11.32L120 108.69V24a8 8 0 0 1 16 0v84.69l34.34-34.35a8 8 0 0 1 11.32 11.32l-48 48a8 8 0 0 1-11.32 0ZM240 136v64a16 16 0 0 1-16 16H32a16 16 0 0 1-16-16v-64a16 16 0 0 1 16-16h52.4a4 4 0 0 1 2.83 1.17L111 145a24 24 0 0 0 34 0l23.8-23.8a4 4 0 0 1 2.8-1.2H224a16 16 0 0 1 16 16m-40 32a12 12 0 1 0-12 12a12 12 0 0 0 12-12" fill="currentColor"></path>
+          </svg>
+          <span>Download</span>
+        </button>
+        ${item.status === 'rejected' ? `<button type="button" class="button secondary" style="background-color: var(--danger-color); color: white; border-color: var(--danger-color);" onclick="openViewReasonModal('${encodeURIComponent(getItemRejectReason(item))}')">Motivo da Recusa</button>` : ''}
+        ${devolutivaBtnHtml}
+        <button type="button" class="button secondary" onclick="viewDetailedLogs('${item.id}')">Logs</button>
+      </div>
+    </div>
+  `;
+
+  const header = row.querySelector('.queue-header');
+  header.addEventListener('click', () => {
+    row.classList.toggle('collapsed');
+    const icon = header.querySelector('.collapse-icon');
+    if (row.classList.contains('collapsed')) {
+      icon.style.transform = 'rotate(0deg)';
+      expandedCardIds.delete(item.id);
+    } else {
+      icon.style.transform = 'rotate(-180deg)';
+      expandedCardIds.add(item.id);
+    }
+  });
+
+  return row;
 }
 
 function parseDate(dateStr) {
@@ -1284,16 +1293,24 @@ document.querySelectorAll('.queue-tab').forEach((tab) => {
     tab.classList.add('is-active');
     
     // Show/hide content
-    strategyQueueActive.classList.toggle('hidden', tabName !== 'active');
-    strategyQueueActive.classList.toggle('is-visible', tabName === 'active');
-    strategyQueueHistory.classList.toggle('hidden', tabName !== 'history');
-    strategyQueueHistory.classList.toggle('is-visible', tabName === 'history');
+    if (strategyQueueActive) {
+      strategyQueueActive.classList.toggle('hidden', tabName !== 'active');
+      strategyQueueActive.classList.toggle('is-visible', tabName === 'active');
+    }
+    if (strategyQueueHistoryQueue) {
+      strategyQueueHistoryQueue.classList.toggle('hidden', tabName !== 'history_queue');
+      strategyQueueHistoryQueue.classList.toggle('is-visible', tabName === 'history_queue');
+    }
+    if (strategyQueueHistoryEnrich) {
+      strategyQueueHistoryEnrich.classList.toggle('hidden', tabName !== 'history_enrich');
+      strategyQueueHistoryEnrich.classList.toggle('is-visible', tabName === 'history_enrich');
+    }
   });
 });
 
-// Add click listeners to both queue containers
-[strategyQueueActive, strategyQueueHistory].forEach((container) => {
-  container.addEventListener('click', submitSummary);
+// Add click listeners to queue containers
+[strategyQueueActive, strategyQueueHistoryQueue, strategyQueueHistoryEnrich].forEach((container) => {
+  if (container) container.addEventListener('click', submitSummary);
 });
 
 // Logs Queue functions and polling
