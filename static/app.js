@@ -581,8 +581,20 @@ async function submitRequest(event) {
     }
 
     closeRequestModal();
-    step3Container.classList.add('hidden');
-    showMessage(payload.message, 'success');
+    if (step2Container) step2Container.classList.add('hidden');
+    if (step3Container) step3Container.classList.add('hidden');
+    if (step1Container) step1Container.classList.remove('hidden');
+    if (uploadForm) uploadForm.reset();
+    if (dropZone) {
+      dropZone.classList.remove('drop-zone--attached');
+      const textEl = dropZone.querySelector('.drop-zone-text');
+      if (textEl) {
+        textEl.textContent = 'Arrastar e soltar arquivo aqui (.xlsx, .csv) ou clique para selecionar';
+      }
+    }
+    state.currentRecord = null;
+    state.activeRequestImportId = null;
+    showMessage('Solicitação enviada com sucesso para a estratégia!', 'success');
     loadQueue();
     loadLogsQueue();
   } catch (error) {
@@ -1632,6 +1644,13 @@ function pollUploadProgress(requestId) {
 
       const totalRowsFormatted = (data.total_rows || 0).toLocaleString('pt-BR');
       const processedFormatted = (data.processed_count || 0).toLocaleString('pt-BR');
+
+      const enrichSuccessCount = document.getElementById('enrichSuccessCount');
+      const enrichErrorCount = document.getElementById('enrichErrorCount');
+      const enrichmentSummaryBox = document.getElementById('enrichmentSummaryBox');
+      if (enrichmentSummaryBox) enrichmentSummaryBox.classList.remove('hidden');
+      if (enrichSuccessCount) enrichSuccessCount.textContent = (data.success_count || 0).toLocaleString('pt-BR');
+      if (enrichErrorCount) enrichErrorCount.textContent = (data.error_count || 0).toLocaleString('pt-BR');
 
       if (data.total_rows > 0 && stepCarregandoDetail) {
         stepCarregandoDetail.textContent = `Planilha de ${totalRowsFormatted} registros validada com sucesso`;

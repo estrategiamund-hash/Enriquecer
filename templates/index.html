@@ -10,7 +10,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=20260815_3" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=20260815_4" />
   <link rel="icon" href="{{ url_for('static', filename='favicon.png') }}?v=2" type="image/png">
   <link rel="shortcut icon" href="/favicon.ico?v=2" type="image/png">
 </head>
@@ -136,6 +136,12 @@
           <div id="progressBarFill" class="progress-bar-fill" style="width: 0%;"></div>
         </div>
         <p id="progressText" class="progress-text" style="margin-bottom: 1.5rem; font-weight: 600;">Iniciando processamento...</p>
+        
+        <!-- RESUMO ÚNICO DE PROCESSAMENTO -->
+        <div id="enrichmentSummaryBox" class="enrich-summary-box hidden" style="margin-top: 1rem; margin-bottom: 1.5rem; padding: 1rem 1.5rem; border-radius: 12px; background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.25); text-align: center; font-size: 1.1rem; font-weight: 600; display: flex; justify-content: center; gap: 3rem; align-items: center;">
+          <span style="color: #34d399;">Sucessos: <strong id="enrichSuccessCount" style="font-size: 1.3rem;">0</strong></span>
+          <span style="color: #f87171;">Falhas: <strong id="enrichErrorCount" style="font-size: 1.3rem;">0</strong></span>
+        </div>
         
         <!-- PAINEL DE ETAPAS DO BACKEND -->
         <div id="processingStepsContainer" class="processing-steps-container">
@@ -378,7 +384,7 @@
     </div>
   </div>
 
-  <script src="{{ url_for('static', filename='app.js') }}?v=20260815_3"></script>
+  <script src="{{ url_for('static', filename='app.js') }}?v=20260815_4"></script>
 </body>
 
 </html>

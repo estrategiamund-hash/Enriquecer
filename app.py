@@ -1727,18 +1727,31 @@ def complete_request(request_id: str):
 
     uploaded_file = request.files.get("summaryImage")
     summary_name = "resumo_importacao.png"
+    summary_b64 = None
+    summary_mime = "image/png"
     if uploaded_file and uploaded_file.filename:
         summary_name = uploaded_file.filename
+        summary_bytes = uploaded_file.read()
+        summary_b64 = base64.b64encode(summary_bytes).decode("utf-8")
+        summary_mime = uploaded_file.content_type or "image/png"
         destination = EXPORT_DIR / f"summary_{request_id}_{summary_name}"
-        uploaded_file.save(destination)
+        try:
+            with open(destination, "wb") as f:
+                f.write(summary_bytes)
+        except Exception:
+            pass
 
     item["status"] = "completed"
     item["summary_name"] = summary_name
+    item["summary_b64"] = summary_b64
+    item["summary_mime"] = summary_mime
     item["completed_at"] = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
 
     db_update_queue_item(request_id, {
         "status": item["status"],
         "summary_name": item["summary_name"],
+        "summary_b64": item["summary_b64"],
+        "summary_mime": item["summary_mime"],
         "completed_at": item["completed_at"]
     })
 
@@ -1759,15 +1772,26 @@ def complete_request(request_id: str):
 @app.get("/api/summary/<request_id>")
 def get_summary_image(request_id: str):
     item = db_get_queue_item(request_id)
-    if item is None or not item.get("summary_name"):
-        return jsonify({"error": "Resumo não encontrado."}), 404
+    if item is None:
+        return jsonify({"error": "Solicitação não encontrada."}), 404
         
-    filename = f"summary_{request_id}_{item['summary_name']}"
-    filepath = EXPORT_DIR / filename
-    if not filepath.exists():
-        return jsonify({"error": "Arquivo não encontrado no servidor."}), 404
+    # 1. Tenta servir do Base64 armazenado no banco (Vercel Serverless)
+    if item.get("summary_b64"):
+        try:
+            image_data = base64.b64decode(item["summary_b64"])
+            mime = item.get("summary_mime") or "image/png"
+            return send_file(io.BytesIO(image_data), mimetype=mime)
+        except Exception as e:
+            log_api_debug(f"Erro ao decodificar summary_b64: {e}")
+
+    # 2. Fallback para o arquivo local
+    if item.get("summary_name"):
+        filename = f"summary_{request_id}_{item['summary_name']}"
+        filepath = EXPORT_DIR / filename
+        if filepath.exists():
+            return send_file(filepath)
         
-    return send_file(filepath)
+    return jsonify({"error": "Resumo não encontrado."}), 404
 
 
 @app.get("/api/health")
