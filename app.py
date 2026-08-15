@@ -118,7 +118,7 @@ def extract_reject_reason(item: Dict[str, Any]) -> str:
 def db_save_queue_item(item: Dict[str, Any]) -> None:
     item_db = {
         k: v for k, v in item.items()
-        if k in {"id", "record_id", "queue_number", "requester_name", "observacoes", "filename", "status", "total_rows", "processed_count", "success_count", "error_count", "request_time", "completed_at", "summary_name", "selected_fields", "detected_type", "logs", "reject_reason", "mode"}
+        if k in {"id", "record_id", "queue_number", "requester_name", "observacoes", "filename", "status", "total_rows", "processed_count", "success_count", "error_count", "request_time", "completed_at", "summary_name", "selected_fields", "detected_type", "logs", "rows"}
     }
     res = make_supabase_request("queue", "POST", item_db)
     if res is None:
@@ -128,7 +128,7 @@ def db_save_queue_item(item: Dict[str, Any]) -> None:
 def db_update_queue_item(item_id: str, updates: Dict[str, Any]) -> None:
     updates_db = {
         k: v for k, v in updates.items()
-        if k in {"id", "record_id", "queue_number", "requester_name", "observacoes", "filename", "status", "total_rows", "processed_count", "success_count", "error_count", "request_time", "completed_at", "summary_name", "selected_fields", "detected_type", "logs", "reject_reason", "mode"}
+        if k in {"id", "record_id", "queue_number", "requester_name", "observacoes", "filename", "status", "total_rows", "processed_count", "success_count", "error_count", "request_time", "completed_at", "summary_name", "selected_fields", "detected_type", "logs", "rows"}
     }
     res = make_supabase_request("queue", "PATCH", data=updates_db, query=f"?id=eq.{item_id}")
     if res is None:
@@ -1578,7 +1578,7 @@ def create_import_request():
     if record is None:
         return jsonify({"error": "Registro não encontrado."}), 404
 
-    raw_rows = record.get("rows")
+    raw_rows = payload.get("rows") or record.get("rows")
     if not raw_rows and record.get("stored_file"):
         stored_file_path = Path(record["stored_file"])
         if stored_file_path.exists():
@@ -1620,7 +1620,7 @@ def create_import_request():
         "success_count": 0,
         "error_count": 0,
         "logs": ["Iniciando enriquecimento assíncrono..."] if mode != "queue_only" else ["Fila criada. Aguardando cadastro da solicitação."],
-        "rows": [],
+        "rows": raw_rows or [],
         "completed_at": None,
         "mode": mode,
     }
@@ -1655,6 +1655,8 @@ def create_import_request():
     )
     thread.daemon = True
     thread.start()
+    # Permitir que a thread processe sincronamente por até 8s no ambiente Vercel
+    thread.join(timeout=8)
 
     return jsonify({
         "message": "Enriquecimento iniciado em segundo plano.",
@@ -1882,6 +1884,13 @@ def get_request_logs(request_id: str):
     if item is None:
         return jsonify({"error": "Solicitação não encontrada."}), 404
         
+    # Auto-concluir se todas as linhas foram processadas mas o status ainda for 'processing'
+    processed = item.get("processed_count", 0)
+    total = item.get("total_rows", 0)
+    if processed >= total and total > 0 and item.get("status") == "processing":
+        item["status"] = "pending"
+        db_update_queue_item(request_id, {"status": "pending", "logs": item.get("logs", [])})
+
     preview_row = {}
     csv_path = EXPORT_DIR / f"raw_{request_id}.csv"
     if csv_path.exists():

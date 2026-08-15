@@ -1482,7 +1482,8 @@ async function startEnrichment(requesterName) {
         record_id: state.currentRecord.id,
         query_fields: queryFields,
         mode: actionMode,
-        requester_name: requesterName
+        requester_name: requesterName,
+        rows: state.currentRecord ? state.currentRecord.rows : null
       })
     });
 
