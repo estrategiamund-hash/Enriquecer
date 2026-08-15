@@ -508,13 +508,24 @@ async function handleUpload(event) {
 }
 
 function openRequestModal() {
-  if (!state.currentRecord || !state.selectedFields.length) {
-    showMessage('Selecione nome e telefone para criar a solicitação.', 'error');
+  if (!state.currentRecord) {
+    showMessage('Nenhum registro disponível para criar a solicitação.', 'error');
     return;
   }
 
-  requestModal.classList.remove('hidden');
+  if (!state.selectedFields || !state.selectedFields.length) {
+    if (state.currentRecord.available_fields && state.currentRecord.available_fields.length) {
+      state.selectedFields = [...state.currentRecord.available_fields];
+    }
+  }
+
+  if (requestModal) {
+    requestModal.classList.remove('hidden');
+  }
 }
+
+window.openRequestModal = openRequestModal;
+window.openQueueModal = openRequestModal;
 
 function closeRequestModal() {
   requestModal.classList.add('hidden');
@@ -1736,8 +1747,8 @@ function pollUploadProgress(requestId) {
           // Mantém a tela visível por 2.5 segundos antes de transicionar
           setTimeout(() => {
             if (state.currentAction === 'enrich_and_queue') {
-              step2Container.classList.add('hidden');
-              openQueueModal();
+              if (step2Container) step2Container.classList.add('hidden');
+              openRequestModal();
             } else {
               step2Container.classList.add('hidden');
               step3Container.classList.remove('hidden');
