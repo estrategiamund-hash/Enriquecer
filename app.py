@@ -118,7 +118,7 @@ def extract_reject_reason(item: Dict[str, Any]) -> str:
 def db_save_queue_item(item: Dict[str, Any]) -> None:
     item_db = {
         k: v for k, v in item.items()
-        if k in {"id", "record_id", "queue_number", "requester_name", "observacoes", "filename", "status", "total_rows", "processed_count", "success_count", "error_count", "request_time", "completed_at", "summary_name", "selected_fields", "detected_type", "logs", "rows"}
+        if k in {"id", "record_id", "queue_number", "requester_name", "observacoes", "filename", "status", "total_rows", "processed_count", "success_count", "error_count", "request_time", "completed_at", "summary_name", "selected_fields", "detected_type", "logs"}
     }
     res = make_supabase_request("queue", "POST", item_db)
     if res is None:
@@ -128,7 +128,7 @@ def db_save_queue_item(item: Dict[str, Any]) -> None:
 def db_update_queue_item(item_id: str, updates: Dict[str, Any]) -> None:
     updates_db = {
         k: v for k, v in updates.items()
-        if k in {"id", "record_id", "queue_number", "requester_name", "observacoes", "filename", "status", "total_rows", "processed_count", "success_count", "error_count", "request_time", "completed_at", "summary_name", "selected_fields", "detected_type", "logs", "rows"}
+        if k in {"id", "record_id", "queue_number", "requester_name", "observacoes", "filename", "status", "total_rows", "processed_count", "success_count", "error_count", "request_time", "completed_at", "summary_name", "selected_fields", "detected_type", "logs"}
     }
     res = make_supabase_request("queue", "PATCH", data=updates_db, query=f"?id=eq.{item_id}")
     if res is None:
@@ -649,39 +649,45 @@ def extract_xml_tag(xml_str: str, tag_name: str) -> str:
     return match.group(2).strip() if match else ""
 
 
+_TOKEN_CACHE: Dict[str, Any] = {"token": None, "expires_at": 0}
+
 def get_nova_vida_token() -> str | None:
-    log_api_debug("get_nova_vida_token chamado")
+    import time
+    now = time.time()
+    if _TOKEN_CACHE["token"] and _TOKEN_CACHE["expires_at"] > now:
+        return _TOKEN_CACHE["token"]
+
+    log_api_debug("get_nova_vida_token chamado (gerando novo token com validade de 24h via GET)")
     if NOVA_VIDA_API_KEY:
         log_api_debug("Usando NOVA_VIDA_API_KEY")
+        _TOKEN_CACHE["token"] = NOVA_VIDA_API_KEY
+        _TOKEN_CACHE["expires_at"] = now + 86400
         return NOVA_VIDA_API_KEY
 
     if not (NOVA_VIDA_USER and NOVA_VIDA_PASSWORD and NOVA_VIDA_CLIENT):
         log_api_debug("Credenciais da API Nova Vida incompletas")
         return None
 
-    # Use PLAIN TEXT credentials and HTTP POST Form encoding as per tests
     params = {
         "usuario": NOVA_VIDA_USER,
         "senha": NOVA_VIDA_PASSWORD,
         "cliente": NOVA_VIDA_CLIENT,
     }
-    encoded_data = urllib.parse.urlencode(params).encode("utf-8")
-
-    url = NOVA_VIDA_TOKEN_URL
-    log_api_debug(f"Efetuando HTTP POST Form de Token para: {url}")
+    query_str = urllib.parse.urlencode(params)
+    url = f"{NOVA_VIDA_TOKEN_URL}?{query_str}" if "?" not in NOVA_VIDA_TOKEN_URL else f"{NOVA_VIDA_TOKEN_URL}&{query_str}"
+    log_api_debug(f"Efetuando HTTP GET de Token para: {url}")
 
     request = urllib.request.Request(
         url,
-        data=encoded_data,
-        headers={"Content-Type": "application/x-www-form-urlencoded"},
-        method="POST"
+        headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"},
+        method="GET"
     )
 
     try:
         context = ssl._create_unverified_context()
-        with urllib.request.urlopen(request, timeout=30, context=context) as response:
+        with urllib.request.urlopen(request, timeout=10, context=context) as response:
             xml_body = response.read().decode("utf-8", errors="ignore")
-            log_api_debug(f"Retorno do Token XML (parcial): {xml_body[:1000]}")
+            log_api_debug(f"Retorno do Token XML (parcial): {xml_body[:300]}")
     except Exception as exc:
         app.logger.warning("Nova Vida token generation failed: %s", exc)
         log_api_debug(f"Falha na geração do token: {exc}")
@@ -689,7 +695,9 @@ def get_nova_vida_token() -> str | None:
 
     token = extract_xml_tag(xml_body, "string")
     if token:
-        log_api_debug("Token extraído com sucesso")
+        log_api_debug("Token extraído com sucesso (armazenado por 24 horas)")
+        _TOKEN_CACHE["token"] = token
+        _TOKEN_CACHE["expires_at"] = now + 86400  # Validade de 24 horas
         return token
 
     log_api_debug("Não foi possível extrair o Token da resposta XML")
@@ -1122,11 +1130,32 @@ def upload_file():
     })
 
 
+QUEUE_ROWS: Dict[str, List[Dict[str, Any]]] = {}
+
+def get_queue_item_rows(request_id: str) -> List[Dict[str, Any]]:
+    if request_id in QUEUE_ROWS and QUEUE_ROWS[request_id]:
+        return QUEUE_ROWS[request_id]
+
+    csv_path = EXPORT_DIR / f"raw_{request_id}.csv"
+    rows = []
+    if csv_path.exists():
+        try:
+            with open(csv_path, "r", encoding="utf-8") as f:
+                reader = csv.DictReader(f, delimiter=";")
+                for r in reader:
+                    rows.append(dict(r))
+        except Exception as e:
+            log_api_debug(f"Erro ao carregar linhas do CSV local {csv_path}: {e}")
+    QUEUE_ROWS[request_id] = rows
+    return rows
+
 def process_batch_for_request(item: Dict[str, Any], batch_size: int = 100) -> Dict[str, Any]:
     from concurrent.futures import ThreadPoolExecutor, as_completed
     import threading
+    import time
 
-    raw_rows = item.get("rows") or []
+    t_start = time.time()
+    raw_rows = item.get("rows") or get_queue_item_rows(item["id"])
     total_rows = item.get("total_rows") or len(raw_rows)
     processed_count = item.get("processed_count", 0)
 
@@ -1196,55 +1225,101 @@ def process_batch_for_request(item: Dict[str, Any], batch_size: int = 100) -> Di
                     "nascimento": "",
                     "token": token
                 }
-                encoded_data = urllib.parse.urlencode(data).encode("utf-8")
+                query_str = urllib.parse.urlencode(data)
+                url_get = f"{endpoint}?{query_str}" if "?" not in endpoint else f"{endpoint}&{query_str}"
                 req = urllib.request.Request(
-                    endpoint,
-                    data=encoded_data,
-                    headers={"Content-Type": "application/x-www-form-urlencoded"},
-                    method="POST"
+                    url_get,
+                    headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"},
+                    method="GET"
                 )
-                context = ssl._create_unverified_context()
-                with urllib.request.urlopen(req, timeout=10, context=context) as resp:
-                    return resp.read().decode("utf-8", errors="ignore")
+                try:
+                    context = ssl._create_unverified_context()
+                    with urllib.request.urlopen(req, timeout=10, context=context) as resp:
+                        return resp.read().decode("utf-8", errors="ignore")
+                except Exception as e:
+                    return None
 
             xml_response = query_api(uf_val)
-            if not xml_response or "Nada Consta" in xml_response:
+            if not xml_response or "Nada Consta" in xml_response or "REGISTRO MULTIPLO" in xml_response:
                 xml_response = query_api("")
 
-            if xml_response:
-                records_parsed = parse_nova_vida_xml(xml_response)
-                if records_parsed:
-                    best_match = select_best_match(records_parsed, nome_val, uf_val, cidade_val)
-                    if best_match:
-                        enriched = merge_enriched_data(row, best_match, detected_type)
-                        with lock:
-                            success_count += 1
-                            curr_p = start_idx + idx_pos + 1
-                            cpf = enriched.get("cpf", "")
-                            cid = enriched.get("cidade", "")
-                            if len(logs) < 300:
-                                logs.append(f"[{curr_p}/{total_rows}] Sucesso: {nome_val} -> CPF={cpf}, Cidade={cid}")
-                        return enriched
+            import html
+            xml_content = html.unescape(xml_response or "")
+
+            curr_p = start_idx + idx_pos + 1
+            if "REGISTRO MULTIPLO" in xml_content:
+                api_status = "REGISTRO MULTIPLO"
+            elif "Nada Consta" in xml_content or not xml_content:
+                api_status = "NADA CONSTA"
+            else:
+                api_status = "REGISTRO ENCONTRADO"
+
+            print(f"[CLIENTE {curr_p}/{total_rows}] Nome: '{nome_val}' | UF: '{uf_val}' | Resposta Nova Vida: {api_status}", flush=True)
+
+            if api_status != "REGISTRO ENCONTRADO":
+                # Quando houver Registro Múltiplo ou Nada Consta, não atribui dados para evitar informações incorretas
+                enriched = dict(row)
+                for field in ALL_ENRICH_FIELDS:
+                    if field not in enriched:
+                        enriched[field] = ""
+                with lock:
+                    error_count += 1
+                    if len(logs) < 300:
+                        logs.append(f"[{curr_p}/{total_rows}] Não enriquecido {nome_val}: {api_status}")
+                return enriched
+
+            # ÚNICO CLIENTE LOCALIZADO PELA API NOVA VIDA:
+            cpf = extract_xml_tag(xml_content, "CPF")
+            nome_ret = extract_xml_tag(xml_content, "NOME") or nome_val
+            sexo_ret = extract_xml_tag(xml_content, "SEXO") or row.get("sexo") or ""
+            nasc = extract_xml_tag(xml_content, "NASCIMENTO") or extract_xml_tag(xml_content, "NASC") or ""
+            idade = extract_xml_tag(xml_content, "IDADE") or ""
+            
+            raw_email = extract_xml_tag(xml_content, "EMAIL")
+            email_ret = raw_email.lower() if raw_email else str(row.get("email") or "").lower()
+            
+            ddd_clean = re.sub(r"\D", "", extract_xml_tag(xml_content, "DDD"))
+            fone_clean = re.sub(r"\D", "", extract_xml_tag(xml_content, "TELEOFNE") or extract_xml_tag(xml_content, "TELEFONE"))
+            phone_val = f"{ddd_clean}{fone_clean}" if ddd_clean and fone_clean else re.sub(r"\D", "", telefone_val)
+            
+            cidade_ret = extract_xml_tag(xml_content, "CIDADE") or cidade_val
+            uf_ret = extract_xml_tag(xml_content, "UF") or uf_val
+
+            enriched = dict(row)
+            enriched["nome"] = nome_ret
+            enriched["telefone"] = phone_val
+            enriched["cpf"] = cpf
+            enriched["sexo"] = sexo_ret
+            enriched["data_nascimento"] = nasc
+            enriched["idade"] = idade
+            enriched["cidade"] = cidade_ret
+            enriched["estado"] = uf_ret
+            
+            for field in ALL_ENRICH_FIELDS:
+                val = extract_xml_tag(xml_content, field.upper())
+                if not enriched.get(field):
+                    enriched[field] = val or ""
+
             with lock:
-                error_count += 1
-                curr_p = start_idx + idx_pos + 1
+                success_count += 1
                 if len(logs) < 300:
-                    logs.append(f"[{curr_p}/{total_rows}] Nada Consta: {nome_val}")
+                    logs.append(f"[{curr_p}/{total_rows}] Sucesso: {nome_ret} -> CPF={cpf}, Cidade={cidade_ret}")
+            return enriched
+
         except Exception as exc:
+            curr_p = start_idx + idx_pos + 1
+            print(f"[CLIENTE {curr_p}/{total_rows}] Erro ao consultar '{nome_val}': {exc}", flush=True)
+            enriched = dict(row)
+            for field in ALL_ENRICH_FIELDS:
+                if field not in enriched:
+                    enriched[field] = ""
             with lock:
                 error_count += 1
-                curr_p = start_idx + idx_pos + 1
                 if len(logs) < 300:
                     logs.append(f"[{curr_p}/{total_rows}] Falha ao consultar {nome_val}: {exc}")
+            return enriched
 
-        # Fallback se nada consta ou erro
-        enriched = dict(row)
-        for field in ALL_ENRICH_FIELDS:
-            if field not in enriched:
-                enriched[field] = ""
-        return enriched
-
-    MAX_WORKERS = 40
+    MAX_WORKERS = 200
     enriched_batch_results = [None] * len(batch_rows)
 
     with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
@@ -1276,14 +1351,33 @@ def process_batch_for_request(item: Dict[str, Any], batch_size: int = 100) -> Di
     item["logs"] = logs
     item["status"] = new_status
 
+    QUEUE_ROWS[item["id"]] = raw_rows
+
+    # Persiste as linhas atualizadas no CSV local para garantir que o download acesse do disco
+    csv_path = EXPORT_DIR / f"raw_{item['id']}.csv"
+    try:
+        if raw_rows:
+            all_keys = list(dict.fromkeys(k for r in raw_rows for k in r.keys()))
+            with open(csv_path, "w", encoding="utf-8", newline="") as f:
+                writer = csv.DictWriter(f, fieldnames=all_keys, delimiter=";")
+                writer.writeheader()
+                writer.writerows([{k: r.get(k, "") for k in all_keys} for r in raw_rows])
+    except Exception as e:
+        log_api_debug(f"Erro ao atualizar CSV local pós-lote {csv_path}: {e}")
+
     db_update_queue_item(item["id"], {
         "status": item["status"],
         "processed_count": item["processed_count"],
         "success_count": item["success_count"],
         "error_count": item["error_count"],
-        "logs": item["logs"],
-        "rows": item["rows"]
+        "logs": item["logs"]
     })
+
+    elapsed = round(time.time() - t_start, 2)
+    pct = round((new_processed_count / total_rows) * 100, 1) if total_rows > 0 else 100
+    log_msg = f"[LOTE PROCESSADO] Req {item['id'][:8]}: {new_processed_count}/{total_rows} ({pct}%) | Sucesso: {success_count} | Falhas: {error_count} | Tempo Lote: {elapsed}s"
+    print(log_msg, flush=True)
+    log_api_debug(log_msg)
 
     return item
 
@@ -1545,42 +1639,35 @@ def download_export(request_id: str):
     if item is None:
         return jsonify({"error": "Solicitação não encontrada."}), 404
 
+    # Busca as linhas enriquecidas da memória ou do CSV local
+    raw_enriched_rows = QUEUE_ROWS.get(request_id) or get_queue_item_rows(request_id) or item.get("rows") or []
+
     original_columns = []
     record = db_get_record(item["record_id"])
     if record:
         original_columns = record.get("columns") or []
 
+    # Determina as colunas do arquivo final
     export_columns = list(original_columns)
-    for field in item.get("selected_fields") or []:
+    
+    # Adiciona todos os campos de enriquecimento selecionados ou disponíveis
+    selected_fields = item.get("selected_fields") or []
+    fields_to_add = selected_fields if selected_fields else ALL_ENRICH_FIELDS
+    for field in fields_to_add:
         if field not in export_columns:
             export_columns.append(field)
 
     is_enrich_only = (item.get("mode") == "enrich_only") or (item.get("queue_number") == "ENRICH")
     include_concatenated = not is_enrich_only
-    if include_concatenated:
+    if include_concatenated and "Resultado Concatenado" not in export_columns:
         export_columns.append("Resultado Concatenado")
 
     export_rows = []
-
-    csv_path = EXPORT_DIR / f"raw_{request_id}.csv"
-    if csv_path.exists():
-        try:
-            with open(csv_path, "r", encoding="utf-8") as f:
-                reader = csv.DictReader(f, delimiter=";")
-                for row in reader:
-                    row_copy = dict(row)
-                    if include_concatenated:
-                        row_copy["Resultado Concatenado"] = format_concatenated_fields(row_copy, item.get("selected_fields") or [])
-                    export_rows.append(row_copy)
-        except Exception as e:
-            log_api_debug(f"Erro ao ler CSV local para download {request_id}: {e}")
-
-    if not export_rows:
-        for row in (item.get("rows") or []):
-            row_copy = dict(row)
-            if include_concatenated:
-                row_copy["Resultado Concatenado"] = format_concatenated_fields(row_copy, item.get("selected_fields") or [])
-            export_rows.append(row_copy)
+    for row in raw_enriched_rows:
+        row_copy = dict(row)
+        if include_concatenated:
+            row_copy["Resultado Concatenado"] = format_concatenated_fields(row_copy, fields_to_add)
+        export_rows.append(row_copy)
 
     filename = f"fila_{item.get('queue_number') or 'enriquecimento'}_{request_id}.xlsx"
     filepath = EXPORT_DIR / filename
@@ -1599,9 +1686,9 @@ def get_request_logs(request_id: str):
     if item is None:
         return jsonify({"error": "Solicitação não encontrada."}), 404
         
-    # Se o item ainda está sendo processado, executa o próximo lote de 200 registros com 40 workers de alta velocidade
+    # Se o item ainda está sendo processado, executa um super lote de 5.000 registros com 200 workers paralelos usando o token de 24h ativo
     if item.get("status") == "processing":
-        item = process_batch_for_request(item, batch_size=200)
+        item = process_batch_for_request(item, batch_size=5000)
 
     preview_row = {}
     csv_path = EXPORT_DIR / f"raw_{request_id}.csv"

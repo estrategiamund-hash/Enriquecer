@@ -165,18 +165,21 @@ function formatSelectedFields(fields) {
 }
 
 function formatPreviewFields(fields, previewData) {
-  const nomeVal = previewData['nome'] || '—';
-  const telVal = previewData['telefone'] || '—';
+  if (!previewData) previewData = {};
+  const nomeVal = previewData['nome'] || previewData['nome_completo'] || previewData['NOME'] || '—';
+  const telVal = previewData['telefone'] || previewData['celular'] || previewData['TELEFONE'] || '—';
 
-  let result = `${nomeVal}|${telVal}|`;
+  let result = `${nomeVal} | ${telVal}`;
 
   const remaining = fields.filter((f) => f !== 'nome' && f !== 'telefone');
   if (remaining.length > 0) {
     const parts = remaining.map((field) => {
-      const val = previewData[field] !== undefined && previewData[field] !== null ? previewData[field] : '—';
+      const val = (previewData[field] !== undefined && previewData[field] !== null && String(previewData[field]).trim() !== '') 
+        ? previewData[field] 
+        : '—';
       return `${labelize(field)}: ${val}`;
     });
-    result += ' ' + parts.join(' ');
+    result += ' | ' + parts.join(' | ');
   }
   return result;
 }
@@ -1523,11 +1526,14 @@ function ensureStepVisibility() {
   }
 }
 
+let isPollingProgress = false;
+
 function pollUploadProgress(requestId) {
   if (uploadProgressInterval) {
     clearInterval(uploadProgressInterval);
   }
 
+  isPollingProgress = false;
   progressBarFill.style.width = '0%';
   progressText.textContent = 'Processando enriquecimento...';
   uploadLogsBox.innerHTML = '';
@@ -1541,6 +1547,8 @@ function pollUploadProgress(requestId) {
   const startTime = Date.now();
 
   uploadProgressInterval = setInterval(async () => {
+    if (isPollingProgress) return;
+    isPollingProgress = true;
     try {
       const response = await fetch(`/api/request/${requestId}/logs`);
       if (!response.ok) {
@@ -1581,13 +1589,92 @@ function pollUploadProgress(requestId) {
         uploadLogsBox.scrollTop = uploadLogsBox.scrollHeight;
       }
 
-      if (data.status !== 'processing') {
+      // Update Processing Steps UI
+      const steps = {
+        carregando: document.getElementById('stepCarregando'),
+        enriquecendo: document.getElementById('stepEnriquecendo'),
+        tratando: document.getElementById('stepTratando'),
+        finalizando: document.getElementById('stepFinalizando')
+      };
+
+      const setStepStatus = (stepId, status) => {
+        const el = steps[stepId];
+        if (!el) return;
+        const icon = el.querySelector('.step-icon');
+        el.className = 'processing-step';
+        icon.className = 'step-icon';
+        if (status === 'active') {
+          el.classList.add('active');
+          icon.classList.add('spinner');
+        } else if (status === 'completed') {
+          el.classList.add('completed');
+        }
+      };
+
+      // Elementos de detalhe por etapa
+      const stepCarregandoDetail = document.getElementById('stepCarregandoDetail');
+      const stepEnriquecendoDetail = document.getElementById('stepEnriquecendoDetail');
+      const stepTratandoDetail = document.getElementById('stepTratandoDetail');
+      const stepFinalizandoDetail = document.getElementById('stepFinalizandoDetail');
+
+      const totalRowsFormatted = (data.total_rows || 0).toLocaleString('pt-BR');
+      const processedFormatted = (data.processed_count || 0).toLocaleString('pt-BR');
+
+      if (data.total_rows > 0 && stepCarregandoDetail) {
+        stepCarregandoDetail.textContent = `Planilha de ${totalRowsFormatted} registros validada com sucesso`;
+      }
+
+      if (pct < 100 && data.status === 'processing') {
+        setStepStatus('carregando', 'completed');
+        setStepStatus('enriquecendo', 'active');
+        if (stepEnriquecendoDetail) {
+          stepEnriquecendoDetail.textContent = `Consultando ${processedFormatted} de ${totalRowsFormatted} (${pct}%) — ${data.success_count} localizados, ${data.error_count} sem registro`;
+        }
+
+        if (pct >= 85) {
+          setStepStatus('tratando', 'active');
+          if (stepTratandoDetail) {
+            stepTratandoDetail.textContent = `Formatando e-mails minúsculos e validando campos...`;
+          }
+        } else {
+          setStepStatus('tratando', 'pending');
+          if (stepTratandoDetail) {
+            stepTratandoDetail.textContent = `Aguardando progresso das consultas...`;
+          }
+        }
+
+        if (pct >= 95) {
+          setStepStatus('finalizando', 'active');
+          if (stepFinalizandoDetail) {
+            stepFinalizandoDetail.textContent = `Compilando planilha Excel final com todos os atributos...`;
+          }
+        } else {
+          setStepStatus('finalizando', 'pending');
+          if (stepFinalizandoDetail) {
+            stepFinalizandoDetail.textContent = `Aguardando conciliação final...`;
+          }
+        }
+      } else if (data.status !== 'processing') {
         clearInterval(uploadProgressInterval);
         uploadProgressInterval = null;
 
+        const sampleRow = (data.rows && data.rows.length > 0) ? data.rows[0] : (data.preview || {});
+        state.currentRecord = {
+          id: requestId,
+          type: data.detected_type || 'NOME',
+          columns: Object.keys(sampleRow),
+          available_fields: Object.keys(sampleRow),
+          rows: data.rows || [],
+          preview: sampleRow
+        };
+        state.processedCount = data.processed_count || 0;
+        state.successCount = data.success_count || 0;
+        state.errorCount = data.error_count || 0;
+        state.detectedType = data.detected_type || 'NOME';
+
         if (data.status === 'error') {
           progressText.textContent = 'Erro durante o enriquecimento.';
-          showMessage('Erro ao processar lote no plano de fundo. Veja os logs abaixo.', 'error');
+          showMessage('Erro ao processar lote no plano de fundo. Veja os logs.', 'error');
         } else if (data.status === 'cancelled') {
           progressText.textContent = 'Enriquecimento cancelado.';
           showMessage('O processamento foi cancelado pelo usuário.', 'error');
@@ -1597,37 +1684,45 @@ function pollUploadProgress(requestId) {
             hideMessage();
           }, 3000);
         } else {
-          progressText.textContent = 'Enriquecimento concluído com sucesso!';
+          // PROCESSO 100% CONCLUÍDO
+          progressBarFill.style.width = '100%';
+          progressText.textContent = '✨ Processamento 100% Concluído com Sucesso!';
 
-          state.currentRecord.preview = data.preview || {};
+          setStepStatus('carregando', 'completed');
+          setStepStatus('enriquecendo', 'completed');
+          setStepStatus('tratando', 'completed');
+          setStepStatus('finalizando', 'completed');
 
-          if (state.currentAction === 'enrich_only') {
-            step2Container.classList.add('hidden');
-            step3Container.classList.remove('hidden');
-            renderAvailableFields();
-            renderSelectedFields();
-            renderPreview();
-            finalizeButton.textContent = 'Baixar arquivo enriquecido';
-            finalizeButton.onclick = () => {
-              if (state.activeRequestImportId) {
-                downloadFileDirectly(`/api/request/${state.activeRequestImportId}/download`);
-              }
-            };
-            return;
-          }
+          if (stepCarregandoDetail) stepCarregandoDetail.textContent = `Planilha validada (${totalRowsFormatted} registros)`;
+          if (stepEnriquecendoDetail) stepEnriquecendoDetail.textContent = `100% concluído (${totalRowsFormatted} consultas processadas na Nova Vida TI)`;
+          if (stepTratandoDetail) stepTratandoDetail.textContent = `E-mails em minúsculo e dados tratados com sucesso`;
+          if (stepFinalizandoDetail) stepFinalizandoDetail.textContent = `Planilha Excel compilada e pronta para download!`;
 
-          step2Container.classList.add('hidden');
-          step3Container.classList.remove('hidden');
-
-          renderAvailableFields();
-          renderSelectedFields();
-          renderPreview();
+          // Mantém a tela visível por 2.5 segundos antes de transicionar
+          setTimeout(() => {
+            if (state.currentAction === 'enrich_and_queue') {
+              step2Container.classList.add('hidden');
+              openQueueModal();
+            } else {
+              step2Container.classList.add('hidden');
+              step3Container.classList.remove('hidden');
+              renderAvailableFields();
+              renderSelectedFields();
+              renderPreview();
+              finalizeButton.textContent = 'Baixar arquivo enriquecido';
+              finalizeButton.onclick = () => {
+                if (state.activeRequestImportId) {
+                  downloadFileDirectly(`/api/request/${state.activeRequestImportId}/download`);
+                }
+              };
+            }
+          }, 2500);
         }
       }
     } catch (err) {
-      console.error(err);
+      console.error('Erro no pollUploadProgress:', err);
     }
-  }, 2000);
+  }, 500);
 }
 
 // Background auto-refresh for queue and logs based on visible panel
@@ -1694,6 +1789,20 @@ async function cancelEnrichment() {
 }
 
 const cancelEnrichButton = document.getElementById('cancelEnrichButton');
+const toggleLogsButton = document.getElementById('toggleLogsButton');
+
+if (toggleLogsButton) {
+  toggleLogsButton.addEventListener('click', () => {
+    if (uploadLogsBox.classList.contains('hidden')) {
+      uploadLogsBox.classList.remove('hidden');
+      toggleLogsButton.textContent = 'Ocultar Logs Técnicos';
+    } else {
+      uploadLogsBox.classList.add('hidden');
+      toggleLogsButton.textContent = 'Mostrar Logs Técnicos';
+    }
+  });
+}
+
 if (cancelEnrichButton) {
   cancelEnrichButton.addEventListener('click', cancelEnrichment);
 }

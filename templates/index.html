@@ -124,10 +124,11 @@
         </div>
       </div>
 
-      <!-- PASSO 2: PROGRESSO DO PROCESSAMENTO -->
+      <!-- PASSO 2: ACOMPANHAMENTO DO ENRIQUECIMENTO EM PLANO DE FUNDO -->
       <div id="step2Container" class="step-container hidden">
-        <div class="section-title" style="margin-bottom: 0.5rem; font-weight: bold;">Passo 2: Processando enriquecimento
-          no plano de fundo...</div>
+        <div class="section-title" style="margin-bottom: 1rem; font-weight: bold; font-size: 1.2rem; color: var(--primary);">
+          Passo 2: Processamento e Acompanhamento em Tempo Real
+        </div>
 
         <div class="stats-grid">
           <div class="stat-card">
@@ -135,27 +136,63 @@
             <span id="statProcessed" class="stat-value">0 / 0</span>
           </div>
           <div class="stat-card success">
-            <span class="stat-label">Sucesso</span>
+            <span class="stat-label">Sucesso (Único)</span>
             <span id="statSuccess" class="stat-value">0 (0%)</span>
           </div>
           <div class="stat-card danger">
-            <span class="stat-label">Falhas</span>
+            <span class="stat-label">Sem Registro / Múltiplo</span>
             <span id="statError" class="stat-value">0 (0%)</span>
           </div>
           <div class="stat-card warning">
-            <span class="stat-label">Tempo Restante</span>
+            <span class="stat-label">Tempo Restante Est.</span>
             <span id="statTimeRemaining" class="stat-value">Calculando...</span>
           </div>
         </div>
 
-        <div class="progress-bar-container" style="margin-bottom: 0.5rem;">
+        <div class="progress-bar-container" style="margin-top: 1rem; margin-bottom: 0.5rem;">
           <div id="progressBarFill" class="progress-bar-fill" style="width: 0%;"></div>
         </div>
-        <p id="progressText" class="progress-text" style="margin-bottom: 1rem;">Aguardando início...</p>
-        <div id="uploadLogsBox" class="logs-console-box upload-logs-console"
-          style="height: 200px; overflow-y: auto; white-space: pre-wrap; line-height: 1.4;"></div>
-        <div class="actions-row" style="margin-top: 1rem; display: flex; justify-content: flex-end;">
-          <button id="cancelEnrichButton" class="secondary" type="button">Cancelar Enriquecimento</button>
+        <p id="progressText" class="progress-text" style="margin-bottom: 1.5rem; font-weight: 600;">Iniciando processamento...</p>
+        
+        <!-- PAINEL DE ETAPAS DO BACKEND -->
+        <div id="processingStepsContainer" class="processing-steps-container">
+          <div class="processing-step completed" id="stepCarregando">
+            <div class="step-icon"></div>
+            <div class="step-content">
+              <span class="step-title">1. Validação e Carregamento da Planilha</span>
+              <span class="step-detail" id="stepCarregandoDetail">Estrutura e colunas validadas com sucesso</span>
+            </div>
+          </div>
+          <div class="processing-step active" id="stepEnriquecendo">
+            <div class="step-icon spinner"></div>
+            <div class="step-content">
+              <span class="step-title">2. Consulta à API Nova Vida TI (Enriquecimento)</span>
+              <span class="step-detail" id="stepEnriquecendoDetail">Conectando aos servidores da Nova Vida TI...</span>
+            </div>
+          </div>
+          <div class="processing-step" id="stepTratando">
+            <div class="step-icon"></div>
+            <div class="step-content">
+              <span class="step-title">3. Tratamento de Dados (E-mails Minúsculos e Validações)</span>
+              <span class="step-detail" id="stepTratandoDetail">Aguardando progresso das consultas...</span>
+            </div>
+          </div>
+          <div class="processing-step" id="stepFinalizando">
+            <div class="step-icon"></div>
+            <div class="step-content">
+              <span class="step-title">4. Compilação e Disponibilização do Excel Final</span>
+              <span class="step-detail" id="stepFinalizandoDetail">Aguardando conciliação final...</span>
+            </div>
+          </div>
+        </div>
+
+        </div>
+
+        <!-- Elemento oculto para compatibilidade de script -->
+        <div id="uploadLogsBox" class="hidden"></div>
+
+        <div class="actions-row" style="margin-top: 1.5rem; display: flex; justify-content: flex-end;">
+          <button id="cancelEnrichButton" class="btn-cancel-enrich" type="button">Cancelar Enriquecimento</button>
         </div>
       </div>
 

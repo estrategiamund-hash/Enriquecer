@@ -846,9 +846,69 @@ button.secondary:hover {
 }
 
 .upload-logs-console {
-  color: #34d399;
-  border-color: rgba(52, 211, 153, 0.15);
-  box-shadow: inset 0 3px 15px rgba(0, 0, 0, 0.7), 0 0 10px rgba(52, 211, 153, 0.03);
+  color: #34d399 !important;
+  border-color: rgba(52, 211, 153, 0.15) !important;
+  box-shadow: inset 0 3px 15px rgba(0, 0, 0, 0.7) !important;
+  background: #050811 !important;
+}
+
+/* Botão de Cancelar Enriquecimento */
+.btn-cancel-enrich {
+  background: rgba(239, 68, 68, 0.12) !important;
+  border: 1px solid rgba(239, 68, 68, 0.4) !important;
+  color: #fca5a5 !important;
+  padding: 0.6rem 1.4rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-cancel-enrich:hover {
+  background: #ef4444 !important;
+  border-color: #ef4444 !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+  transform: translateY(-1px);
+}
+
+/* Terminal Console Wrapper */
+.logs-console-wrapper {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 210, 255, 0.2);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  background: #090d16;
+}
+
+.logs-console-header {
+  background: #0f172a;
+  padding: 0.6rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.dot.red { background: #ef4444; }
+.dot.yellow { background: #f59e0b; }
+.dot.green { background: #10b981; }
+
+.console-title {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  font-family: 'Courier New', Courier, monospace;
+  margin-left: 0.5rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
 }
 
 .upload-logs-console::-webkit-scrollbar-thumb {
@@ -857,6 +917,122 @@ button.secondary:hover {
 
 .upload-logs-console::-webkit-scrollbar-thumb:hover {
   background: rgba(52, 211, 153, 0.4);
+}
+
+/* Processing Steps UI */
+.processing-steps-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  margin: 1.5rem 0;
+  padding: 2rem;
+  background: rgba(15, 23, 42, 0.5);
+  border-radius: 16px;
+  border: 1px solid rgba(0, 210, 255, 0.15);
+  box-shadow: inset 0 2px 10px rgba(0,0,0,0.4);
+}
+
+.processing-step {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  opacity: 0.3;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateX(-5px);
+}
+
+.processing-step.active {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.processing-step.active .step-text {
+  color: var(--primary);
+  font-weight: 600;
+  text-shadow: 0 0 10px rgba(0, 210, 255, 0.3);
+}
+
+.processing-step.completed {
+  opacity: 0.8;
+  transform: translateX(0);
+}
+
+.processing-step.completed .step-icon {
+  background: var(--success);
+  border-color: var(--success);
+  box-shadow: 0 0 15px rgba(52, 211, 153, 0.4);
+}
+
+.processing-step.completed .step-icon::after {
+  content: "✓";
+  color: #fff;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.processing-step.completed .step-text {
+  color: var(--success);
+}
+
+.step-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.step-icon.spinner {
+  border-top-color: var(--primary);
+  border-right-color: var(--primary);
+  animation: spin 1s linear infinite;
+  border-width: 2px;
+  box-shadow: 0 0 15px rgba(0, 210, 255, 0.2);
+}
+
+.step-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.step-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+  transition: color 0.3s ease;
+}
+
+.processing-step.active .step-title {
+  color: var(--primary);
+  text-shadow: 0 0 10px rgba(0, 210, 255, 0.3);
+}
+
+.processing-step.completed .step-title {
+  color: var(--success);
+}
+
+.step-detail {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  transition: color 0.3s ease;
+}
+
+.processing-step.active .step-detail {
+  color: #a5f3fc;
+}
+
+.processing-step.completed .step-detail {
+  color: #6ee7b7;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 /* Queue Card Items */
