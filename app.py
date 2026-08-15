@@ -1122,452 +1122,170 @@ def upload_file():
     })
 
 
-def process_enrichment_background_task(queue_item_id: str, raw_rows: List[Dict[str, Any]], detected_type: str, query_fields: List[str]):
+def process_batch_for_request(item: Dict[str, Any], batch_size: int = 100) -> Dict[str, Any]:
     from concurrent.futures import ThreadPoolExecutor, as_completed
     import threading
 
-    item = db_get_queue_item(queue_item_id)
-    if not item:
-        return
-        
-    log_api_debug(f"Thread de processamento concorrente iniciada para {len(raw_rows)} registros")
+    raw_rows = item.get("rows") or []
+    total_rows = item.get("total_rows") or len(raw_rows)
+    processed_count = item.get("processed_count", 0)
+
+    if processed_count >= total_rows or not raw_rows:
+        item["status"] = "pending"
+        item["processed_count"] = total_rows
+        db_update_queue_item(item["id"], {
+            "status": "pending",
+            "processed_count": total_rows,
+            "logs": item.get("logs", [])
+        })
+        return item
+
+    start_idx = processed_count
+    end_idx = min(start_idx + batch_size, total_rows)
+    batch_rows = raw_rows[start_idx:end_idx]
+
+    detected_type = item.get("detected_type") or "NOME"
+    query_fields = item.get("query_fields") or []
     
-    try:
-        is_api_configured = bool(NOVA_VIDA_API_URL)
-        token = None
-        if is_api_configured:
-            item["logs"].append("Autenticando na API Nova Vida...")
-            token = get_nova_vida_token()
-            if not token:
-                item["logs"].append("Falha de autenticação na API Nova Vida. Usando fallbacks vazios.")
-                is_api_configured = False
-            else:
-                item["logs"].append("Autenticação bem-sucedida.")
-        
-        endpoint = (NOVA_VIDA_API_URL or "").rstrip("/") + "/" + NOVA_VIDA_API_ENDPOINT.lstrip("/")
-        
-        use_nome = any(f.lower() in [q.lower() for q in query_fields] for f in ["nome", "nome_completo", "nome_cliente"]) if query_fields else True
-        use_uf = any(f.lower() in [q.lower() for q in query_fields] for f in ["uf", "estado"]) if query_fields else True
-        use_cidade = any(f.lower() in [q.lower() for q in query_fields] for f in ["cidade"]) if query_fields else True
-        use_telefone = any(f.lower() in [q.lower() for q in query_fields] for f in ["telefone", "celular", "fone", "tel"]) if query_fields else True
+    is_api_configured = bool(NOVA_VIDA_API_URL)
+    token = None
+    if is_api_configured:
+        token = get_nova_vida_token()
+        if not token:
+            is_api_configured = False
 
-        # Deduplicação baseada em Nome/CPF
-        def get_row_query_key(row_dict: Dict[str, Any], idx_pos: int) -> str:
-            cpf_val = re.sub(r"\D", "", str(row_dict.get("cpf") or ""))
-            nome_val = normalize_text(row_dict.get("nome") or row_dict.get("nome_completo") or row_dict.get("nome_cliente") or "")
-            if not cpf_val and not nome_val:
-                return f"empty_{idx_pos}"
-            return cpf_val if cpf_val else nome_val
+    endpoint = (NOVA_VIDA_API_URL or "").rstrip("/") + "/" + NOVA_VIDA_API_ENDPOINT.lstrip("/")
 
-        lock = threading.Lock()
-        total_rows = len(raw_rows)
+    use_nome = any(f.lower() in [q.lower() for q in query_fields] for f in ["nome", "nome_completo", "nome_cliente"]) if query_fields else True
+    use_uf = any(f.lower() in [q.lower() for q in query_fields] for f in ["uf", "estado"]) if query_fields else True
+    use_cidade = any(f.lower() in [q.lower() for q in query_fields] for f in ["cidade"]) if query_fields else True
+    use_telefone = any(f.lower() in [q.lower() for q in query_fields] for f in ["telefone", "celular", "fone", "tel"]) if query_fields else True
 
-        def enrich_row_task(row: Dict[str, Any]):
-            if item.get("status") == "cancelled":
-                return None
+    lock = threading.Lock()
+    logs = item.get("logs") or []
+    success_count = item.get("success_count", 0)
+    error_count = item.get("error_count", 0)
 
-            nome_val = row.get("nome") or row.get("nome_completo") or row.get("nome_cliente") or ""
-            nome_val = str(nome_val).strip() if use_nome else ""
+    def enrich_one(row: Dict[str, Any], idx_pos: int):
+        nonlocal success_count, error_count
+        nome_val = str(row.get("nome") or row.get("nome_completo") or row.get("nome_cliente") or "").strip() if use_nome else ""
+        uf_val = str(row.get("uf") or row.get("estado") or "").strip() if use_uf else ""
+        cidade_val = str(row.get("cidade") or "").strip() if use_cidade else ""
+        telefone_val = str(row.get("telefone") or row.get("celular") or "").strip() if use_telefone else ""
 
-            uf_val = row.get("uf") or row.get("estado") or ""
-            uf_val = str(uf_val).strip() if use_uf else ""
-
-            cidade_val = row.get("cidade") or ""
-            cidade_val = str(cidade_val).strip() if use_cidade else ""
-
-            telefone_val = row.get("telefone") or row.get("celular") or ""
-            telefone_val = str(telefone_val).strip() if use_telefone else ""
-
-            enriched = None
-
-            if not is_api_configured:
-                # Simulado
-                enriched = generate_mock_row(row, detected_type)
-                with lock:
-                    item["success_count"] += 1
-                    item["processed_count"] += 1
-                    if len(item["logs"]) < 300:
-                        item["logs"].append(f"[{item['processed_count']}/{total_rows}] Sucesso (Simulado): {nome_val}")
-                    elif len(item["logs"]) == 300:
-                        item["logs"].append("... logs subsequentes ocultados para economizar memória ...")
-                return enriched
-
-            try:
-                def query_api(uf_filter: str) -> str | None:
-                    data = {
-                        "nome": nome_val,
-                        "endereco": "",
-                        "cidade": cidade_val,
-                        "uf": uf_filter,
-                        "telefone": telefone_val,
-                        "celular": "",
-                        "email": "",
-                        "nascimento": "",
-                        "token": token
-                    }
-                    encoded_data = urllib.parse.urlencode(data).encode("utf-8")
-                    req = urllib.request.Request(
-                        endpoint,
-                        data=encoded_data,
-                        headers={"Content-Type": "application/x-www-form-urlencoded"},
-                        method="POST",
-                    )
-                    try:
-                        context = ssl._create_unverified_context()
-                        with urllib.request.urlopen(req, timeout=10, context=context) as resp:
-                            return resp.read().decode("utf-8")
-                    except Exception as e:
-                        with lock:
-                            item["logs"].append(f"Erro na requisição para {nome_val} (UF={uf_filter}): {e}")
-                        return None
-
-                xml_response = query_api(uf_val)
-                if not xml_response or "Nada Consta" in xml_response or "REGISTRO MULTIPLO" in xml_response:
-                    xml_response = query_api("")
-
-                if not xml_response or "Nada Consta" in xml_response:
-                    raise ValueError("Nada Consta")
-
-                import html
-                xml_content = html.unescape(xml_response)
-
-                if "REGISTRO MULTIPLO" in xml_content:
-                    raise ValueError("Registro múltiplo")
-
-                cpf = extract_xml_tag(xml_content, "CPF")
-                nome_ret = extract_xml_tag(xml_content, "NOME") or nome_val
-                sexo_ret = extract_xml_tag(xml_content, "SEXO") or row.get("sexo") or random.choice(["MASCULINO", "FEMININO"])
-                nasc = extract_xml_tag(xml_content, "NASCIMENTO") or extract_xml_tag(xml_content, "NASC")
-                idade = extract_xml_tag(xml_content, "IDADE")
-                email_ret = normalize_email_value(extract_xml_tag(xml_content, "EMAIL") or row.get("email") or "")
-
-                ddd_clean = re.sub(r"\D", "", extract_xml_tag(xml_content, "DDD"))
-                fone_clean = re.sub(r"\D", "", extract_xml_tag(xml_content, "TELEOFNE") or extract_xml_tag(xml_content, "TELEFONE"))
-                phone_val = f"{ddd_clean}{fone_clean}" if ddd_clean and fone_clean else re.sub(r"\D", "", telefone_val)
-
-                logradouro = extract_xml_tag(xml_content, "LOGRADOURO")
-                numero = extract_xml_tag(xml_content, "NUMERO")
-                complemento = extract_xml_tag(xml_content, "COMPLEMENTO")
-                bairro = extract_xml_tag(xml_content, "BAIRRO")
-                cidade_ret = extract_xml_tag(xml_content, "CIDADE") or cidade_val
-                uf_ret = extract_xml_tag(xml_content, "UF") or uf_val
-                cep_ret = extract_xml_tag(xml_content, "CEP")
-
-                nasc_raw = nasc
-                if not idade and nasc_raw:
-                    year_match = re.search(r"\b\d{4}\b", nasc_raw)
-                    if year_match:
-                        try:
-                            idade = str(datetime.now().year - int(year_match.group(0)))
-                        except Exception:
-                            idade = "35"
-                    else:
-                        idade = "35"
-                elif not idade:
-                    bold_age = "35"
-                    idade = bold_age
-
-                nasc = format_to_brazilian_date(nasc_raw or "15/03/1990")
-
-                if not cpf:
-                    cpf = f"{(uuid.uuid4().int % 99999999999):011d}"
-
-                renda_estimada = normalize_renda_estimada(
-                    extract_xml_tag(xml_content, "RENDA")
-                    or extract_xml_tag(xml_content, "CLASSEECONOMICA")
-                    or row.get("renda_estimada")
-                    or row.get("renda")
-                    or random.choice([
-                        "1.000 AT 2.000",
-                        "2.001 AT 3.000",
-                        "3.001 AT 5.000",
-                        "5.001 AT 8.000",
-                        "18.001 AT 19.000",
-                    ])
-                )
-
-                cbo_professions = [
-                    ("411005", "Auxiliar de Escritório"),
-                    ("782310", "Motorista de Furgão ou Veículo Similar"),
-                    ("225250", "Médico Ginecologista e Obstetra"),
-                    ("322205", "Técnico de Enfermagem"),
-                    ("142105", "Gerente Administrativo"),
-                    ("212405", "Analista de Desenvolvimento de Sistemas"),
-                    ("231205", "Professor da Educação Infantil"),
-                    ("354125", "Supervisor de Vendas Comercial")
-                ]
-                cbo_pair = random.choice(cbo_professions)
-                cbo_val = extract_xml_tag(xml_content, "CBO") or extract_xml_tag(xml_content, "POSSIVEL_CBO") or row.get("cbo") or cbo_pair[0]
-                profissao_val = extract_xml_tag(xml_content, "PROFISSAO") or extract_xml_tag(xml_content, "POSSIVEL_PROFISSAO") or row.get("profissao") or cbo_pair[1]
-
-                score_val = extract_xml_tag(xml_content, "SCORE") or row.get("score") or str(random.randint(200, 990))
-
-                perfil_list = ["Sempre Presente", "O Bem Amado", "Quem Sou Eu", "Decisor", "Influenciador"]
-                perfil_val = extract_xml_tag(xml_content, "PERFIL") or extract_xml_tag(xml_content, "PERSONADECREDITO") or row.get("perfil") or random.choice(perfil_list)
-
-                obito_val = extract_xml_tag(xml_content, "OBITO") or extract_xml_tag(xml_content, "FLAG_DE_OBITO") or row.get("obito") or random.choices(["0", "1"], weights=[98, 2])[0]
-                whatsapp_val = row.get("whatsapp") or random.choices(["SIM", "NÃO"], weights=[90, 10])[0]
-
-                status_list = ["ativo", "inativo", "pendente"]
-                status_val = row.get("status") or random.choice(status_list)
-
-                if not email_ret:
-                    clean_name_part = normalize_text(nome_ret).replace("_", "")
-                    email_ret = f"{clean_name_part[:12]}@{random.choice(['gmail.com', 'hotmail.com', 'outlook.com', 'yahoo.com.br'])}"
-                email_ret = normalize_email_value(email_ret)
-
-                if not phone_val or re.match(r"^0+$", phone_val):
-                    raise ValueError("Telefone vazio ou inválido após enriquecimento")
-
-                enriched = {
-                    "nome": nome_ret,
-                    "telefone": phone_val,
-                    "cpf": cpf,
-                    "data_nascimento": nasc,
-                    "idade": idade,
-                    "sexo": sexo_ret,
-                    "email": email_ret,
-                    "logradouro": logradouro,
-                    "numero": numero,
-                    "complemento": complemento,
-                    "bairro": bairro,
-                    "cidade": cidade_ret,
-                    "estado": uf_ret,
-                    "cep": cep_ret,
-                    "renda_estimada": renda_estimada,
-                    "cbo": cbo_val,
-                    "profissao": profissao_val,
-                    "score": score_val,
-                    "perfil": perfil_val,
-                    "obito": obito_val,
-                    "whatsapp": whatsapp_val,
-                    "status": status_val,
-                    "tipo_enriquecimento": detected_type,
-                }
-                for k, val in list(row.items()):
-                    enriched.setdefault(normalize_text(k), val)
-
-                with lock:
-                    item["success_count"] += 1
-                    item["processed_count"] += 1
-                    if len(item["logs"]) < 300:
-                        item["logs"].append(f"[{item['processed_count']}/{total_rows}] Sucesso: {nome_val} -> CPF={cpf}, Cidade={cidade_ret}")
-                    elif len(item["logs"]) == 300:
-                        item["logs"].append("... logs subsequentes ocultados para economizar memória ...")
-
-            except Exception as exc:
-                phone_final = re.sub(r"\D", "", telefone_val)
-                if not phone_final or re.match(r"^0+$", phone_final):
-                    with lock:
-                        item["processed_count"] += 1
-                        if len(item["logs"]) < 300:
-                            item["logs"].append(f"[{item['processed_count']}/{total_rows}] Removido {nome_val}: Telefone vazio/zerado")
-                    return None
-
-                enriched = {
-                    "nome": nome_val,
-                    "telefone": phone_final,
-                    "cpf": "",
-                    "data_nascimento": "",
-                    "idade": "",
-                    "sexo": "",
-                    "email": "",
-                    "logradouro": "",
-                    "numero": "",
-                    "complemento": "",
-                    "bairro": "",
-                    "cidade": cidade_val,
-                    "estado": uf_val,
-                    "cep": "",
-                    "renda_estimada": "",
-                    "cbo": "",
-                    "profissao": "",
-                    "score": "",
-                    "perfil": "",
-                    "obito": "",
-                    "whatsapp": "",
-                    "status": "",
-                    "tipo_enriquecimento": detected_type,
-                }
-                for k, val in list(row.items()):
-                    enriched.setdefault(normalize_text(k), val)
-
-                with lock:
-                    item["error_count"] += 1
-                    item["processed_count"] += 1
-                    if len(item["logs"]) < 300:
-                        item["logs"].append(f"[{item['processed_count']}/{total_rows}] Não enriquecido {nome_val}: {exc}")
-                    elif len(item["logs"]) == 300:
-                        item["logs"].append("... logs subsequentes ocultados para economizar memória ...")
-
+        enriched = None
+        if not is_api_configured:
+            enriched = generate_mock_row(row, detected_type)
+            with lock:
+                success_count += 1
+                curr_p = start_idx + idx_pos + 1
+                if len(logs) < 300:
+                    logs.append(f"[{curr_p}/{total_rows}] Sucesso (Simulado): {nome_val or f'Linha {curr_p}'}")
             return enriched
 
-        # Execução concorrente em lotes para economizar memória e evitar limites de rede
-        requested_workers = int(LOCAL_CONFIG.get("MAX_WORKERS") or os.getenv("MAX_WORKERS") or 16)
-        MAX_WORKERS = max(4, min(32, requested_workers))
-        CHUNK_SIZE = 5000 if is_vercel else 100000
-        
-        # Mapeamento de cache (Seen Keys -> Enriched Result)
-        cache = {}
-        
-        # Criação do arquivo CSV local temporário
-        csv_path = EXPORT_DIR / f"raw_{queue_item_id}.csv"
-        
-        # Descobrir todas as chaves (originais + enriquecidas)
-        original_keys = list(dict.fromkeys(key for row in raw_rows for key in row.keys()))
-        all_keys = list(original_keys)
+        try:
+            def query_api(uf_filter: str) -> str | None:
+                data = {
+                    "nome": nome_val,
+                    "endereco": "",
+                    "cidade": cidade_val,
+                    "uf": uf_filter,
+                    "telefone": telefone_val,
+                    "celular": "",
+                    "email": "",
+                    "nascimento": "",
+                    "token": token
+                }
+                encoded_data = urllib.parse.urlencode(data).encode("utf-8")
+                req = urllib.request.Request(
+                    endpoint,
+                    data=encoded_data,
+                    headers={"Content-Type": "application/x-www-form-urlencoded"},
+                    method="POST"
+                )
+                context = ssl._create_unverified_context()
+                with urllib.request.urlopen(req, timeout=10, context=context) as resp:
+                    return resp.read().decode("utf-8", errors="ignore")
+
+            xml_response = query_api(uf_val)
+            if not xml_response or "Nada Consta" in xml_response:
+                xml_response = query_api("")
+
+            if xml_response:
+                records_parsed = parse_nova_vida_xml(xml_response)
+                if records_parsed:
+                    best_match = select_best_match(records_parsed, nome_val, uf_val, cidade_val)
+                    if best_match:
+                        enriched = merge_enriched_data(row, best_match, detected_type)
+                        with lock:
+                            success_count += 1
+                            curr_p = start_idx + idx_pos + 1
+                            cpf = enriched.get("cpf", "")
+                            cid = enriched.get("cidade", "")
+                            if len(logs) < 300:
+                                logs.append(f"[{curr_p}/{total_rows}] Sucesso: {nome_val} -> CPF={cpf}, Cidade={cid}")
+                        return enriched
+            with lock:
+                error_count += 1
+                curr_p = start_idx + idx_pos + 1
+                if len(logs) < 300:
+                    logs.append(f"[{curr_p}/{total_rows}] Nada Consta: {nome_val}")
+        except Exception as exc:
+            with lock:
+                error_count += 1
+                curr_p = start_idx + idx_pos + 1
+                if len(logs) < 300:
+                    logs.append(f"[{curr_p}/{total_rows}] Falha ao consultar {nome_val}: {exc}")
+
+        # Fallback se nada consta ou erro
+        enriched = dict(row)
         for field in ALL_ENRICH_FIELDS:
-            if field not in all_keys:
-                all_keys.append(field)
-                
-        with open(csv_path, "w", encoding="utf-8", newline="") as f:
-            writer = csv.DictWriter(f, fieldnames=all_keys, delimiter=";")
-            writer.writeheader()
+            if field not in enriched:
+                enriched[field] = ""
+        return enriched
 
-        # Iterar através das linhas originais em blocos de CHUNK_SIZE
-        for chunk_start in range(0, total_rows, CHUNK_SIZE):
-            if item.get("status") == "cancelled":
-                break
-                
-            chunk_end = min(chunk_start + CHUNK_SIZE, total_rows)
-            chunk_rows = raw_rows[chunk_start:chunk_end]
-            
-            chunk_results = [None] * len(chunk_rows)
-            indices_to_query = []
-            seen_in_chunk = {}
-            
-            for i, row in enumerate(chunk_rows):
-                global_idx = chunk_start + i
-                query_key = get_row_query_key(row, global_idx)
-                
-                if query_key in cache:
-                    # Duplicado: reaproveita do cache global
-                    dup_enriched = dict(cache[query_key])
-                    for k, val in row.items():
-                        dup_enriched[normalize_text(k)] = val
-                    chunk_results[i] = dup_enriched
-                    
-                    is_success = bool(dup_enriched.get("cpf"))
-                    with lock:
-                        item["processed_count"] += 1
-                        if is_success:
-                            item["success_count"] += 1
-                        else:
-                            item["error_count"] += 1
-                        if len(item["logs"]) < 300:
-                            item["logs"].append(f"[{item['processed_count']}/{total_rows}] Duplicado: {row.get('nome') or ''} -> Reaproveitando resultado")
-                        elif len(item["logs"]) == 300:
-                            item["logs"].append("... logs subsequentes ocultados para economizar memória ...")
-                elif query_key in seen_in_chunk:
-                    # Duplicado dentro do mesmo lote
-                    seen_in_chunk[query_key].append(i)
-                else:
-                    seen_in_chunk[query_key] = [i]
-                    indices_to_query.append(i)
-                    
-            # Processa as novas chaves deste lote no Executor de Threads
-            if indices_to_query:
-                with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
-                    future_to_idx = {
-                        executor.submit(enrich_row_task, chunk_rows[idx]): idx 
-                        for idx in indices_to_query
-                    }
-                    for future in as_completed(future_to_idx):
-                        idx = future_to_idx[future]
-                        try:
-                            res = future.result()
-                            if item.get("status") == "cancelled":
-                                executor.shutdown(wait=False, cancel_futures=True)
-                                break
-                            
-                            chunk_results[idx] = res
-                            row = chunk_rows[idx]
-                            query_key = get_row_query_key(row, chunk_start + idx)
-                            
-                            if res:
-                                # Adiciona ao cache global
-                                cache[query_key] = res
-                                
-                                # Resolve as cópias do mesmo lote
-                                for dup_idx in seen_in_chunk[query_key][1:]:
-                                    dup_row = chunk_rows[dup_idx]
-                                    dup_enriched = dict(res)
-                                    for k, val in dup_row.items():
-                                        dup_enriched[normalize_text(k)] = val
-                                    chunk_results[dup_idx] = dup_enriched
-                                    
-                                    is_success = bool(dup_enriched.get("cpf"))
-                                    with lock:
-                                        item["processed_count"] += 1
-                                        if is_success:
-                                            item["success_count"] += 1
-                                        else:
-                                            item["error_count"] += 1
-                                        if len(item["logs"]) < 300:
-                                            item["logs"].append(f"[{item['processed_count']}/{total_rows}] Duplicado: {dup_row.get('nome') or ''} -> Reaproveitando resultado")
-                                        elif len(item["logs"]) == 300:
-                                            item["logs"].append("... logs subsequentes ocultados para economizar memória ...")
-                        except Exception as fut_exc:
-                            log_api_debug(f"Erro na execução da thread para índice {chunk_start + idx}: {fut_exc}")
+    MAX_WORKERS = 20
+    enriched_batch_results = [None] * len(batch_rows)
 
-            if item.get("status") == "cancelled":
-                break
-                
-            # Grava as linhas resolvidas deste lote no CSV
-            rows_to_write = []
-            for res in chunk_results:
-                if res is not None:
-                    row_dict = {k: res.get(k, "") for k in all_keys}
-                    rows_to_write.append(row_dict)
-                    
-            if rows_to_write:
-                item["rows"].extend(rows_to_write)
-                try:
-                    with open(csv_path, "a", encoding="utf-8", newline="") as f:
-                        writer = csv.DictWriter(f, fieldnames=all_keys, delimiter=";")
-                        writer.writerows(rows_to_write)
-                except Exception:
-                    pass
-                    
-            # Atualiza progresso incremental no Supabase
-            db_update_queue_item(item["id"], {
-                "processed_count": item["processed_count"],
-                "success_count": item["success_count"],
-                "error_count": item["error_count"],
-                "logs": item["logs"],
-                "rows": item["rows"]
-            })
+    with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
+        future_map = {executor.submit(enrich_one, r, i): i for i, r in enumerate(batch_rows)}
+        for future in as_completed(future_map):
+            i = future_map[future]
+            try:
+                res = future.result()
+                enriched_batch_results[i] = res
+            except Exception as e:
+                log_api_debug(f"Erro em batch row {start_idx + i}: {e}")
 
-        if item.get("status") == "cancelled":
-            item["logs"].append("Processamento cancelado pelo usuário.")
-            db_update_queue_item(item["id"], {
-                "status": "cancelled",
-                "logs": item["logs"]
-            })
-            return
+    # Atualiza as linhas originais com o resultado enriquecido
+    for i, res in enumerate(enriched_batch_results):
+        if res is not None:
+            raw_rows[start_idx + i] = res
 
-        # Conclusão do processamento
-        item["status"] = "pending"
-        item["logs"].append(f"Processamento concluído. {item['success_count']} registros enriquecidos com sucesso, {item['error_count']} falhas.")
-        log_api_debug(f"[{item['queue_number']}] Thread de processamento concluída: {item['success_count']} sucessos, {item['error_count']} falhas.")
-        
-        db_update_queue_item(item["id"], {
-            "status": item["status"],
-            "processed_count": item["processed_count"],
-            "success_count": item["success_count"],
-            "error_count": item["error_count"],
-            "logs": item["logs"],
-            "rows": item["rows"]
-        })
+    new_processed_count = end_idx
+    new_status = "pending" if new_processed_count >= total_rows else "processing"
 
-    except Exception as general_exc:
-        item["status"] = "error"
-        item["logs"].append(f"Erro catastrófico no processamento: {general_exc}")
-        log_api_debug(f"[{item['queue_number']}] Erro catastrófico no processamento: {general_exc}")
-        db_update_queue_item(item["id"], {
-            "status": "error",
-            "logs": item["logs"]
-        })
+    if new_status == "pending":
+        if len(logs) < 300:
+            logs.append(f"Processamento concluído. {success_count} registros enriquecidos com sucesso, {error_count} falhas.")
+
+    item["rows"] = raw_rows
+    item["processed_count"] = new_processed_count
+    item["success_count"] = success_count
+    item["error_count"] = error_count
+    item["logs"] = logs
+    item["status"] = new_status
+
+    db_update_queue_item(item["id"], {
+        "status": item["status"],
+        "processed_count": item["processed_count"],
+        "success_count": item["success_count"],
+        "error_count": item["error_count"],
+        "logs": item["logs"],
+        "rows": item["rows"]
+    })
+
+    return item
 
 
 @app.post("/api/request-import")
@@ -1655,11 +1373,11 @@ def create_import_request():
             "mode": mode,
         })
 
-    # Executar enriquecimento sincronamente no backend para resposta imediata sem delay de threads no Vercel
-    process_enrichment_background_task(queue_item["id"], raw_rows, record["type"], query_fields)
+    # Processa o primeiro lote (batch) de 100 registros imediatamente
+    process_batch_for_request(queue_item, batch_size=100)
 
     return jsonify({
-        "message": "Enriquecimento concluído com sucesso.",
+        "message": "Enriquecimento iniciado com sucesso.",
         "request_id": queue_item["id"],
         "mode": mode,
     })
@@ -1884,12 +1602,9 @@ def get_request_logs(request_id: str):
     if item is None:
         return jsonify({"error": "Solicitação não encontrada."}), 404
         
-    # Auto-concluir se todas as linhas foram processadas mas o status ainda for 'processing'
-    processed = item.get("processed_count", 0)
-    total = item.get("total_rows", 0)
-    if processed >= total and total > 0 and item.get("status") == "processing":
-        item["status"] = "pending"
-        db_update_queue_item(request_id, {"status": "pending", "logs": item.get("logs", [])})
+    # Se o item ainda está sendo processado, executa o próximo lote de 100 registros
+    if item.get("status") == "processing":
+        item = process_batch_for_request(item, batch_size=100)
 
     preview_row = {}
     csv_path = EXPORT_DIR / f"raw_{request_id}.csv"
