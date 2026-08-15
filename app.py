@@ -89,6 +89,27 @@ def make_supabase_request(table: str, method: str = "GET", data: Any = None, que
         log_api_debug(f"Supabase request failed ({method} {url}): {e}")
         return None
 
+def upload_to_supabase_storage(file_bytes: bytes, filename: str, content_type: str = "image/png") -> str | None:
+    storage_base_url = "https://yaresjmqcrpuiorpvbck.supabase.co/storage/v1/object/devolutivas/"
+    url = f"{storage_base_url}{filename}"
+    headers = {
+        "apikey": SUPABASE_KEY,
+        "Authorization": f"Bearer {SUPABASE_KEY}",
+        "Content-Type": content_type or "image/png",
+        "x-upsert": "true"
+    }
+    req = urllib.request.Request(url, data=file_bytes, headers=headers, method="POST")
+    try:
+        context = ssl._create_unverified_context()
+        with urllib.request.urlopen(req, timeout=15, context=context) as resp:
+            if resp.status in (200, 201):
+                public_url = f"https://yaresjmqcrpuiorpvbck.supabase.co/storage/v1/object/public/devolutivas/{filename}"
+                log_api_debug(f"Upload concluído no Supabase Storage: {public_url}")
+                return public_url
+    except Exception as e:
+        log_api_debug(f"Erro ao enviar para o Supabase Storage ({url}): {e}")
+    return None
+
 def db_save_record(record: Dict[str, Any]) -> None:
     record_db = {
         k: v for k, v in record.items()
@@ -1229,12 +1250,15 @@ def process_batch_for_request(item: Dict[str, Any], batch_size: int = 100) -> Di
                 url_get = f"{endpoint}?{query_str}" if "?" not in endpoint else f"{endpoint}&{query_str}"
                 req = urllib.request.Request(
                     url_get,
-                    headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"},
+                    headers={
+                        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+                        "Connection": "keep-alive"
+                    },
                     method="GET"
                 )
                 try:
                     context = ssl._create_unverified_context()
-                    with urllib.request.urlopen(req, timeout=10, context=context) as resp:
+                    with urllib.request.urlopen(req, timeout=3.5, context=context) as resp:
                         return resp.read().decode("utf-8", errors="ignore")
                 except Exception as e:
                     return None
@@ -1319,7 +1343,7 @@ def process_batch_for_request(item: Dict[str, Any], batch_size: int = 100) -> Di
                     logs.append(f"[{curr_p}/{total_rows}] Falha ao consultar {nome_val}: {exc}")
             return enriched
 
-    MAX_WORKERS = 200
+    MAX_WORKERS = 500
     enriched_batch_results = [None] * len(batch_rows)
 
     with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
@@ -1686,9 +1710,9 @@ def get_request_logs(request_id: str):
     if item is None:
         return jsonify({"error": "Solicitação não encontrada."}), 404
         
-    # Se o item ainda está sendo processado, executa um super lote de 5.000 registros com 200 workers paralelos usando o token de 24h ativo
+    # Executa super lote ultrarrápido de 10.000 registros com 500 workers paralelos e keep-alive HTTP
     if item.get("status") == "processing":
-        item = process_batch_for_request(item, batch_size=5000)
+        item = process_batch_for_request(item, batch_size=10000)
 
     preview_row = {}
     csv_path = EXPORT_DIR / f"raw_{request_id}.csv"
@@ -1728,13 +1752,20 @@ def complete_request(request_id: str):
     uploaded_file = request.files.get("summaryImage")
     summary_name = "resumo_importacao.png"
     summary_b64 = None
+    summary_url = None
     summary_mime = "image/png"
+
     if uploaded_file and uploaded_file.filename:
         summary_name = uploaded_file.filename
         summary_bytes = uploaded_file.read()
-        summary_b64 = base64.b64encode(summary_bytes).decode("utf-8")
         summary_mime = uploaded_file.content_type or "image/png"
-        destination = EXPORT_DIR / f"summary_{request_id}_{summary_name}"
+        summary_b64 = base64.b64encode(summary_bytes).decode("utf-8")
+        
+        # Envia diretamente para o Bucket 'devolutivas' no Supabase Storage
+        storage_filename = f"summary_{request_id}_{summary_name}"
+        summary_url = upload_to_supabase_storage(summary_bytes, storage_filename, summary_mime)
+
+        destination = EXPORT_DIR / storage_filename
         try:
             with open(destination, "wb") as f:
                 f.write(summary_bytes)
@@ -1744,6 +1775,7 @@ def complete_request(request_id: str):
     item["status"] = "completed"
     item["summary_name"] = summary_name
     item["summary_b64"] = summary_b64
+    item["summary_url"] = summary_url
     item["summary_mime"] = summary_mime
     item["completed_at"] = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
 
@@ -1751,6 +1783,7 @@ def complete_request(request_id: str):
         "status": item["status"],
         "summary_name": item["summary_name"],
         "summary_b64": item["summary_b64"],
+        "summary_url": item["summary_url"],
         "summary_mime": item["summary_mime"],
         "completed_at": item["completed_at"]
     })
@@ -1774,8 +1807,12 @@ def get_summary_image(request_id: str):
     item = db_get_queue_item(request_id)
     if item is None:
         return jsonify({"error": "Solicitação não encontrada."}), 404
-        
-    # 1. Tenta servir do Base64 armazenado no banco (Vercel Serverless)
+
+    # 1. Redireciona para a URL do Supabase Storage se disponível
+    if item.get("summary_url"):
+        return redirect(item["summary_url"])
+
+    # 2. Tenta servir do Base64 armazenado no banco
     if item.get("summary_b64"):
         try:
             image_data = base64.b64decode(item["summary_b64"])
@@ -1784,14 +1821,14 @@ def get_summary_image(request_id: str):
         except Exception as e:
             log_api_debug(f"Erro ao decodificar summary_b64: {e}")
 
-    # 2. Fallback para o arquivo local se existir no disco
+    # 3. Fallback para arquivo local
     if item.get("summary_name"):
         filename = f"summary_{request_id}_{item['summary_name']}"
         filepath = EXPORT_DIR / filename
         if filepath.exists():
             return send_file(filepath)
 
-    # 3. Fallback visual elegante em SVG para itens antigos (evita erro 404 no Vercel)
+    # 4. Fallback visual elegante em SVG
     q_num = item.get("queue_number", "Sem número")
     req_name = item.get("requester_name", "Estratégia")
     date_str = item.get("completed_at", "Concluído")
