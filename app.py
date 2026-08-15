@@ -1274,49 +1274,36 @@ def process_batch_for_request(item: Dict[str, Any], batch_size: int = 100) -> Di
             return enriched
 
         try:
-            def query_api(nome_q: str, uf_q: str, cidade_q: str, tel_q: str = "") -> str | None:
-                data = {
-                    "nome": nome_q,
-                    "endereco": "",
-                    "cidade": cidade_q,
-                    "uf": uf_q,
-                    "telefone": tel_q,
-                    "celular": "",
-                    "email": "",
-                    "nascimento": "",
-                    "token": token
-                }
-                query_str = urllib.parse.urlencode(data)
-                url_get = f"{endpoint}?{query_str}" if "?" not in endpoint else f"{endpoint}&{query_str}"
-                req = urllib.request.Request(
-                    url_get,
-                    headers={
-                        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-                        "Connection": "keep-alive"
-                    },
-                    method="GET"
-                )
-                try:
-                    context = ssl._create_unverified_context()
-                    with urllib.request.urlopen(req, timeout=3.5, context=context) as resp:
-                        return resp.read().decode("utf-8", errors="ignore")
-                except Exception as e:
-                    return None
+            # Monta APENAS os parâmetros que possuem conteúdo para reproduzir exatamente a chamada da plataforma Nova Vida
+            params = {"token": token}
+            if nome_val:
+                params["nome"] = nome_val
+            if uf_val:
+                params["uf"] = uf_val
+            if cidade_val:
+                params["cidade"] = cidade_val
+            if telefone_val:
+                params["telefone"] = telefone_val
 
-            # 1. Tentativa estrita com Nome + UF + Cidade
-            xml_response = query_api(nome_val, uf_val, cidade_val)
+            query_str = urllib.parse.urlencode(params)
+            url_get = f"{endpoint}?{query_str}" if "?" not in endpoint else f"{endpoint}&{query_str}"
             
-            # 2. Se falhar ou der Registro Múltiplo / Nada Consta, tenta sem cidade
-            if (not xml_response or "Nada Consta" in xml_response or "REGISTRO MULTIPLO" in xml_response) and cidade_val:
-                xml_response = query_api(nome_val, uf_val, "")
-
-            # 3. Se ainda falhar, tenta sem UF (busca em todo o Brasil)
-            if (not xml_response or "Nada Consta" in xml_response or "REGISTRO MULTIPLO" in xml_response) and uf_val:
-                xml_response = query_api(nome_val, "", "")
-
-            # 4. Se houver telefone e o nome deu registro múltiplo/nada consta, tenta pelo telefone
-            if (not xml_response or "Nada Consta" in xml_response or "REGISTRO MULTIPLO" in xml_response) and telefone_val:
-                xml_response = query_api("", "", "", telefone_val)
+            req = urllib.request.Request(
+                url_get,
+                headers={
+                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+                    "Connection": "keep-alive"
+                },
+                method="GET"
+            )
+            
+            xml_response = None
+            try:
+                context = ssl._create_unverified_context()
+                with urllib.request.urlopen(req, timeout=4.0, context=context) as resp:
+                    xml_response = resp.read().decode("utf-8", errors="ignore")
+            except Exception:
+                xml_response = None
 
             import html
             xml_content = html.unescape(xml_response or "")
