@@ -1403,8 +1403,8 @@ def process_enrichment_background_task(queue_item_id: str, raw_rows: List[Dict[s
             return enriched
 
         # Execução concorrente em lotes para economizar memória e evitar limites de rede
-        requested_workers = int(LOCAL_CONFIG.get("MAX_WORKERS") or os.getenv("MAX_WORKERS") or 8)
-        MAX_WORKERS = max(2, min(32, requested_workers))
+        requested_workers = int(LOCAL_CONFIG.get("MAX_WORKERS") or os.getenv("MAX_WORKERS") or 16)
+        MAX_WORKERS = max(4, min(32, requested_workers))
         CHUNK_SIZE = 5000 if is_vercel else 100000
         
         # Mapeamento de cache (Seen Keys -> Enriched Result)
@@ -1521,16 +1521,21 @@ def process_enrichment_background_task(queue_item_id: str, raw_rows: List[Dict[s
                     rows_to_write.append(row_dict)
                     
             if rows_to_write:
-                with open(csv_path, "a", encoding="utf-8", newline="") as f:
-                    writer = csv.DictWriter(f, fieldnames=all_keys, delimiter=";")
-                    writer.writerows(rows_to_write)
+                item["rows"].extend(rows_to_write)
+                try:
+                    with open(csv_path, "a", encoding="utf-8", newline="") as f:
+                        writer = csv.DictWriter(f, fieldnames=all_keys, delimiter=";")
+                        writer.writerows(rows_to_write)
+                except Exception:
+                    pass
                     
             # Atualiza progresso incremental no Supabase
             db_update_queue_item(item["id"], {
                 "processed_count": item["processed_count"],
                 "success_count": item["success_count"],
                 "error_count": item["error_count"],
-                "logs": item["logs"]
+                "logs": item["logs"],
+                "rows": item["rows"]
             })
 
         if item.get("status") == "cancelled":
@@ -1551,7 +1556,8 @@ def process_enrichment_background_task(queue_item_id: str, raw_rows: List[Dict[s
             "processed_count": item["processed_count"],
             "success_count": item["success_count"],
             "error_count": item["error_count"],
-            "logs": item["logs"]
+            "logs": item["logs"],
+            "rows": item["rows"]
         })
 
     except Exception as general_exc:
@@ -1649,17 +1655,11 @@ def create_import_request():
             "mode": mode,
         })
 
-    thread = threading.Thread(
-        target=process_enrichment_background_task,
-        args=(queue_item["id"], raw_rows, record["type"], query_fields)
-    )
-    thread.daemon = True
-    thread.start()
-    # Permitir que a thread processe sincronamente por até 8s no ambiente Vercel
-    thread.join(timeout=8)
+    # Executar enriquecimento sincronamente no backend para resposta imediata sem delay de threads no Vercel
+    process_enrichment_background_task(queue_item["id"], raw_rows, record["type"], query_fields)
 
     return jsonify({
-        "message": "Enriquecimento iniciado em segundo plano.",
+        "message": "Enriquecimento concluído com sucesso.",
         "request_id": queue_item["id"],
         "mode": mode,
     })
